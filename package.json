@@ -3,16 +3,45 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cycjimmy/jsmpeg-player": "^6.0.5",
+    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "axios": "^1.6.7",
+    "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "node-rtsp-stream": "^0.0.9",
+    "node-sass": "^7.0.3",
+    "onvif": "github:agsh/onvif",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-data-table-component": "^7.6.2",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-h5-audio-player": "^3.9.1",
+    "react-icons": "^5.0.1",
+    "react-modal": "^3.16.1",
+    "react-player": "^2.15.1",
+    "react-pro-sidebar": "^0.7.1",
+    "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.8.0",
+    "react-toastify": "^10.0.4",
+    "react-use-draggable-scroll": "^0.4.7",
+    "secure-ls": "^1.2.6",
+    "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env HOST=0.0.0.0 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -34,5 +63,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "sass": "^1.71.1"
   }
 }

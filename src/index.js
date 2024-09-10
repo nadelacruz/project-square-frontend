@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import "react-h5-audio-player/src/styles.scss";
+import 'chart.js/auto'; // VERY IMPORTANT
+import 'react-pro-sidebar/dist/css/styles.css'; // VERY IMPORTANT
+
+import './css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
