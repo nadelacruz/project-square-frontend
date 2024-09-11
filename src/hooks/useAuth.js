@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     }, [location]);
 
     const login = async (credentials) => {
-        const response = await square_api.post('/login', credentials);
+        const response = await square_api.post('/auth/login', credentials);
 
         if (response.status === 200) {
             const user = response.data.user;
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (credentials) => {
-        const response = await square_api.post('/register', credentials);
+        const response = await square_api.post('/auth/register', credentials);
 
         if (response.status === 201) { // 201 = CREATED
             const user = response.data.user;
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        const response = await square_api.post('/logout');
+        const response = await square_api.post('/auth/logout');
         
         ss.removeItem('user');
         

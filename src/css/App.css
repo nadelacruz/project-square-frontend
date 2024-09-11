@@ -1,7 +1,7 @@
 :root {
   --primary-color: #217ba8;
   --primary-color-dark: #175c7e;
-  --primary-color-light: #f53535;
+  --primary-color-light: #3895c3;
   --primary-header-color: #A82122;
   --primary-highlight: rgba(236, 0, 4, 0.4);
   --secondary-highlight: rgba(108, 107, 107, 0.4);
@@ -324,4 +324,56 @@ body {
   height: 100%;
   width: 100%;
   object-fit: fill;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 7%;
+  margin-right: 7%;
+  height: 100%;
+}
+
+
+.landing-img-div img {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+  scale: 1.2;
+  z-index: 0;
+}
+
+.landing-text-bold {
+  font-size: 43px;
+  font-weight: bold;
+  color: var(--primary-color-dark);
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.landing-text {
+  font-size: 15px;
+  color: var(--primary-color);
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.landing-btn {
+  background-color: var(--primary-color);
+  font-size: 20px;
+  height: 52px;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 50px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.landing-btn:hover {
+  background-color: var(--primary-color-light);
 }

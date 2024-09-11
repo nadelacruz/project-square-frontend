@@ -101,7 +101,7 @@ const IndexPage = () => {
         setDateTime(formattedDate);
         setScanStatus("detecting");
 
-        await square_api.post('/detect-faces', captureData, config)
+        await square_api.post('/face/detect-faces', captureData, config)
             .then((response) => {
                 const newDetection = response.data;
 
@@ -126,7 +126,7 @@ const IndexPage = () => {
                 return newDetection;
             }).then(async (detection) => {
                 setScanStatus("recognizing");
-                const response = await square_api.post('/recognize-faces', JSON.stringify(detection), {
+                const response = await square_api.post('/face/recognize-faces', JSON.stringify(detection), {
                     headers: {
                         'Content-Type': 'application/json',
                     },

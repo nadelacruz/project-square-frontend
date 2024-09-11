@@ -12,7 +12,7 @@ const UnknownItem = ({ detected }) => {
                     style={{ width: '60px', borderRadius: '5px' }}
                 >
                     <img
-                        src={faceApiBaseUrl + "/detected-face/" + detected  }
+                        src={faceApiBaseUrl + "/face/detected-face/" + detected  }
                         alt={`input image`}
                     /> 
                 </div>

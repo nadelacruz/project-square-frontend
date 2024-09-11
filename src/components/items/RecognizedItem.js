@@ -14,7 +14,7 @@ const RecognizedItem = ({ identityPath, detected }) => {
                     style={{ width: '60px', borderRadius: '5px' }}
                 >
                     <img
-                        src={faceApiBaseUrl + "/detected-face/" + detected  }
+                        src={faceApiBaseUrl + "/face/detected-face/" + detected  }
                         alt={`input image`}
                     /> 
                 </div>
@@ -24,7 +24,7 @@ const RecognizedItem = ({ identityPath, detected }) => {
                     style={{ width: '60px', borderRadius: '5px' }}
                 >
                     <img
-                        src={faceApiBaseUrl + "/recognized-face/" + identity }
+                        src={faceApiBaseUrl + "/face/recognized-face/" + identity }
                         alt={`database image`}
                     />
                 </div>
