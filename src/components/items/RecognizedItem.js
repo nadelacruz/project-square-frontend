@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faceApiBaseUrl } from '../../api/face_api';
+import { faceApiBaseUrl } from '../../api/square_api';
 
 import { FaArrowRight } from "react-icons/fa";
 

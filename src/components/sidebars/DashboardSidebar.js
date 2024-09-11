@@ -21,13 +21,12 @@ const ListenerSidebar = () => {
                 <SidebarHeader>
                     <Menu>
                         <MenuItem onClick={() => { setCollapse(!collapse) }} icon={<TiThMenu size={28} />}>
-                            <Link to="/"><span className='explore-text'>INSTRUCTOR</span></Link>
+                            <Link to="/"><span className='explore-text'>USER</span></Link>
                         </MenuItem>
                     </Menu>
                 </SidebarHeader>
                 <Menu >
                     <MenuItem icon={<FaVideo size={22} />}><Link to="/">Live Attendance</Link></MenuItem>
-                    <MenuItem icon={<AiFillSchedule size={25} />}><Link to="/">Schedules</Link></MenuItem>
                     <MenuItem icon={<FaClipboardList size={25} />}><Link to="/">Records</Link></MenuItem>
                 </Menu>
             </SidebarContent>

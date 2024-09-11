@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import face_api, { faceApiBaseUrl, serverIp } from '../api/face_api';
+import square_api from '../api/square_api';
 import { toDisplayText, toFilename } from '../services/DateFormatService';
 import { ToastContainer, toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import ListenerHeader from '../components/headers/ListenerHeader';
-import ListenerSidebar from '../components/sidebars/ListenerSidebar';
+import MainHeader from '../components/headers/MainHeader';
+import DashboardSidebar from '../components/sidebars/DashboardSidebar';
 
 import RecognizedItem from '../components/items/RecognizedItem';
 import RecognizedLoadingItem from '../components/items/RecognizedLoadingItem';
@@ -101,7 +101,7 @@ const IndexPage = () => {
         setDateTime(formattedDate);
         setScanStatus("detecting");
 
-        await face_api.post('/detect-faces', captureData, config)
+        await square_api.post('/detect-faces', captureData, config)
             .then((response) => {
                 const newDetection = response.data;
 
@@ -126,7 +126,7 @@ const IndexPage = () => {
                 return newDetection;
             }).then(async (detection) => {
                 setScanStatus("recognizing");
-                const response = await face_api.post('/recognize-faces', JSON.stringify(detection), {
+                const response = await square_api.post('/recognize-faces', JSON.stringify(detection), {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -163,8 +163,8 @@ const IndexPage = () => {
     return (
         <div className="listener-main-container" >
             <ToastContainer />
-            <ListenerHeader />
-            <ListenerSidebar />
+            <MainHeader />
+            <DashboardSidebar />
 
             <div className='listener-main custom-scrollbar'>
                 <div className='attendance-container'>

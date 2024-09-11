@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import face_api, { faceApiBaseUrl, serverIp }  from '../../api/face_api';
+import face_api, { faceApiBaseUrl, serverIp }  from '../../api/square_api';
 import JSMpeg from "@cycjimmy/jsmpeg-player";
 import axios from "axios";
 
