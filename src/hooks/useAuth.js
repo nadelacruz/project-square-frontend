@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const [home, setHome] = useState("/");
+    const [isDetecting, setIsDetecting] = useState(false);
 
     useEffect(() => {
 
@@ -84,6 +85,8 @@ export const AuthProvider = ({ children }) => {
             register,
             logout,
             me,
+            isDetecting,
+            setIsDetecting
         }),
         [user]
     );

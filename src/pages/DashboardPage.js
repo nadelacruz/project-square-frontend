@@ -18,8 +18,11 @@ import WebcamFeed from '../components/feeds/WebcamFeed';
 import { RiLiveFill } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 
+import { useAuth } from '../hooks/useAuth';
 
-const IndexPage = () => {    
+
+const DashboardPage = () => {
+    const { isDetecting, setIsDetecting } = useAuth();
     const videoRef = useRef(null);
 
     // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.1.2:554/live/ch00_0"; // Appartment Network
@@ -31,8 +34,9 @@ const IndexPage = () => {
     const [datetime, setDateTime] = useState(null);
     const [verifiedFaces, setVerifiedFaces] = useState([]);
 
+
     const renderRecognized = () => {
-        return verifiedFaces.map((face, index) => {
+        return verifiedFaces.slice().reverse().map((face, index) => {
             if (face.identity !== null) {
                 return (
                     <RecognizedItem
@@ -50,7 +54,7 @@ const IndexPage = () => {
                 )
             }
         });
-    }
+    };
 
     const captureFrame = () => {
         return new Promise((resolve, reject) => {
@@ -76,9 +80,10 @@ const IndexPage = () => {
     };
 
     const handleCapture = async () => {
+        setIsDetecting(true);
         setIsScanning(true);
         setDetection(null);
-        setVerifiedFaces([]);
+        // setVerifiedFaces([]); I FUCKING HATE YOU
         setDateTime(null)
 
         const date = new Date();
@@ -132,7 +137,7 @@ const IndexPage = () => {
                     },
                 });
                 const results = response.data.results
-
+                console.log(results);
                 if (results.filter((face) => face.identity).length === 0) {
                     toast.error("No faces were recognized", {
                         autoClose: 2500,
@@ -141,7 +146,7 @@ const IndexPage = () => {
                         position: 'bottom-right'
                     });
                 } else {
-                    toast.info(results.length + " face(s) were recognized", {
+                    toast.info(results.filter((face) => face.identity).length + " face(s) were recognized", {
                         autoClose: 2500,
                         closeOnClick: true,
                         hideProgressBar: true,
@@ -149,16 +154,29 @@ const IndexPage = () => {
                     });
                 }
 
-                setVerifiedFaces(results);
+                setVerifiedFaces(prevFaces => {
+                    const seenIds = new Set(prevFaces.map(face => face.identity || ''));
+                    return [
+                        ...prevFaces,
+                        ...results.filter(face => !seenIds.has(face.identity))
+                    ];
+                });
 
                 return results;
             }).finally(() => {
                 setIsScanning(false);
                 setScanStatus(null);
+                setIsDetecting(false);
             })
 
     }
-    
+
+    const handleDetectChange = (detected) => {
+        if (detected > 0 && !isScanning) {
+            handleCapture();
+        }
+    }
+
 
     return (
         <div className="listener-main-container" >
@@ -179,13 +197,15 @@ const IndexPage = () => {
                                     className='me-2 mb-3 w-50'
                                     rtspUrl={rtspurl} 
                                 /> */}
-                                <WebcamFeed 
-                                    className={'ms-2 w-50'} 
+                                <WebcamFeed
+                                    className={'ms-2'}
                                     videoRef={videoRef}
+                                    // onDetectChange={() => { }}
+                                    onDetectChange={handleDetectChange}
                                 />
                             </div>
                             <div className='d-flex align-items-center mb-3'>
-                                <Button
+                                {/* <Button
                                     onClick={() => handleCapture()}
                                     disabled={isScanning}
                                     style={{
@@ -195,7 +215,7 @@ const IndexPage = () => {
                                     }}
                                 >
                                     {(isScanning) ? "Taking attendance..." : "Take attendance"}
-                                </Button>
+                                </Button> */}
 
                                 {(isScanning && scanStatus === "detecting") && (
                                     <div className='d-flex align-items-center'>
@@ -240,28 +260,40 @@ const IndexPage = () => {
                             )}
 
                         </div>
-                        <div className="ms-3" style={{ width: '40%' }}>
-                            <div className='fs-4 fw-bold'>Attendance</div>
-                            {datetime && (
-                                <div className='fs-6 mb-3 opacity-75'>{datetime}</div>
-                            )}
-                            {(verifiedFaces.length > 0) && (
-                                renderRecognized()
-                            )}
-                            {(!(verifiedFaces.length > 0) && !isScanning) && (
-                                <div className='w-100'>
-                                    <span className='fs-6 opacity-50'>
-                                        Click 'Scan' button to recognize faces.
-                                    </span>
-                                </div>
-                            )}
-                            {isScanning && (
-                                <>
-                                    <RecognizedLoadingItem />
-                                    <RecognizedLoadingItem />
-                                    <RecognizedLoadingItem />
-                                </>
-                            )}
+                        <div className="attendance-list-container custom-scrollbar" style={{ width: '40%' }}>
+                            <div className='attendance-content-wrapper'>
+                                <div className='fs-4 fw-bold'>Attendance</div>
+                                {/* Part that displays date and time of detection */}
+                                {datetime && (
+                                    <div className='fs-6 mb-3 opacity-75'>{datetime}</div>
+                                )}
+                                {/* Loading animation when there are already verified faces */}
+                                {isScanning && (
+                                    <div>
+                                        <RecognizedLoadingItem />
+                                    </div>
+                                )}
+                                {/* List of verified faces  */}
+                                {(verifiedFaces.length > 0) && (
+                                    renderRecognized()
+                                )}
+                                {/* initial message before automatic scanning */}
+                                {(!(verifiedFaces.length > 0) && !isScanning) && (
+                                    <div className='w-100'>
+                                        <span className='fs-6 opacity-50'>
+                                            Make sure that face is visible to the camera.
+                                        </span>
+                                    </div>
+                                )}
+                                {/* Loading animation when there are NO verified faces */}
+                                {(isScanning && !(verifiedFaces.length > 0)) && (
+                                    <div>
+                                        <RecognizedLoadingItem />
+                                        <RecognizedLoadingItem />
+                                        <RecognizedLoadingItem />
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -271,4 +303,4 @@ const IndexPage = () => {
     );
 }
 
-export default IndexPage;
+export default DashboardPage;

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 const MainHeader = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, isDetecting } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -60,6 +60,7 @@ const MainHeader = () => {
                                 })
                             }}
                             className='logout-btn'
+                            disabled={isDetecting}
                         >
                             Logout
                         </button>

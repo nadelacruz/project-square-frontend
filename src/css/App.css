@@ -51,7 +51,7 @@ body {
 
 .video-feed {
   aspect-ratio: 3 / 2;
-  width: 100%;
+  width: 87%;
   background-color: #000000;
   border-radius: 10px;
   position: relative;
@@ -120,9 +120,19 @@ body {
 
 .attendance-container {
   padding: 20px;
+}
+
+.attendance-list-container {
+  width: 40%;
+  height: calc(100% - 56px);
   overflow-y: auto;
 }
 
+.attendance-content-wrapper {
+  height: 100%;
+  padding-bottom: 20px; 
+  box-sizing: border-box;
+}
 .queue-item {
   width: 100%;
   display: flex;
