@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as faceapi from 'face-api.js';
 
-const WebcamFeed = ({ className, onDetectChange, videoRef }) => {
-    // const videoRef = useRef(null);
+const WebcamFeed = ({ onDetectChange, videoRef }) => {
     const canvasRef = useRef(null);
 
     const [detected, setDetected] = useState(0);
@@ -89,7 +88,7 @@ const WebcamFeed = ({ className, onDetectChange, videoRef }) => {
                 await loadModels();
                 await startVideoStream();
 
-                intervalId = setInterval(detectFaces, 250); 
+                intervalId = setInterval(detectFaces, 1000); 
             } catch (error) {
                 console.error('Initialization failed:', error);
             }
@@ -107,7 +106,7 @@ const WebcamFeed = ({ className, onDetectChange, videoRef }) => {
     }, []);
 
     return (
-        <div className={`video-feed ${className}`}>
+        <div className={`video-feed`}>
             <video ref={videoRef} autoPlay playsInline muted />
             <canvas id="device-canvas" style={{ display: 'none' }}></canvas>
             <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0 }} />

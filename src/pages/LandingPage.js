@@ -10,11 +10,11 @@ const LandingPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="listener-main-container" >
+        <div className="main-container" >
             <ToastContainer />
             <MainHeader />
 
-            <div className='listener-main custom-scrollbar'>
+            <div className='content-area custom-scrollbar'>
                 <div className='landing-container'>
                     <div className='w-50'>
                         {/* <div className='logo-div' style={{width: '150px'}}>

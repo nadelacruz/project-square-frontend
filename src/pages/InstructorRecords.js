@@ -191,7 +191,7 @@ const ListenerPlaylist = () => {
                                         />
                                     </div>
                                 )}
-                                <div className='threel-item-cover box-shadow' style={{ width: '150px' }}>
+                                <div className='square-item-cover box-shadow' style={{ width: '150px' }}>
                                     {(playlist.cover) && (
                                         <img
                                             src={threelApiBaseUrl + "/" + playlist.cover}

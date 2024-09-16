@@ -8,7 +8,7 @@ const MainHeader = () => {
     const navigate = useNavigate();
 
     return (
-        <header className='listener-header'>
+        <header className='header-area'>
             <div className='logo-container'>
                 <div className='logo-div'>
                     <img

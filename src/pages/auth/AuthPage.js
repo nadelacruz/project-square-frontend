@@ -4,12 +4,11 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
-const Login = () => {
-    const { login } = useAuth();
+const AuthPage = ({ type }) => {
+    const { login, register } = useAuth();
     const navigate = useNavigate();
 
-    const [loader, loaderOn] = useState("Log in");
-
+    const [loader, setLoader] = useState(type === 'login' ? 'Log in' : 'Register');
     const [state, setState] = useState({
         email: '',
         password: '',
@@ -27,56 +26,52 @@ const Login = () => {
             errors: {
                 ...prevState.errors,
                 [field]: '',
-            }
+            },
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!validateForm()) return;
 
-        const credentials = {
-            email: state.email,
-            password: state.password
-        }
+        const credentials = { email: state.email, password: state.password };
+        setLoader(type === 'login' ? 'Logging in...' : 'Registering...');
 
-        loaderOn("Logging in...");
+        try {
+            const isLoggedIn = type === 'login'
+                ? await login(credentials)
+                : await register(credentials);
 
-        login(credentials).then((isLoggedIn) => {
-            if (isLoggedIn === true) {
-                navigate("/dashboard", { replace: true });
-                loaderOn("Log in");
+            if (isLoggedIn) {
+                navigate('/dashboard', { replace: true });
+                setLoader(type === 'login' ? 'Log in' : 'Register');
             }
-        }).catch((res) => {
-            loaderOn("Log in");
+        } catch (res) {
+            setLoader(type === 'login' ? 'Log in' : 'Register');
             toast.error(res.response.data.error, {
                 position: 'top-center',
                 autoClose: 2500,
                 hideProgressBar: true,
             });
-        });
-
-
+        }
     };
 
     const validateForm = () => {
         const { email, password } = state;
         let errors = {};
 
-        // Check if email is empty
         if (!email.trim()) {
-            errors.email = "Email is required";
+            errors.email = 'Email is required';
         } else {
-            // Check if email format is valid
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\w+$/;
             if (!emailRegex.test(email)) {
-                errors.email = "Email is not in a valid format";
+                errors.email = 'Email is not in a valid format';
             }
         }
 
         if (!password.trim()) {
-            errors.password = "Password is required";
+            errors.password = 'Password is required';
         }
 
         setState(prevState => ({
@@ -144,21 +139,24 @@ const Login = () => {
                             className='auth-form-btn'
                             onClick={handleSubmit}
                         >
-                                {loader === "Logging in..." && <Spinner animation="border" size='sm' />}
-                                <h6 className='text-white ms-2'>{loader}</h6>
+                            {loader === "Logging in..." && <Spinner animation="border" size='sm' />}
+                            <h6 className='text-white ms-2'>{loader}</h6>
                         </button>
+
                         <span className='auth-text-small'>Don't have an account?
                             <strong
                                 style={{ color: 'var(--primary-color-dark)' }}
                                 className='cursor-pointer'
                                 onClick={() => navigate('/auth/register')}>      Sign up</strong>
                         </span>
+
                         <button
                             className='auth-form-btn-clear'
                             onClick={() => { navigate('/') }}
                         >
                             Continue with Google
                         </button>
+
                         <button
                             className='auth-form-btn-clear'
                             onClick={() => { navigate('/') }}
@@ -185,9 +183,8 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
-}
+};
 
-export default Login;
+export default AuthPage;

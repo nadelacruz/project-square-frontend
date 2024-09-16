@@ -16,7 +16,7 @@ const ListenerSidebar = () => {
     const [collapse, setCollapse] = useState(true);
 
     return (
-        <ProSidebar className='listener-sidebar' collapsed={collapse}>
+        <ProSidebar className='sidebar-area' collapsed={collapse}>
             <SidebarContent>
                 <SidebarHeader>
                     <Menu>

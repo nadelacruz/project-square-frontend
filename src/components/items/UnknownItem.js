@@ -8,7 +8,7 @@ const UnknownItem = ({ detected }) => {
         <div className='queue-item box-shadow mb-2'>
             <div className='d-flex align-items-center'>
                 <div
-                    className='threel-item-cover my-auto'
+                    className='square-item-cover my-auto'
                     style={{ width: '60px', borderRadius: '5px' }}
                 >
                     <img
@@ -18,7 +18,7 @@ const UnknownItem = ({ detected }) => {
                 </div>
                 <FaArrowRight className='ms-2 me-2' size={24} />
                 <div
-                    className='threel-item-cover my-auto'
+                    className='square-item-cover my-auto'
                     style={{ width: '60px', borderRadius: '5px' }}
                 >
                     <img

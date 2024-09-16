@@ -3,8 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/App.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
+import AuthPage from './pages/auth/AuthPage';
 import DashboardPage from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
 
@@ -22,8 +21,8 @@ function App() {
           <Route path="auth/*" element={
             <PublicRoute>
               <Routes>
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
+                <Route path="login" element={<AuthPage type={'login'}/>} />
+                <Route path="register" element={<AuthPage type={'register'}/>} />
               </Routes>
             </PublicRoute>
           } />
