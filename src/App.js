@@ -11,11 +11,13 @@ import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import PublicRoute from './routes/PublicRoute';
 
 import { AuthProvider } from './hooks/useAuth';
+import { RecognizeProvider } from './hooks/useRecognize';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
+      <RecognizeProvider>
         <Routes>
           <Route index element={<PublicRoute><LandingPage /></PublicRoute>} />
           <Route path="auth/*" element={
@@ -34,6 +36,7 @@ function App() {
             </AuthenticatedRoute>
           } />
         </Routes>
+      </RecognizeProvider>
       </AuthProvider>
     </Router>
   );

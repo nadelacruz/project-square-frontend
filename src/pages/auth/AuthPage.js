@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const AuthPage = ({ type }) => {
-    const { login, register } = useAuth();
+    const { login, register, loginGoogle } = useAuth();
     const navigate = useNavigate();
 
     const [loader, setLoader] = useState(type === 'login' ? 'Log in' : 'Register');
@@ -17,6 +17,10 @@ const AuthPage = ({ type }) => {
             password: '',
         },
     });
+
+    useEffect(() => {
+        setLoader(type === 'login' ? 'Log in' : 'Register');
+    }, [type]);
 
     const handleChange = (event) => {
         const field = event.target.name;
@@ -100,7 +104,7 @@ const AuthPage = ({ type }) => {
 
                     <div className='d-flex flex-column align-items-center w-100'>
                         <div className='auth-text-bold'>
-                            Welcome back
+                            {((type === 'login')? "Welcome Back": "Create an account")}
                         </div>
 
                         <div className='auth-form-input-container'>
@@ -143,16 +147,23 @@ const AuthPage = ({ type }) => {
                             <h6 className='text-white ms-2'>{loader}</h6>
                         </button>
 
-                        <span className='auth-text-small'>Don't have an account?
+                        <span className='auth-text-small'>{((type === 'login')? "Don't have an account?": "Already have an account?")}
                             <strong
                                 style={{ color: 'var(--primary-color-dark)' }}
-                                className='cursor-pointer'
-                                onClick={() => navigate('/auth/register')}>      Sign up</strong>
+                                className='cursor-pointer ms-1'
+                                onClick={() => {
+                                    if(type === "login") {
+                                        navigate('/auth/register');
+                                    } else {
+                                        navigate('/auth/login');
+                                    }
+                                }}
+                            >{((type === 'login')? "Sign up": "Sign in")}</strong>
                         </span>
 
                         <button
                             className='auth-form-btn-clear'
-                            onClick={() => { navigate('/') }}
+                            onClick={() => {loginGoogle()}}
                         >
                             Continue with Google
                         </button>

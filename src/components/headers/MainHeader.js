@@ -1,10 +1,13 @@
 import React from 'react';
-import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
+import { useAuth } from "../../hooks/useAuth";
+import { useRecognize } from '../../hooks/useRecognize';
+
 const MainHeader = () => {
     const { user, logout, isDetecting } = useAuth();
+    const { isScanning } = useRecognize();
     const navigate = useNavigate();
 
     return (
@@ -60,9 +63,9 @@ const MainHeader = () => {
                                 })
                             }}
                             className='logout-btn'
-                            disabled={isDetecting}
+                            disabled={isScanning}
                         >
-                            Logout
+                            {(isScanning)? 'Still Scanning...' : 'Logout'}
                         </button>
                     </div>
                 </div>

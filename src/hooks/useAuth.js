@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
     }
 
     const [home, setHome] = useState("/");
-    const [isDetecting, setIsDetecting] = useState(false);
 
     useEffect(() => {
 
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }) => {
             const user = response.data.user;
 
             ss.storeItem('user', JSON.stringify(user));
-            
+
             return true;
         } else {
             return false;
@@ -51,12 +50,35 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const loginGoogle = async () => {
+        window.open('http://localhost:5000/auth/login/google');
+        
+        // const response = await square_api.post('/auth/login/google', {
+        //     withCredentials: true,
+        //     headers: {
+        //         'Access-Control-Allow-Origin': '*'
+        //     }
+        // });
+
+        // if (response.status === 200) {
+        //     const user = response.data.user;
+
+        //     ss.storeItem('user', JSON.stringify(user));
+
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+    };
+
+
+
     const logout = async () => {
         const response = await square_api.post('/auth/logout');
-        
+
         ss.removeItem('user');
-        
-        if (response.status === 200) {  
+
+        if (response.status === 200) {
             return true;
         } else {
             return false;
@@ -84,9 +106,8 @@ export const AuthProvider = ({ children }) => {
             login,
             register,
             logout,
+            loginGoogle,
             me,
-            isDetecting,
-            setIsDetecting
         }),
         [user]
     );
