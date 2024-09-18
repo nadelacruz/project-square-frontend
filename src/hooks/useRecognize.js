@@ -27,12 +27,12 @@ export const RecognizeProvider = ({ children }) => {
     const [scanState, setScanState] = useState({
         isScanning: false,
         status: null,
-        detection: null,
+        detections: null,
         datetime: null,
         verifiedFaces: []
     });
 
-    const { isScanning, status, detection, datetime, verifiedFaces } = scanState;
+    const { isScanning, status, detections, datetime, verifiedFaces } = scanState;
 
     const updateScanState = (newState) => {
         setScanState(prevState => ({ ...prevState, ...newState }));
@@ -46,7 +46,7 @@ export const RecognizeProvider = ({ children }) => {
         updateScanState({
             isScanning: true,
             status: SCAN_STATUS.DETECTING,
-            detection: null,
+            detections: null,
             datetime: null
         });
 
@@ -61,12 +61,15 @@ export const RecognizeProvider = ({ children }) => {
         });
 
         const detectedFaces = results.data;
+        console.log(detectedFaces);
 
         if (detectedFaces.faces.length === 0) {
             throw new Error("No faces were detected");
         }
 
         handleToast(`${detectedFaces.faces.length} face(s) were detected`, 'info');
+
+        updateScanState({detections: detectedFaces});
 
         const response = {
             detectedFaces: detectedFaces,
@@ -91,7 +94,6 @@ export const RecognizeProvider = ({ children }) => {
         const unseenIds = results.filter(face => !seenIds.has(face.identity));
 
         updateScanState({
-            detection: faces,
             datetime: formattedDate,
             verifiedFaces: [...verifiedFaces, ...unseenIds]
         });
@@ -112,7 +114,7 @@ export const RecognizeProvider = ({ children }) => {
             isScanning,
             status,
             datetime,
-            detection,
+            detections,
             verifiedFaces,
             SCAN_STATUS,
         }),

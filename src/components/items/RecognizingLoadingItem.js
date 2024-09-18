@@ -1,16 +1,21 @@
 import React from 'react';
 import Placeholder from 'react-bootstrap/Placeholder';
+import { faceApiBaseUrl } from '../../api/square_api';
 
 import { FaArrowRight } from "react-icons/fa";
 
-const RecognizedLoadingItem = () => {
+const RecognizingLoadingItem = ({ detected }) => {
     return (
         <div className='loading-recognition-item animate-wave mb-2'>
             <div className='d-flex align-items-center' style={{ width: 'fit-content' }}>
                 <div
-                    className='loading-cover my-auto'
+                    className='square-item-cover my-auto'
                     style={{ width: '60px', borderRadius: '5px' }}
                 >
+                    <img
+                        src={faceApiBaseUrl + "/face/detected-face/" + detected}
+                        alt={`input image`}
+                    />
                 </div>
                 <FaArrowRight className='ms-2 me-2 opacity-50' size={24} />
                 <div
@@ -28,4 +33,4 @@ const RecognizedLoadingItem = () => {
     )
 }
 
-export default RecognizedLoadingItem;
+export default RecognizingLoadingItem;

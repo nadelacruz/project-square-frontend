@@ -9,10 +9,12 @@ import Spinner from 'react-bootstrap/Spinner';
 import DashboardSidebar from '../components/sidebars/DashboardSidebar';
 import MainHeader from '../components/headers/MainHeader';
 import RecognizedItem from '../components/items/RecognizedItem';
-import RecognizedLoadingItem from '../components/items/RecognizedLoadingItem';
+import RecognizingLoadingItem from '../components/items/RecognizingLoadingItem';
+import DetectingLoadingItem from '../components/items/DetectingLoadingItem';
 import UnknownItem from '../components/items/UnknownItem';
 import RtspFeed from '../components/feeds/RtspFeed';
 import WebcamFeed from '../components/feeds/WebcamFeed';
+import AttendanceList from '../components/lists/AttendanceList';
 
 import { toDisplayText, toFilename } from '../services/DateFormatService';
 import square_api from '../api/square_api';
@@ -33,7 +35,7 @@ const DashboardPage = () => {
         isScanning,
         status,
         datetime,
-        detection,
+        detections,
         verifiedFaces,
         SCAN_STATUS
     } = useRecognize();
@@ -74,7 +76,7 @@ const DashboardPage = () => {
             console.error(error);
             handleToast(error.message, 'error');
         } finally {
-            updateScanState({ isScanning: false, status: null }); // Users can now logout
+            updateScanState({ isScanning: false, status: null, detections: null }); // Users can now logout
         }
     };
 
@@ -83,27 +85,6 @@ const DashboardPage = () => {
             handleCapture();
         }
     }
-
-    const renderRecognized = () => {
-        return verifiedFaces.slice().reverse().map((face, index) => {
-            if (face.identity !== null) {
-                return (
-                    <RecognizedItem
-                        key={index}
-                        identityPath={face.identity}
-                        detected={face.detected}
-                    />
-                )
-            } else {
-                return (
-                    <UnknownItem
-                        key={index}
-                        detected={face.detected}
-                    />
-                )
-            }
-        });
-    };
 
     const renderScanStatus = () => {
         if (isScanning) {
@@ -122,12 +103,12 @@ const DashboardPage = () => {
             );
         }
 
-        if (detection && verifiedFaces.length > 0) {
+        if (detections && verifiedFaces.length > 0) {
             return (
                 <div className='scan-status'>
                     <div className='d-flex align-items-center mb-2'>
                         <FaCheckCircle className='me-2' size={17} />
-                        <span className='fs-6'>{detection.faces.length} face(s) were detected.</span>
+                        <span className='fs-6'>{detections.faces.length} face(s) were detected.</span>
                     </div>
 
                     <div className='d-flex align-items-center'>
@@ -147,39 +128,6 @@ const DashboardPage = () => {
         return datetime && (
             <div className='fs-6 mb-3 opacity-75'>{datetime}</div>
         );
-    };
-
-    const renderAttendanceList = () => {
-        if (isScanning && verifiedFaces.length === 0) {
-            return (
-                <>
-                    <RecognizedLoadingItem />
-                    <RecognizedLoadingItem />
-                    <RecognizedLoadingItem />
-                </>
-            );
-        }
-
-        if (isScanning && verifiedFaces.length > 0) {
-            return (
-                <>
-                    <RecognizedLoadingItem />
-                    {renderRecognized()}
-                </>
-            );
-        }
-
-        if (verifiedFaces.length === 0) {
-            return (
-                <div className='w-100'>
-                    <span className='fs-6 opacity-50'>
-                        Make sure that face is visible to the camera.
-                    </span>
-                </div>
-            );
-        }
-
-        return renderRecognized();
     };
 
 
@@ -208,7 +156,7 @@ const DashboardPage = () => {
                         <div className='attendance-list-wrapper'>
                             <div className='fs-4 fw-bold'>Attendance</div>
                             {renderDateTime()}
-                            {renderAttendanceList()}
+                            <AttendanceList />
                         </div>
                     </div>
                 </div>
