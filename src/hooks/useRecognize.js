@@ -84,7 +84,12 @@ export const RecognizeProvider = ({ children }) => {
 
         updateScanState({ status: SCAN_STATUS.RECOGNIZING });
 
-        const response = await square_api.post('/face/recognize-faces', JSON.stringify(faces), {
+        const payload = {
+            faces: faces,
+            datetime: formattedDate
+        };
+        
+        const response = await square_api.post('/face/recognize-faces', JSON.stringify(payload), {
             headers: { 'Content-Type': 'application/json' },
         });
 

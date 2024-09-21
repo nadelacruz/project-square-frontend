@@ -1,15 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as faceapi from 'face-api.js';
+import { useLocation } from 'react-router-dom';
 import { useRecognize } from '../../hooks/useRecognize';
 
 const WebcamFeed = ({ onDetectChange, videoRef }) => {
     const canvasRef = useRef(null);
     const { isScanning } = useRecognize();
     const [detected, setDetected] = useState(0);
+    const [stream, setStream] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
         onDetectChange(detected);
     }, [detected, onDetectChange]);
+
+    useEffect(() => {
+        console.log("location changed");
+
+        return () => {
+            if (stream && location !== "/dashboard") {
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                console.log("stopped camera");
+            }
+        };
+    }, [location, stream]);
 
     const loadModels = async () => {
         try {
@@ -30,11 +45,12 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
 
     const startVideoStream = async () => {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({
+            const webStream = await navigator.mediaDevices.getUserMedia({
                 video: { facingMode: "environment" },
                 audio: false
             });
-            videoRef.current.srcObject = stream;
+            setStream(webStream);
+            videoRef.current.srcObject = webStream;
 
             videoRef.current.onloadedmetadata = () => {
                 resizeCanvas();
@@ -91,10 +107,6 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
 
         return () => {
             clearInterval(intervalId);
-            if (videoRef.current && videoRef.current.srcObject) {
-                const tracks = videoRef.current.srcObject.getTracks();
-                tracks.forEach(track => track.stop());
-            }
         };
     }, []);
 

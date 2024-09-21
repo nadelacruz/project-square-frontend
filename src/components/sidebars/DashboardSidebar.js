@@ -8,7 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { FaVideo } from "react-icons/fa6";
 import { FaClipboardList } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
-import { AiFillSchedule } from "react-icons/ai";
+import { MdDashboardCustomize } from "react-icons/md";
+import { FaUserGroup } from "react-icons/fa6";
+import { MdOutlineChecklist } from "react-icons/md";
+import { IoSettingsSharp } from "react-icons/io5";
 
 const ListenerSidebar = () => {
     const navigate = useNavigate();
@@ -21,13 +24,18 @@ const ListenerSidebar = () => {
                 <SidebarHeader>
                     <Menu>
                         <MenuItem onClick={() => { setCollapse(!collapse) }} icon={<TiThMenu size={28} />}>
-                            <Link to="/"><span className='explore-text'>USER</span></Link>
+                            <span className='explore-text'>MENU</span>
                         </MenuItem>
                     </Menu>
                 </SidebarHeader>
                 <Menu >
-                    <MenuItem icon={<FaVideo size={22} />}><Link to="/">Live Attendance</Link></MenuItem>
-                    <MenuItem icon={<FaClipboardList size={25} />}><Link to="/">Records</Link></MenuItem>
+                    <MenuItem icon={<FaVideo size={22} />}>Live Attendance</MenuItem>
+                    <MenuItem icon={<MdDashboardCustomize size={25} />}>Dashboard</MenuItem>
+                    <MenuItem icon={<FaUserGroup size={25} />}>Groups</MenuItem>
+                    <MenuItem icon={<MdOutlineChecklist size={25} />}>Records</MenuItem>
+                    <MenuItem icon={<IoSettingsSharp size={25} />}>Settings</MenuItem>
+                    {/* <MenuItem icon={<FaVideo size={22} />}><Link to="/">Live Attendance</Link></MenuItem>
+                    <MenuItem icon={<FaClipboardList size={25} />}><Link to="/">Records</Link></MenuItem> */}
                 </Menu>
             </SidebarContent>
         </ProSidebar>

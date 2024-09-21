@@ -8,21 +8,17 @@ import UnknownItem from '../items/UnknownItem';
 const AttendanceList = () => {
     const {
         updateScanState,
-        detectFaces,
-        recognizeFaces,
         handleToast,
         isScanning,
         status,
-        datetime,
         detections,
         verifiedFaces,
-        SCAN_STATUS
     } = useRecognize();
 
-    const [list, setList] = useState(
+    const [list, setList] = useState( // Initial list when there are none recognized yet
         <div className='w-100'>
             <span className='fs-6 opacity-50'>
-                Make sure that face is visible to the camera.
+                Make sure that faces are visible to the camera.
             </span>
         </div>
     );
@@ -30,41 +26,42 @@ const AttendanceList = () => {
     useEffect(() => {
         if (verifiedFaces.length === 0) {
             if (isScanning) {
-                if (detections) {
-                    setList(
+                if (!detections) {
+                    setList( // First detection start, loading items
                         <>
-                            {renderDetected()}
+                            <DetectingLoadingItem />
+                            <DetectingLoadingItem />
+                            <DetectingLoadingItem />
                         </>
                     );
                 } else {
-                    setList(
+                    setList( // First recognition start, showing list of detected
                         <>
-                            <DetectingLoadingItem />
-                            <DetectingLoadingItem />
-                            <DetectingLoadingItem />
+                            {renderDetected()}
+
                         </>
                     );
                 }
-            } 
+            }
         } else {
             if (isScanning) {
-                if (detections) {
-                    setList(
+                if (!detections) {
+                    setList( // Subsequent detection start, with recognized list below
                         <>
-                            {renderDetected()}
+                            <DetectingLoadingItem />
                             {renderRecognized()}
                         </>
                     );
                 } else {
-                    setList(
+                    setList( // Subsequent recognition start, detected list with recognized below
                         <>
-                            <DetectingLoadingItem />
+                            {renderDetected()}
                             {renderRecognized()}
                         </>
                     );
                 }
             } else {
-                setList(
+                setList( // Detection and recognition end, list of recognized and unknown items
                     <>
                         {renderRecognized()}
                     </>
@@ -81,6 +78,7 @@ const AttendanceList = () => {
                         key={index}
                         identityPath={face.identity}
                         detected={face.detected}
+                        datetime={face.datetime}
                     />
                 )
             } else {
@@ -88,6 +86,7 @@ const AttendanceList = () => {
                     <UnknownItem
                         key={index}
                         detected={face.detected}
+                        datetime={face.datetime}
                     />
                 )
             }

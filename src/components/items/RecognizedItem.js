@@ -3,7 +3,7 @@ import { faceApiBaseUrl } from '../../api/square_api';
 
 import { FaArrowRight } from "react-icons/fa";
 
-const RecognizedItem = ({ identityPath, detected }) => {
+const RecognizedItem = ({ identityPath, detected, datetime}) => {
     const id_split = identityPath.split("\\");
     const identity = id_split[id_split.length - 1];
     return (
@@ -34,13 +34,15 @@ const RecognizedItem = ({ identityPath, detected }) => {
                     className='opacity-75 text-truncate'
                     style={{fontSize: '12px'}}
                 >Student</span>
+
                 <span
                     className='fs-6 fw-bold text-truncate'
                     title={identity}
                 >{identity}</span>
+                
                 <span
                     className='small opacity-75 text-truncate'
-                >Room 1</span>
+                >{datetime}</span>
             </div>
         </div>
     )

@@ -8,24 +8,18 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import DashboardSidebar from '../components/sidebars/DashboardSidebar';
 import MainHeader from '../components/headers/MainHeader';
-import RecognizedItem from '../components/items/RecognizedItem';
-import RecognizingLoadingItem from '../components/items/RecognizingLoadingItem';
-import DetectingLoadingItem from '../components/items/DetectingLoadingItem';
-import UnknownItem from '../components/items/UnknownItem';
 import RtspFeed from '../components/feeds/RtspFeed';
 import WebcamFeed from '../components/feeds/WebcamFeed';
 import AttendanceList from '../components/lists/AttendanceList';
 
-import { toDisplayText, toFilename } from '../services/DateFormatService';
-import square_api from '../api/square_api';
-import { useAuth } from '../hooks/useAuth';
+
 import { useRecognize } from '../hooks/useRecognize';
 
 // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.1.2:554/live/ch00_0"; // Appartment Network
 // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.254.104:554/live/ch00_0"; // Home Network
 
 const DashboardPage = () => {
-    const videoRef = useRef(null);
+    const videoRef = useRef();
 
     const {
         updateScanState,
@@ -63,7 +57,7 @@ const DashboardPage = () => {
         });
     };
 
-    const handleCapture = async () => {
+    const handleScan = async () => {
         const newDate = new Date();
 
         try {
@@ -81,8 +75,11 @@ const DashboardPage = () => {
     };
 
     const handleDetectChange = (detected) => {
-        if (detected > 0 && !isScanning) { // to prevent loop call to BACKEND
-            handleCapture();
+        // Only starts scan when detections changes and greater than 0
+        // Only starts when a previous scan ends
+        // To prevent loop call to BACKEND
+        if (detected > 0 && !isScanning) { 
+            handleScan(); // Start detection and recognition
         }
     }
 
@@ -155,7 +152,7 @@ const DashboardPage = () => {
                     <div className="list-area custom-scrollbar">
                         <div className='attendance-list-wrapper'>
                             <div className='fs-4 fw-bold'>Attendance</div>
-                            {renderDateTime()}
+                            {/* {renderDateTime()} */}
                             <AttendanceList />
                         </div>
                     </div>

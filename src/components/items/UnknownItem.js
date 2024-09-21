@@ -3,7 +3,7 @@ import { faceApiBaseUrl } from '../../api/square_api';
 
 import { FaArrowRight } from "react-icons/fa";
 
-const UnknownItem = ({ detected }) => {
+const UnknownItem = ({ detected, datetime }) => {
     return (
         <div className='queue-item box-shadow mb-2'>
             <div className='d-flex align-items-center'>
@@ -27,13 +27,13 @@ const UnknownItem = ({ detected }) => {
                     />
                 </div>
             </div>
-            <div className='ms-3 d-flex flex-column justify-content-center' style={{ width: '50%' }}>
+            <div className='ms-3 d-flex flex-column justify-content-center'>
                 <span
                     className='fs-6 fw-bold text-truncate'
                 >Unknown Face</span>
                 <span
                     className='small opacity-75 text-truncate'
-                >Room 1</span>
+                >{datetime}</span>
             </div>
         </div>
     )
