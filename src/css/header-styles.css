@@ -1,0 +1,65 @@
+@import './variables.css';
+
+header {
+    padding: 20px 18px;
+    color: var(--text-color);
+    background-color: var(--page-header-color);
+    display: flex;
+    align-items: center;
+}
+
+.logo-div {
+    aspect-ratio: 1 / 1;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.logo-div img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+
+.logo-text {
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logout-btn {
+    background-color: var(--page-header-color);
+    font-size: 12px;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: var(--btn-border-radius);
+}
+
+.logout-btn:hover {
+    background-color: var(--error-color);
+}
+
+.header-user-div {
+    aspect-ratio: 1 / 1;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--btn-border-radius);
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.header-user-div img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}

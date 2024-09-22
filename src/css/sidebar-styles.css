@@ -1,0 +1,8 @@
+@import './variables.css';
+
+.explore-text {
+    margin: 0px;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}

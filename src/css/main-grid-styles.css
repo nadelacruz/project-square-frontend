@@ -1,0 +1,41 @@
+@import './variables.css';
+
+.main-container {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 60px minmax(500px, 1fr) auto;
+    grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "sidebar main main";
+}
+
+.header-area {
+    grid-area: header;
+    justify-content: space-between;
+}
+
+.sidebar-area {
+    grid-area: sidebar;
+}
+
+.content-area {
+    grid-area: main;
+    box-shadow: inset 0 -10px 10px -10px rgb(56, 56, 56);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px !important;
+    background-color: #4242427f !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #e3e1e14d !important;
+    border-radius: 10px !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

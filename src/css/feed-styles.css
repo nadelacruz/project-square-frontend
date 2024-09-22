@@ -1,0 +1,33 @@
+@import './variables.css';
+
+.video-feed {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    background-color: #000000;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.video-feed img,
+.video-feed video,
+.video-feed canvas {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+
+.feed-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.scan-status {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: var(--background-light);
+}
