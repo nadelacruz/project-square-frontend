@@ -94,7 +94,7 @@ const AttendanceList = () => {
     };
 
     const renderDetected = () => {
-        return detections.faces.map((face, index) => {
+        return detections.map((face, index) => {
             return (
                 <RecognizingLoadingItem
                     key={index}

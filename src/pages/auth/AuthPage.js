@@ -142,9 +142,10 @@ const AuthPage = ({ type }) => {
                         <button
                             className='auth-form-btn'
                             onClick={handleSubmit}
+                            disabled={loader === "Logging in..."}
                         >
                             {loader === "Logging in..." && <Spinner animation="border" size='sm' />}
-                            <h6 className='text-white ms-2'>{loader}</h6>
+                            <span className='text-white ms-2'>{loader}</span>
                         </button>
 
                         <span className='auth-text-small'>{((type === 'login')? "Don't have an account?": "Already have an account?")}

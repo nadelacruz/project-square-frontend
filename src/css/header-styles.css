@@ -2,7 +2,7 @@
 
 header {
     padding: 20px 18px;
-    color: var(--text-color);
+    color: var(--text-color-dim);
     background-color: var(--page-header-color);
     display: flex;
     align-items: center;
@@ -62,4 +62,43 @@ header {
     height: 100%;
     width: 100%;
     object-fit: fill;
+}
+
+.header-icons {
+    opacity: 0.8;
+    padding: 8px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.header-icons:hover {
+    background-color: var(--secondary-highlight);
+}
+
+.icon-dropdown {
+    background-color: var(--background-input-color);
+    color: var(--text-color-dim);
+    z-index: 100;
+    position: absolute;
+    border-radius: 10px;
+    padding: 10px 0px;
+    overflow-y: auto;
+}
+
+.icon-dropdown-item {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.icon-dropdown-item:hover {
+    background-color: var(--primary-background-nav-color);
+}
+
+.icon-dropdown-text {
+    font-size: 15px;
+    margin-left: 10px;
 }

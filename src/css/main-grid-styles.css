@@ -39,3 +39,21 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.prevent-select {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+.custom-slash {
+    color: var(--primary-color-light);
+    opacity: 0.5;
+    font-size: 19px;
+    text-decoration: none;
+    position: absolute;
+    right: -15px
+}

@@ -1,0 +1,78 @@
+@import './variables.css';
+
+.groups-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    grid-template-areas:
+        "header header"
+        "joined joined"
+        "created created";
+}
+
+.groups-header-area {
+    grid-area: header;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.groups-joined-area {
+    grid-area: joined;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 1rem;
+}
+
+.groups-created-area {
+    grid-area: created;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 1rem;
+}
+
+.group-item {
+    width: 20rem;
+    aspect-ratio: 4 / 2;
+    padding: 5px;
+    cursor: pointer;
+    background-color: var(--primary-color-light);
+    border-radius: 10px;
+    color: var(--background-light);
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.group-horizontal-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.group-horizontal-list>* {
+    flex-shrink: 0;
+}
+
+.group-horizontal-list::-webkit-scrollbar {
+    height: 0px;
+}
+
+.group-forms-btn {
+    background-color: var(--primary-color);
+    font-size: 16px;
+    height: 40px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: var(--btn-border-radius);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

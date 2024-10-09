@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { faceApiBaseUrl } from '../api/square_api';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCheckCircle } from "react-icons/fa";
 import { RiLiveFill } from "react-icons/ri";
 
+import square_api from '../api/square_api';
+
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import DashboardSidebar from '../components/sidebars/DashboardSidebar';
+import MainSidebar from '../components/sidebars/MainSidebar';
 import MainHeader from '../components/headers/MainHeader';
 import RtspFeed from '../components/feeds/RtspFeed';
 import WebcamFeed from '../components/feeds/WebcamFeed';
 import AttendanceList from '../components/lists/AttendanceList';
 
+import debounce from 'lodash/debounce';
 
 import { useRecognize } from '../hooks/useRecognize';
 
@@ -21,6 +25,7 @@ import { useRecognize } from '../hooks/useRecognize';
 const DashboardPage = () => {
     const videoRef = useRef();
 
+    const [isScanCalled, setIsScanCalled] = useState(false);
     const {
         updateScanState,
         detectFaces,
@@ -31,8 +36,13 @@ const DashboardPage = () => {
         datetime,
         detections,
         verifiedFaces,
-        SCAN_STATUS
+        SCAN_STATUS,
+        detectId,
+        recognizeId,
+        checkDetectResults,
+        checkRecognizeResults
     } = useRecognize();
+
 
     const captureFrame = () => {
         return new Promise((resolve, reject) => {
@@ -42,6 +52,7 @@ const DashboardPage = () => {
             });
         });
     };
+
 
     const captureDeviceFrame = () => {
         const video = videoRef.current;
@@ -63,22 +74,37 @@ const DashboardPage = () => {
         try {
             const deviceImageBlob = await captureDeviceFrame();
 
-            const { detectedFaces, date } = await detectFaces(deviceImageBlob, newDate);
+            const jobIdDetect = await detectFaces(deviceImageBlob, newDate);
+            const { detectedFaces, date } = await checkDetectResults(jobIdDetect);
+            const jobIdRecognize = await recognizeFaces(detectedFaces, newDate);
+            await checkRecognizeResults(jobIdRecognize);
 
-            await recognizeFaces(detectedFaces, date);
         } catch (error) {
             console.error(error);
             handleToast(error.message, 'error');
         } finally {
-            updateScanState({ isScanning: false, status: null, detections: null }); // Users can now logout
+            updateScanState({
+                status: null,
+                detections: null,
+                detectId: null,
+                recognizeId: null,
+                detections: null
+            }); // Users can now logout
         }
     };
+
+    const debouncedHandleScan = debounce(handleScan, 20000); // 20 seconds
 
     const handleDetectChange = (detected) => {
         // Only starts scan when detections changes and greater than 0
         // Only starts when a previous scan ends
         // To prevent loop call to BACKEND
-        if (detected > 0 && !isScanning) { 
+        if (
+            detected > 0 &&
+            !isScanning &&
+            detectId === null &&
+            recognizeId === null
+        ) {
             handleScan(); // Start detection and recognition
         }
     }
@@ -132,10 +158,10 @@ const DashboardPage = () => {
         <div className="main-container">
             <ToastContainer />
             <MainHeader />
-            <DashboardSidebar />
+            <MainSidebar />
 
             <div className='content-area custom-scrollbar'>
-                <div className='attendance-container'>
+                <div className='location-container'>
                     <div className='attendance-header-area'>
                         <RiLiveFill className='me-2' size={24} />
                         <span className='fs-5 fw-bold'>Live video feed</span>
