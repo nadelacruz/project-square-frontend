@@ -1,12 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './css/App.css'; // Transfered all css in their own modules
 import './css/variables.css'
 import './css/header-styles.css'
 import './css/sidebar-styles.css'
 import './css/feed-styles.css'
 import './css/item-styles.css'
-import './css/main-grid-styles.css'
+import './css/main-container-styles.css'
 import './css/landing-page-styles.css'
 import './css/auth-page-styles.css'
 import './css/location-page-styles.css'
@@ -16,7 +15,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import AuthPage from './pages/auth/AuthPage';
 import DashboardPage from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
-import GroupsPage from './pages/GroupsPage';
+
+import GroupsPage from './pages/groups/GroupsPage';
+import GroupLocationsPage from './pages/groups/GroupLocationsPage.js';
 
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import PublicRoute from './routes/PublicRoute';
@@ -47,7 +48,12 @@ function App() {
             <AuthenticatedRoute>
               <Routes>
                 <Route path='/dashboard' element={<DashboardPage />} />
-                <Route path='/groups' element={<GroupsPage />} />
+                <Route path='groups/*' element={
+                  <Routes>
+                    <Route path='/' element={<GroupsPage />}/>
+                    <Route path='/:id' element={<GroupLocationsPage />}/>
+                  </Routes>
+                } />
               </Routes>
             </AuthenticatedRoute>
           } />

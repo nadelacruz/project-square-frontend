@@ -9,8 +9,7 @@ import square_api from '../api/square_api';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import MainSidebar from '../components/sidebars/MainSidebar';
-import MainHeader from '../components/headers/MainHeader';
+import MainContainer from '../components/containers/MainContainer';
 import RtspFeed from '../components/feeds/RtspFeed';
 import WebcamFeed from '../components/feeds/WebcamFeed';
 import AttendanceList from '../components/lists/AttendanceList';
@@ -74,21 +73,17 @@ const DashboardPage = () => {
         try {
             const deviceImageBlob = await captureDeviceFrame();
 
-            const jobIdDetect = await detectFaces(deviceImageBlob, newDate);
-            const { detectedFaces, date } = await checkDetectResults(jobIdDetect);
-            const jobIdRecognize = await recognizeFaces(detectedFaces, newDate);
-            await checkRecognizeResults(jobIdRecognize);
+            const detectTaskId = await detectFaces(deviceImageBlob, newDate);
+            const detectedFaces = await checkDetectResults(detectTaskId);
+            const { recognizeTaskId, date } = await recognizeFaces(detectedFaces, newDate);
+            await checkRecognizeResults(recognizeTaskId, date);
 
         } catch (error) {
-            console.error(error);
             handleToast(error.message, 'error');
         } finally {
             updateScanState({
+                isScanning: false,
                 status: null,
-                detections: null,
-                detectId: null,
-                recognizeId: null,
-                detections: null
             }); // Users can now logout
         }
     };
@@ -105,7 +100,7 @@ const DashboardPage = () => {
             detectId === null &&
             recognizeId === null
         ) {
-            handleScan(); // Start detection and recognition
+            // handleScan(); // Start detection and recognition
         }
     }
 
@@ -155,36 +150,30 @@ const DashboardPage = () => {
 
 
     return (
-        <div className="main-container">
-            <ToastContainer />
-            <MainHeader />
-            <MainSidebar />
-
-            <div className='content-area custom-scrollbar'>
-                <div className='location-container'>
-                    <div className='attendance-header-area'>
-                        <RiLiveFill className='me-2' size={24} />
-                        <span className='fs-5 fw-bold'>Live video feed</span>
+        <MainContainer>
+            <div className='location-container'>
+                <div className='attendance-header-area'>
+                    <RiLiveFill className='me-2' size={24} />
+                    <span className='fs-5 fw-bold'>Live video feed</span>
+                </div>
+                <div className='feeds-area'>
+                    <div className='feed-wrapper'>
+                        <WebcamFeed
+                            videoRef={videoRef}
+                            onDetectChange={handleDetectChange}
+                        />
+                        {renderScanStatus()}
                     </div>
-                    <div className='feeds-area'>
-                        <div className='feed-wrapper'>
-                            <WebcamFeed
-                                videoRef={videoRef}
-                                onDetectChange={handleDetectChange}
-                            />
-                            {renderScanStatus()}
-                        </div>
-                    </div>
-                    <div className="list-area custom-scrollbar">
-                        <div className='attendance-list-wrapper'>
-                            <div className='fs-4 fw-bold'>Attendance</div>
-                            {/* {renderDateTime()} */}
-                            <AttendanceList />
-                        </div>
+                </div>
+                <div className="list-area custom-scrollbar">
+                    <div className='attendance-list-wrapper'>
+                        <div className='fs-4 fw-bold'>Attendance</div>
+                        {/* {renderDateTime()} */}
+                        <AttendanceList />
                     </div>
                 </div>
             </div>
-        </div>
+        </MainContainer>
     );
 }
 

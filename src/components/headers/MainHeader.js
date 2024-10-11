@@ -39,7 +39,12 @@ const MainHeader = () => {
             />
 
             <div className='d-flex align-items-center'>
-                <TiThMenu size={28} onClick={() => { setCollapse(!collapse) }} className='cursor-pointer' />
+                <TiThMenu 
+                    size={48} 
+                    title='Square Menu'
+                    onClick={() => { setCollapse(!collapse) }} 
+                    className='header-icons' 
+                />
                 <div className='logo-container ms-3 prevent-select'>
                     <div className='logo-div'>
                         <img
@@ -100,7 +105,7 @@ const MainHeader = () => {
                                 alt={`user_image`}
                             />
                         </div>
-                        <div>
+                        <div className='me-3'>
                             <div className='small'>
                                 {user.email}
                             </div>

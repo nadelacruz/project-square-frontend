@@ -3,12 +3,9 @@ import StorageService from '../services/StorageService';
 
 const ss = new StorageService();
 
-// const serverIp = '172.23.249.243'; 
-const serverIp = '192.168.254.192';
-// const serverIp = '192.168.1.4';
-// const serverIp = '192.168.1.13';
-// const flaskURL = `http://${((serverIp !== '') ? serverIp : 'localhost')}:5000`;
-const flaskURL = `http://localhost:5000`;
+// const serverIp = '172.26.127.26';
+const serverIp = '';
+const flaskURL = `http://${((serverIp !== '') ? serverIp : 'localhost')}:5000`;
 const squareApiBaseUrl = flaskURL;
 
 const square_api = axios.create({
