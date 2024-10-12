@@ -7,7 +7,7 @@ const SectionHeader = ({ icon, title, actions }) => {
                 {icon}
                 <span className='fs-5 fw-bold'>{title}</span>
             </div>
-            <div>
+            <div  className='d-flex align-items-center'>
                 {actions}
             </div>
         </div>

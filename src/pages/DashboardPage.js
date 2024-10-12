@@ -100,7 +100,7 @@ const DashboardPage = () => {
             detectId === null &&
             recognizeId === null
         ) {
-            // handleScan(); // Start detection and recognition
+            handleScan(); // Start detection and recognition
         }
     }
 
@@ -126,7 +126,7 @@ const DashboardPage = () => {
                 <div className='scan-status'>
                     <div className='d-flex align-items-center mb-2'>
                         <FaCheckCircle className='me-2' size={17} />
-                        <span className='fs-6'>{detections.faces.length} face(s) were detected.</span>
+                        <span className='fs-6'>{detections.length} face(s) were detected.</span>
                     </div>
 
                     <div className='d-flex align-items-center'>

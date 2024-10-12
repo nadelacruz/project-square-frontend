@@ -17,7 +17,7 @@ import DashboardPage from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
 
 import GroupsPage from './pages/groups/GroupsPage';
-import GroupLocationsPage from './pages/groups/GroupLocationsPage.js';
+import GroupLocationsPage from './pages/locations/GroupLocationsPage.js';
 
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import PublicRoute from './routes/PublicRoute';
@@ -26,6 +26,7 @@ import { AuthProvider } from './hooks/useAuth';
 import { RecognizeProvider } from './hooks/useRecognize';
 import { SidebarProvider } from './hooks/useSidebar';
 import { GroupProvider } from './hooks/useGroup';
+import { LocationProvider } from './hooks/useLocation';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <AuthProvider>
       <RecognizeProvider>
       <GroupProvider>
+      <LocationProvider>
       <SidebarProvider>
         <Routes>
           <Route index element={<PublicRoute><LandingPage /></PublicRoute>} />
@@ -59,6 +61,7 @@ function App() {
           } />
         </Routes>
       </SidebarProvider>
+      </LocationProvider>
       </GroupProvider>
       </RecognizeProvider>
       </AuthProvider>

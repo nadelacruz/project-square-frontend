@@ -87,6 +87,9 @@ export const RecognizeProvider = ({ children }) => {
 
                     return detectedFaces;
                 }
+                if (response.data.state === "FAILURE") {
+                    throw new Error("Detection task failed...");
+                }
             } catch (error) {
                 console.error(`Error checking detect status ${detectTaskId}:`, error);
                 break;
@@ -145,6 +148,9 @@ export const RecognizeProvider = ({ children }) => {
                     handleToast(`${recognizeResults.filter(face => face.identity).length} face(s) were recognized`, 'info');
 
                     break;
+                }
+                if (response.data.state === "FAILURE") {
+                    throw new Error("Recognition task failed...");
                 }
             } catch (error) {
                 console.error(`Error checking recognize status ${recognizeTaskId}:`, error);

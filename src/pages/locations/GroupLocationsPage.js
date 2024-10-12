@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import debounce from 'lodash/debounce';
 import { useParams } from 'react-router-dom';
 import { faceApiBaseUrl } from '../../api/square_api';
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,19 +14,26 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import MainContainer from '../../components/containers/MainContainer';
 
+import GroupLocationsLoading from './GroupLocationsLoading';
 import GroupAnalyticsItem from '../../components/items/GroupAnalyticsItem';
 import LocationItem from '../../components/items/LocationItem';
 import GroupLocationsHeader from '../../components/headers/GroupLocationsHeader';
 import SectionHeader from '../../components/headers/SectionHeader';
 
-import { useGroup } from '../../hooks/useGroup';
+import { useLocation } from '../../hooks/useLocation'
 
 const GroupLocationsPage = () => {
     const { id } = useParams();
 
-    const { getGroupLocations } = useGroup();
 
-    const [data, setData] = useState(null);
+    let isFetching = false;
+    const { 
+        updateState,
+        group,
+        locations,
+        getGroupLocations
+    } = useLocation();
+
     const [relaod, setReload] = useState(false);
 
     const sampleAnalytics = [
@@ -47,13 +53,21 @@ const GroupLocationsPage = () => {
     ];
 
     useEffect(() => {
-        const debouncedGetGroupLocations = debounce(getGroupLocations, 500);
-
-        getGroupLocations(id).then((data) => {
-            setData(data);
+        if (isFetching) return;
+        isFetching = true;
+        getGroupLocations(id).then(() => {
+            isFetching = false;
         }).catch((e) => {
             console.log("Error while getting group locations data: " + e);
+            isFetching = false;
         });
+
+        return () => {
+            updateState({
+                group: null,
+                locations: []
+            });
+        };
     }, [id, relaod]);
 
     const renderAnalytics = () => {
@@ -68,35 +82,39 @@ const GroupLocationsPage = () => {
     };
 
     const renderLocations = () => {
-        return (
-            <>
-                <LocationItem location={{ name: 'ADD' }} />
-                {sampleLocations.map((location, index) => {
-                    return (
-                        <LocationItem
-                            location={location}
-                            key={index}
-                        />
-                    )
-                })}
-            </>
-        )
+        return sampleLocations.map((location, index) => {
+            return (
+                <LocationItem
+                    location={location}
+                    key={index}
+                />
+            )
+        });
     };
 
     return (
         <MainContainer>
-            {!data && (
-                <div>Loading the page...</div>
+            {!group && (
+                <GroupLocationsLoading />
             )}
-            {data && (
-                <div className='group-locations-container'>
+            {group && (
+                <div className={`group-locations-container`} >
                     <div className='group-locations-header-area'>
-                        <GroupLocationsHeader group={data.group} />
+                        <GroupLocationsHeader group={group} />
                     </div>
                     <div className='group-analytics-area '>
                         <SectionHeader
                             icon={<IoAnalyticsSharp className='me-2' size={24} />}
                             title={"Analytics"}
+                            actions={
+                                <>
+                                    <button
+                                        className='main-button'
+                                        onClick={() => { }}
+                                    >Add location</button>
+
+                                </>
+                            }
                         />
                         <div className='group-grid-display'>
                             {renderAnalytics()}
@@ -107,10 +125,10 @@ const GroupLocationsPage = () => {
                             icon={<ImLocation className='me-2' size={24} />}
                             title={"Locations"}
                             actions={
-                                <div className='d-flex align-items-center'>
+                                <>
                                     <FaList size={25} className='me-4 cursor-pointer' />
                                     <BsFillGrid3X3GapFill size={25} className='cursor-pointer' />
-                                </div>
+                                </>
                             }
                         />
                         <div className='group-grid-display'>

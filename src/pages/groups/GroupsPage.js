@@ -19,6 +19,7 @@ const GroupsPage = () => {
 
     const { user } = useAuth();
 
+    let isFetching = false;
     const {
         joinedGroups,
         createdGroups,
@@ -30,15 +31,15 @@ const GroupsPage = () => {
 
 
     useEffect(() => {
+        if (
+            isFetching ||
+            (inputCode !== null && inputName !== null) ||
+            !user
+        ) return;
+        isFetching = true;
         try {
-            if (
-                inputCode === null &&
-                inputName === null &&
-                user
-            ) {
-                getJoinedGroups(user.id);
-                getCreatedGroups(user.id);
-            }
+            getJoinedGroups(user.id).then(() => { isFetching = false; });
+            getCreatedGroups(user.id).then(() => { isFetching = false; });
         } catch (error) {
             console.error(error);
         }
@@ -46,10 +47,11 @@ const GroupsPage = () => {
 
 
     const renderJoinedGroups = () => {
-        return joinedGroups.map((group) => {
+        return joinedGroups.map((group, index) => {
             return (
                 <GroupItem
                     group={group}
+                    key={index}
                 />
             )
         });

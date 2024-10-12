@@ -5,7 +5,6 @@ import square_api from "../api/square_api";
 
 import StorageService from "../services/StorageService";
 
-import { useAuth } from "./useAuth";
 
 const GroupContext = createContext();
 
@@ -25,8 +24,6 @@ const TOAST_CONFIG = {
 
 export const GroupProvider = ({ children }) => {
 
-    const { user } = useAuth();
-
     const [state, setState] = useState({
         createdGroups: [],
         joinedGroups: [],
@@ -37,21 +34,6 @@ export const GroupProvider = ({ children }) => {
             inputName: ''
         }
     });
-
-    // useEffect(() => {
-    //     try {
-    //         if (
-    //             state.inputCode === null &&
-    //             state.inputName === null && 
-    //             user
-    //         ) {
-    //             getJoinedGroups(user.id);
-    //             getCreatedGroups(user.id);
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }, [state.inputCode, state.inputName, user]);
 
     const { inputCode, inputName, inputErrors } = state;
     const { joinedGroups, createdGroups } = state;
@@ -79,12 +61,6 @@ export const GroupProvider = ({ children }) => {
                 [field]: '',
             },
         }));
-    };
-
-    const getGroupLocations = async (group_id) => {
-        const response = await square_api.get(`/groups/group-locations/${group_id}`);
-        const freshGroupLocations = response.data;
-        return freshGroupLocations;
     };
 
     const getCreatedGroups = async (user_id) => {
@@ -158,7 +134,6 @@ export const GroupProvider = ({ children }) => {
             getJoinedGroups,
             createdGroups,
             joinedGroups,
-            getGroupLocations
         }),
         [state, breadcrumbs]
     );
