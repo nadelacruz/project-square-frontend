@@ -8,7 +8,7 @@ const GroupItem = ({ group }) => {
     const navigate = useNavigate(); 
 
     return (
-        <div className='group-item' onClick={() => {navigate(`/groups/${group.id}`)}}>
+        <div className='group-item fade-in' onClick={() => {navigate(`/groups/${group.id}`)}}>
             <div className='ms-3 d-flex flex-column justify-content-center'>
                 <span
                     className='opacity-75 text-truncate'

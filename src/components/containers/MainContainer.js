@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import MainHeader from '../headers/MainHeader';
 import MainSidebar from '../sidebars/MainSidebar';
 
-const MainContainer = ({ children }) => {
+const MainContainer = ({children}) => {
 
     return (
         <div className="main-container">

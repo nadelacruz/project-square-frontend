@@ -39,3 +39,23 @@
     margin-bottom: 150px;
     box-sizing: border-box;
 }
+
+.location-cameras-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header"
+        "list";
+}
+
+.location-header-area {
+    grid-area: header;
+    height: 60px;
+}
+
+.location-list-area {
+    grid-area: list;
+}

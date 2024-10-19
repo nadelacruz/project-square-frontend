@@ -4,10 +4,11 @@ import { faceApiBaseUrl } from '../../api/square_api';
 import { FaArrowRight } from "react-icons/fa";
 
 const RecognizedItem = ({ identityPath, detected, datetime}) => {
-    const id_split = identityPath.split("\\");
+    const id_split = identityPath.split("/");
+    const identityFolder = id_split[id_split.length - 2];
     const identity = id_split[id_split.length - 1];
     return (
-        <div className='queue-item box-shadow mb-2'>
+        <div className='queue-item box-shadow mb-2 fade-in'>
             <div className='d-flex align-items-center' style={{width: 'fit-content'}}>
                 <div
                     className='square-item-cover my-auto'

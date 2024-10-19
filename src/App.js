@@ -18,6 +18,7 @@ import LandingPage from './pages/LandingPage';
 
 import GroupsPage from './pages/groups/GroupsPage';
 import GroupLocationsPage from './pages/locations/GroupLocationsPage.js';
+import LocationPage from './pages/locations/LocationPage.js';
 
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import PublicRoute from './routes/PublicRoute';
@@ -54,6 +55,11 @@ function App() {
                   <Routes>
                     <Route path='/' element={<GroupsPage />}/>
                     <Route path='/:id' element={<GroupLocationsPage />}/>
+                  </Routes>
+                } />
+                <Route path='location/*' element={
+                  <Routes>
+                    <Route path='/:id' element={<LocationPage />}/>
                   </Routes>
                 } />
               </Routes>

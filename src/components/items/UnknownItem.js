@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const UnknownItem = ({ detected, datetime }) => {
     return (
-        <div className='queue-item box-shadow mb-2'>
+        <div className='queue-item box-shadow mb-2 fade-in'>
             <div className='d-flex align-items-center'>
                 <div
                     className='square-item-cover my-auto'

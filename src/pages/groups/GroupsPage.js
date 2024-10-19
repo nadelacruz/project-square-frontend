@@ -69,7 +69,7 @@ const GroupsPage = () => {
 
     return (
         <MainContainer>
-            <div className='groups-container'>
+            <div className='groups-container fade-in '>
                 <div className='groups-header-area'>
                     {/* <CustomBreadcrumbs breadcrumbs={breadcrumbs}/> */}
                 </div>

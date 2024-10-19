@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GroupLocationsHeaderLoading from '../../components/headers/GroupLocationsHeaderLoading';
 import SectionHeaderLoading from '../../components/headers/SectionHeaderLoading';
 import PlaceholderItem from '../../components/items/PlaceholderItem';
@@ -19,8 +19,8 @@ const GroupLocationsLoading = () => {
     };
 
     return (
-        <div 
-            className={`group-locations-container fade-in animate-wave`}
+        <div
+            className={`group-locations-container animate-wave fade-in`}
         >
             <div className='group-locations-header-area'>
                 <GroupLocationsHeaderLoading />

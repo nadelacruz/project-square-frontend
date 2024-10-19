@@ -10,6 +10,8 @@ import { toDisplayText, toFilename } from "../services/DateFormatService";
 
 const RecognizeContext = createContext();
 
+const TIMEOUT = 1000;
+
 const SCAN_STATUS = {
     DETECTING: 'detecting',
     RECOGNIZING: 'recognizing'
@@ -81,7 +83,7 @@ export const RecognizeProvider = ({ children }) => {
                         handleToast("No faces were detected", 'error');
                     }
 
-                    handleToast(`${detectedFaces.length} face(s) were detected`, 'info');
+                    // handleToast(`${detectedFaces.length} face(s) were detected`, 'info');
                     updateScanState({ detections: detectedFaces, detectId: null });
 
 
@@ -94,7 +96,7 @@ export const RecognizeProvider = ({ children }) => {
                 console.error(`Error checking detect status ${detectTaskId}:`, error);
                 break;
             }
-            await new Promise(resolve => setTimeout(resolve, 5000));
+            await new Promise(resolve => setTimeout(resolve, TIMEOUT));
         }
     };
 
@@ -138,7 +140,7 @@ export const RecognizeProvider = ({ children }) => {
                     const unseenIds = recognizeResults.filter(face => !seenIds.has(face.identity));
 
                     updateScanState({
-                        verifiedFaces: [...verifiedFaces, ...unseenIds],
+                        verifiedFaces: [...verifiedFaces, ...recognizeResults],
                     });
 
                     if (!recognizeResults.some(face => face.identity)) {
@@ -156,7 +158,7 @@ export const RecognizeProvider = ({ children }) => {
                 console.error(`Error checking recognize status ${recognizeTaskId}:`, error);
                 break;
             }
-            await new Promise(resolve => setTimeout(resolve, 5000));
+            await new Promise(resolve => setTimeout(resolve, TIMEOUT));
         }
     };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { faceApiBaseUrl } from '../../api/square_api';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -24,10 +24,11 @@ import { useLocation } from '../../hooks/useLocation'
 
 const GroupLocationsPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
 
     let isFetching = false;
-    const { 
+    const {
         updateState,
         group,
         locations,
@@ -98,7 +99,7 @@ const GroupLocationsPage = () => {
                 <GroupLocationsLoading />
             )}
             {group && (
-                <div className={`group-locations-container`} >
+                <div className={`group-locations-container fade-in`} id="grploc">
                     <div className='group-locations-header-area'>
                         <GroupLocationsHeader group={group} />
                     </div>
