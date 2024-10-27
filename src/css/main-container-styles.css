@@ -5,8 +5,8 @@
     width: 100%;
     overflow: hidden;
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: 60px minmax(500px, 1fr) auto;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 60px minmax(500px, 1fr);
     grid-template-areas:
         "header header"
         "sidebar main";
@@ -26,8 +26,24 @@
     overflow-y: auto;
 }
 
+@media (max-width: 850px) {
+    .main-container {
+        grid-template-areas:
+        "header header"
+        "main main";
+    }
+    .sidebar-area {
+        display: none;
+    }
+}
+
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px !important;
+    background-color: var(--backgroud-semi-light) !important;
+}
+
+.custom-scrollbar-hidden::-webkit-scrollbar {
+    width: 0px !important;
     background-color: var(--backgroud-semi-light) !important;
 }
 
@@ -141,4 +157,37 @@
     to {
         opacity: 0;
     }
+}
+
+.breadcrumbs-container {
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-text {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.breadcrumb-text:hover {
+    .label {
+        text-decoration: underline;
+    }
+}
+
+.breadcrumb-text .active{
+    font-weight: bold;
+}
+
+.unselectable {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer */
+    user-select: none;         /* Standard syntax */
 }

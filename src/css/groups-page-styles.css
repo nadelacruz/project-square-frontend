@@ -1,21 +1,19 @@
 @import './variables.css';
 
 .groups-container {
-    height: 100%;
+    overflow-y: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-        "header header"
-        "joined joined"
-        "created created";
+        "header"
+        "joined"
+        "created";
 }
 
 .groups-header-area {
     grid-area: header;
-    padding-top: 1rem;
-    padding-left: 1rem;
     display: flex;
     align-items: center;
 }
@@ -25,7 +23,8 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 1rem;
+    padding: 0 2rem;
+    padding-top: 2rem;
 }
 
 .groups-created-area {
@@ -33,12 +32,14 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 1rem;
+    padding: 0 2rem;
+    padding-top: 2rem;
+    margin-bottom: 100px;
 }
 
 .group-item {
     width: var(--grid-item-width);
-    aspect-ratio: 4 / 2;
+    aspect-ratio: 6 / 4;
     padding: 5px;
     cursor: pointer;
     background-color: var(--primary-color-light);
@@ -58,6 +59,7 @@
 
 .group-horizontal-list>* {
     flex-shrink: 0;
+    flex-grow: 0;
 }
 
 .group-horizontal-list::-webkit-scrollbar {
@@ -75,91 +77,4 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.group-locations-container {
-    overflow-y: auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 180px auto auto;
-    grid-template-areas:
-        "header"
-        "analytics"
-        "locations";
-}
-
-.group-locations-header-area {
-    grid-area: header;
-}
-
-.group-analytics-area {
-    grid-area: analytics;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 0 2rem;
-    padding-top: 2rem;
-}
-
-.group-locations-area {
-    grid-area: locations;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 0 2rem;
-    padding-top: 2rem;
-    margin-bottom: 50px;
-}
-
-.group-locations-header {
-    padding: 0 1.5rem;
-    padding-bottom: 1.5rem;
-    padding-top: 0.5rem;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--background-light);
-}
-
-.group-info {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    align-items: start;
-    justify-content: space-between;
-}
-
-.group-actions {
-    display: flex;
-    align-items: end;
-    justify-content: end;
-    width: fit-content;
-}
-
-.group-grid-display {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, var(--grid-item-width));
-    gap: 20px;
-}
-
-.group-analytics-item {
-    width: var(--grid-item-width);
-    aspect-ratio: 4 / 2;
-    padding: 5px;
-    cursor: pointer;
-    background-color: var(--background-semi-light);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.location-item {
-    width: var(--grid-item-width);
-    aspect-ratio: 6 / 5;
-    padding: 5px;
-    cursor: pointer;
-    background-color: var(--background-semi-light);
-    border-radius: 10px;
-    overflow: hidden;
 }

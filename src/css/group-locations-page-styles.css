@@ -1,0 +1,95 @@
+@import './variables.css';
+
+.group-locations-container {
+    overflow-y: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 180px auto auto;
+    grid-template-areas:
+        "breadcrumbs"
+        "header"
+        "analytics"
+        "locations";
+}
+
+.group-locations-breadcrumbs-area {
+    grid-area: breadcrumbs;
+    padding-left: 1.5rem;
+    background-color: var(--background-light);
+}
+
+.group-locations-header-area {
+    grid-area: header;
+}
+
+.group-analytics-area {
+    grid-area: analytics;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 0 2rem;
+    padding-top: 2rem;
+}
+
+.group-locations-area {
+    grid-area: locations;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 0 2rem;
+    padding-top: 2rem;
+    margin-bottom: 50px;
+}
+
+.group-locations-header {
+    padding: 0 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-top: 0.5rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--background-light);
+}
+
+.group-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.group-actions {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    width: fit-content;
+}
+
+.group-grid-display {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--grid-item-width));
+    gap: 20px;
+}
+
+.group-analytics-item {
+    width: var(--grid-item-width);
+    aspect-ratio: 4 / 2;
+    padding: 5px;
+    cursor: pointer;
+    background-color: var(--background-semi-light);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.location-item {
+    width: var(--grid-item-width);
+    aspect-ratio: 6 / 5;
+    padding: 5px;
+    cursor: pointer;
+    background-color: var(--background-semi-light);
+    border-radius: 10px;
+    overflow: hidden;
+}

@@ -11,33 +11,20 @@ import { IoMdAdd } from "react-icons/io";
 
 import Dropdown from '../dropdowns/Dropdown';
 
-import CreateGroupModal from '../modals/CreateGroupModal';
-import JoinGroupModal from '../modals/JoinGroupModal';
-
 import { useSidebar } from '../../hooks/useSidebar';
+import { useGroup } from '../../hooks/useGroup';
 
 const MainHeader = () => {
     const { user, logout } = useAuth();
     const { isScanning } = useRecognize();
     const { setCollapse, collapse } = useSidebar();
+    const { updateState } = useGroup();
 
     const navigate = useNavigate();
 
-    const [showCreate, setCreate] = useState(false);
-    const [showJoin, setJoin] = useState(false);
 
     return (
         <header className='header-area'>
-            <CreateGroupModal 
-                show={showCreate}
-                onClose={() => {setCreate(false)}}
-            />
-
-            <JoinGroupModal 
-                show={showJoin}
-                onClose={() => {setJoin(false)}}
-            />
-
             <div className='d-flex align-items-center'>
                 <TiThMenu 
                     size={48} 
@@ -82,11 +69,11 @@ const MainHeader = () => {
                 <div className='d-flex align-items-center'>
                     <div className='d-flex align-items-center'>
                         <Dropdown icon={<IoMdAdd size={25} />} title={"Add"}>
-                            <div className='icon-dropdown-item' onClick={() => {setCreate(!showCreate)}}>
+                            <div className='icon-dropdown-item' onClick={() => {updateState({showCreate: true})}}>
                                 <IoMdAdd size={25} title='Create Group' />
                                 <span className='icon-dropdown-text'>Create group</span>
                             </div>
-                            <div className='icon-dropdown-item' onClick={() => {setJoin(!showJoin)}}>
+                            <div className='icon-dropdown-item' onClick={() =>{updateState({showJoin: true})}}>
                                 <IoMdAdd size={25} title='Join Group' />
                                 <span className='icon-dropdown-text'>Join group</span>
                             </div>

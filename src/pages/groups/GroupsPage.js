@@ -10,6 +10,7 @@ import MainContainer from '../../components/containers/MainContainer';
 
 import HorizontalList from '../../components/lists/HorizontalList';
 import GroupItem from '../../components/items/GroupItem';
+import SectionHeader from '../../components/headers/SectionHeader';
 
 import { useGroup } from '../../hooks/useGroup';
 import { useAuth } from '../../hooks/useAuth';
@@ -26,7 +27,8 @@ const GroupsPage = () => {
         getCreatedGroups,
         getJoinedGroups,
         inputCode,
-        inputName
+        inputName,
+        updateState
     } = useGroup();
 
 
@@ -58,9 +60,10 @@ const GroupsPage = () => {
     };
 
     const renderCreatedGroups = () => {
-        return createdGroups.map((group) => {
+        return createdGroups.map((group, index) => {
             return (
                 <GroupItem
+                    key={index}
                     group={group}
                 />
             )
@@ -70,39 +73,52 @@ const GroupsPage = () => {
     return (
         <MainContainer>
             <div className='groups-container fade-in '>
-                <div className='groups-header-area'>
-                    {/* <CustomBreadcrumbs breadcrumbs={breadcrumbs}/> */}
-                </div>
                 <div className='groups-joined-area'>
-                    <div className='d-flex align-items-center mb-3'>
-                        <FaUserGroup className='me-2' size={24} />
-                        <span className='fs-5 fw-bold'>Joined Groups</span>
-                    </div>
+                    <SectionHeader
+                        icon={<FaUserGroup className='me-2' size={24} />}
+                        title={"Joined Groups"}
+                        actions={
+                            <>
+                                <button
+                                    className='main-button'
+                                    onClick={() => {updateState({showJoin: true})}}
+                                >Join group</button>
+                            </>
+                        }
+                    />
                     {!joinedGroups && (
                         <div className=''>
                             No groups joined yet
                         </div>
                     )}
                     {joinedGroups && (
-                        <HorizontalList>
+                        <div className='group-grid-display'>
                             {renderJoinedGroups()}
-                        </HorizontalList>
+                        </div>
                     )}
                 </div>
                 <div className='groups-created-area'>
-                    <div className='d-flex align-items-center mb-3'>
-                        <FaUserGroup className='me-2' size={24} />
-                        <span className='fs-5 fw-bold'>Created Groups</span>
-                    </div>
+                    <SectionHeader
+                        icon={<FaUserGroup className='me-2' size={24} />}
+                        title={"Created Groups"}
+                        actions={
+                            <>
+                                <button
+                                    className='main-button'
+                                    onClick={() => {updateState({showCreate: true})}}
+                                >Create group</button>
+                            </>
+                        }
+                    />
                     {!createdGroups && (
                         <div className=''>
                             No groups created yet
                         </div>
                     )}
                     {createdGroups && (
-                        <HorizontalList>
+                        <div className='group-grid-display'>
                             {renderCreatedGroups()}
-                        </HorizontalList>
+                        </div>
                     )}
                 </div>
             </div>

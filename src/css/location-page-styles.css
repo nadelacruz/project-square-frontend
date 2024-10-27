@@ -1,61 +1,120 @@
 @import './variables.css';
 
-.location-container {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 60% 40%;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-        "attHeader list"
-        "feeds list";
-}
-
-.attendance-header-area {
-    grid-area: attHeader;
-    padding-top: 1rem;
-    padding-left: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-.feeds-area {
-    grid-area: feeds;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 1rem;
-}
-
-.list-area {
-    grid-area: list;
-    padding: 1rem;
-    overflow-y: auto;
-}
-
-.attendance-list-wrapper {
-    height: 100%;
-    width: 100%;
-    margin-bottom: 150px;
-    box-sizing: border-box;
-}
-
 .location-cameras-container {
-    height: 100%;
     width: 100%;
+    max-width: 2000px;
+    padding:0 1.5rem;
+    overflow-y: auto;
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 300px 1fr 450px;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
-        "header"
-        "list";
+        "header header header"
+        "cameras live list "
+        "none none none "
+        "none none none ";
 }
 
 .location-header-area {
     grid-area: header;
-    height: 60px;
+}
+
+.location-live-area {
+    grid-area: live;
+    overflow-y: auto;
 }
 
 .location-list-area {
     grid-area: list;
+    overflow-y: auto;
+    padding-left: 1.5rem;
+}
+
+.location-cameras-area {
+    grid-area: cameras;
+    padding-right: 1.5rem;
+    overflow-y: auto;
+}
+
+.content-area.medium {
+    .location-cameras-container {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+        "header header"
+        "live list "
+        "cameras none "
+        "cameras none ";
+    }
+    .location-cameras-area {
+        padding-top: 1rem;
+        margin-bottom: 3rem;
+        padding-right: 0;
+    }
+}
+
+.content-area.narrow {
+    .location-cameras-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "header"
+        "live "
+        "cameras "
+        "list ";
+    }
+    .location-list-area {
+        padding-top: 1.5rem;
+        padding-left: 0;
+        margin-bottom: 3rem;
+    }
+    .location-cameras-area {
+        padding-top: 1rem;
+        padding-right: 0;
+    }
+}
+
+.list-container {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: var(--background-light);
+    border-radius: 7px;
+}
+
+.cameras-container {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.camera-item {
+    width: minmax(100%, calc(var(--grid-item-width) * 1.5));
+    padding: 10px 5px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.action-icons {
+    opacity: 0.9;
+    padding: 6px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-right: 5px;
+    background-color: var(--background-light);
+}
+
+.action-icons:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.action-bar-container {
+    width: 100%;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
 }

@@ -4,7 +4,7 @@ import StorageService from '../services/StorageService';
 const ss = new StorageService();
 
 let serverIp = '';
-serverIp = '172.26.127.26';
+// serverIp = '172.26.127.26';
 // serverIp = '192.168.254.104';
 const flaskURL = `http://${((serverIp !== '') ? serverIp : 'localhost')}:5000`;
 const squareApiBaseUrl = flaskURL;

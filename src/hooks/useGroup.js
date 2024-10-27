@@ -32,11 +32,14 @@ export const GroupProvider = ({ children }) => {
         inputErrors: {
             inputCode: '',
             inputName: ''
-        }
+        },
+        showCreate: false,
+        showJoin: false,
     });
 
     const { inputCode, inputName, inputErrors } = state;
     const { joinedGroups, createdGroups } = state;
+    const { showCreate, showJoin } = state;
 
     const [breadcrumbs, setBreadcrumbs] = useState([
         { label: 'Groups', link: '/groups' },
@@ -134,6 +137,8 @@ export const GroupProvider = ({ children }) => {
             getJoinedGroups,
             createdGroups,
             joinedGroups,
+            showCreate,
+            showJoin
         }),
         [state, breadcrumbs]
     );

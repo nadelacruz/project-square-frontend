@@ -10,17 +10,20 @@ import { FaClipboardList } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
 import { MdDashboardCustomize } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
-import { MdOutlineChecklist } from "react-icons/md";
+import { FaRectangleList } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
+import { FaMapLocation } from "react-icons/fa6";
 
 import { useSidebar } from '../../hooks/useSidebar';
 import { useRecognize } from '../../hooks/useRecognize';
 import { useAuth } from '../../hooks/useAuth';
+import { useBreadcrumbs } from '../../hooks/useBreadcrumbs';
 
 const MainSidebar = () => {
+    const navigate = useNavigate();
+
     const { user, logout } = useAuth();
     const { isScanning } = useRecognize();
-    const navigate = useNavigate();
     const { collapse } = useSidebar();
 
     return (
@@ -29,18 +32,15 @@ const MainSidebar = () => {
                 <SidebarHeader>
                     <Menu>
                         <MenuItem icon={<MdDashboardCustomize size={25} />}>
-                            Dashboard
+                            <Link to="/dashboard">Dashboard</Link>
                         </MenuItem>
                     </Menu>
                 </SidebarHeader>
-                <Menu >
-                    <MenuItem icon={<FaVideo size={22} />}><Link to="/dashboard">Live Location</Link></MenuItem>
+                <Menu>
                     <MenuItem icon={<FaUserGroup size={25} />}><Link to="/groups">Groups</Link></MenuItem>
-                    <MenuItem icon={<MdOutlineChecklist size={25} />}>Records</MenuItem>
+                    <MenuItem icon={<FaMapLocation size={22} />} ><Link to="/locations">Locations</Link></MenuItem>
+                    <MenuItem icon={<FaRectangleList size={25} />} >Records</MenuItem>
                     <MenuItem icon={<IoSettingsSharp size={25} />}>Settings</MenuItem>
-                    {/* <MenuItem icon={<FaVideo size={22} />}><Link to="/">Live Attendance</Link></MenuItem>
-                    <MenuItem icon={<FaClipboardList size={25} />}><Link to="/">Records</Link></MenuItem> */}
-
                 </Menu>
             </SidebarContent>
         </ProSidebar>

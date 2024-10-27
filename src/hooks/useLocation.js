@@ -63,7 +63,9 @@ export const LocationProvider = ({ children }) => {
         updateState({
             group: freshGroupLocations.group,
             locations: freshGroupLocations.locations
-        })
+        });
+
+        return freshGroupLocations;
     };
 
     const createLocation = async (location_name, group_id) => {

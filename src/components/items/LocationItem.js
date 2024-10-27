@@ -8,7 +8,7 @@ const LocationItem = ({ location }) => {
     const navigate = useNavigate(); 
 
     return (
-        <div className='location-item' onClick={() => {navigate('/location/1')}}>
+        <div className='location-item' onClick={() => {navigate('/locations/1')}}>
             <div className='ms-3 d-flex flex-column justify-content-center'>
                 <span
                     className='opacity-75 text-truncate'

@@ -10,6 +10,7 @@ import './css/landing-page-styles.css'
 import './css/auth-page-styles.css'
 import './css/location-page-styles.css'
 import './css/groups-page-styles.css'
+import './css/group-locations-page-styles.css'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import AuthPage from './pages/auth/AuthPage';
@@ -28,6 +29,8 @@ import { RecognizeProvider } from './hooks/useRecognize';
 import { SidebarProvider } from './hooks/useSidebar';
 import { GroupProvider } from './hooks/useGroup';
 import { LocationProvider } from './hooks/useLocation';
+import { BreadcrumbsProvider } from './hooks/useBreadcrumbs.js';
+import { FeedsProvider } from './hooks/useFeeds.js';
 
 function App() {
   return (
@@ -37,6 +40,8 @@ function App() {
       <GroupProvider>
       <LocationProvider>
       <SidebarProvider>
+      <BreadcrumbsProvider>
+      <FeedsProvider>
         <Routes>
           <Route index element={<PublicRoute><LandingPage /></PublicRoute>} />
           <Route path="auth/*" element={
@@ -57,7 +62,7 @@ function App() {
                     <Route path='/:id' element={<GroupLocationsPage />}/>
                   </Routes>
                 } />
-                <Route path='location/*' element={
+                <Route path='locations/*' element={
                   <Routes>
                     <Route path='/:id' element={<LocationPage />}/>
                   </Routes>
@@ -66,6 +71,8 @@ function App() {
             </AuthenticatedRoute>
           } />
         </Routes>
+      </FeedsProvider>
+      </BreadcrumbsProvider>
       </SidebarProvider>
       </LocationProvider>
       </GroupProvider>

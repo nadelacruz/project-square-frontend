@@ -13,7 +13,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
 import MainContainer from '../../components/containers/MainContainer';
-
+import MainBreadcrumbs from '../../components/tabs/MainBreadcrumbs';
 import GroupLocationsLoading from './GroupLocationsLoading';
 import GroupAnalyticsItem from '../../components/items/GroupAnalyticsItem';
 import LocationItem from '../../components/items/LocationItem';
@@ -21,13 +21,17 @@ import GroupLocationsHeader from '../../components/headers/GroupLocationsHeader'
 import SectionHeader from '../../components/headers/SectionHeader';
 
 import { useLocation } from '../../hooks/useLocation'
+import { useRecognize } from '../../hooks/useRecognize';
+import { useBreadcrumbs } from '../../hooks/useBreadcrumbs';
 
 const GroupLocationsPage = () => {
     const { id } = useParams();
+    let isFetching = false; 
+    
     const navigate = useNavigate();
 
-
-    let isFetching = false;
+    const { setBreadcrumbs, clearBreadcrumbs } = useBreadcrumbs();
+    const { getImageUrl } = useRecognize();
     const {
         updateState,
         group,
@@ -35,7 +39,7 @@ const GroupLocationsPage = () => {
         getGroupLocations
     } = useLocation();
 
-    const [relaod, setReload] = useState(false);
+    const [imgUrl, setImgUrl] = useState('');
 
     const sampleAnalytics = [
         { name: 'Frequency' },
@@ -56,8 +60,9 @@ const GroupLocationsPage = () => {
     useEffect(() => {
         if (isFetching) return;
         isFetching = true;
-        getGroupLocations(id).then(() => {
+        getGroupLocations(id).then((groupLocs) => {
             isFetching = false;
+            handleBreadcrumbs(groupLocs.group);
         }).catch((e) => {
             console.log("Error while getting group locations data: " + e);
             isFetching = false;
@@ -69,7 +74,15 @@ const GroupLocationsPage = () => {
                 locations: []
             });
         };
-    }, [id, relaod]);
+    }, [id]);
+
+    const handleBreadcrumbs = (group) => {
+        clearBreadcrumbs();
+        setBreadcrumbs([
+            {label: "Groups", link: "/groups"},
+            {label: group.name, link: "/groups/"+group.id},
+        ]);
+    };
 
     const renderAnalytics = () => {
         return sampleAnalytics.map((analytics, index) => {
@@ -100,10 +113,13 @@ const GroupLocationsPage = () => {
             )}
             {group && (
                 <div className={`group-locations-container fade-in`} id="grploc">
+                    <div className='group-locations-breadcrumbs-area'>
+                        <MainBreadcrumbs />
+                    </div>
                     <div className='group-locations-header-area'>
                         <GroupLocationsHeader group={group} />
                     </div>
-                    <div className='group-analytics-area '>
+                    <div className='group-analytics-area'>
                         <SectionHeader
                             icon={<IoAnalyticsSharp className='me-2' size={24} />}
                             title={"Analytics"}
@@ -113,7 +129,6 @@ const GroupLocationsPage = () => {
                                         className='main-button'
                                         onClick={() => { }}
                                     >Add location</button>
-
                                 </>
                             }
                         />
@@ -121,7 +136,7 @@ const GroupLocationsPage = () => {
                             {renderAnalytics()}
                         </div>
                     </div>
-                    <div className='group-locations-area'>
+                    <div className='group-locations-area' >
                         <SectionHeader
                             icon={<ImLocation className='me-2' size={24} />}
                             title={"Locations"}

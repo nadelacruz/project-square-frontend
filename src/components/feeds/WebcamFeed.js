@@ -17,10 +17,8 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
     }, [detected, onDetectChange]);
 
     useEffect(() => {
-        console.log("location changed");
-
         return () => {
-            if (stream && location !== "/dashboard") {
+            if (stream) {
                 const tracks = stream.getTracks();
                 tracks.forEach(track => track.stop());
                 console.log("stopped camera");
@@ -41,7 +39,6 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
         if (videoRef.current && canvasRef.current) {
             canvasRef.current.width = videoRef.current.videoWidth;
             canvasRef.current.height = videoRef.current.videoHeight;
-            console.log(`Canvas size: ${canvasRef.current.width}x${canvasRef.current.height}`);
         }
     };
 
@@ -95,17 +92,12 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
         let intervalId;
 
         const initializeFaceDetection = async () => {
-            await loadModels();
+            // await loadModels();
             await startVideoStream();
-            intervalId = setInterval(detectFaces, 1000);
+            // intervalId = setInterval(detectFaces, 1000);
         };
 
         initializeFaceDetection();
-        // if (!isScanning) {
-        //     initializeFaceDetection();
-        // } else if (intervalId) {
-        //     clearInterval(intervalId);
-        // }
 
         return () => {
             clearInterval(intervalId);

@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 import { toast } from 'react-toastify';
 
 import square_api from "../api/square_api";
@@ -25,20 +25,17 @@ const TOAST_CONFIG = {
 };
 
 export const RecognizeProvider = ({ children }) => {
+    const videoRef = useRef();
 
     const [scanState, setScanState] = useState({
         isScanning: false,
         status: null,
         detections: null,
-        detectId: null,
-        date: null,
-        recognizeId: null,
         datetime: null,
         verifiedFaces: [],
     });
 
     const { isScanning, status, detections, datetime, verifiedFaces } = scanState;
-    const { detectId, recognizeId, date } = scanState;
 
     const updateScanState = (newState) => {
         setScanState(prevState => ({ ...prevState, ...newState }));
@@ -48,6 +45,60 @@ export const RecognizeProvider = ({ children }) => {
         toast[type](message, TOAST_CONFIG);
     };
 
+    const getImageUrl = async (filename) => {
+        try {
+            const response = await square_api.get(`/bucket/get/${filename}`);
+            return response.data.url
+        } catch (e) {
+            console.log("Error while getting image url"+e)
+        }
+    };
+
+    const captureFrame = () => {
+        return new Promise((resolve, reject) => {
+            const canvas = document.getElementById("stream-canvas");
+            requestAnimationFrame(() => {
+                canvas.toBlob(resolve, 'image/png');
+            });
+        });
+    };
+
+
+    const captureDeviceFrame = () => {
+        const video = videoRef.current;
+        const canvas = document.getElementById("device-canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+
+        return new Promise((resolve, reject) => {
+            requestAnimationFrame(() => {
+                canvas.toBlob(resolve, 'image/png');
+            });
+        });
+    };
+
+    const handleScan = async () => {
+        const newDate = new Date();
+
+        try {
+            const deviceImageBlob = await captureDeviceFrame();
+
+            const detectTaskId = await detectFaces(deviceImageBlob, newDate);
+            const detectedFaces = await checkDetectResults(detectTaskId);
+            const { recognizeTaskId, date } = await recognizeFaces(detectedFaces, newDate);
+            await checkRecognizeResults(recognizeTaskId, date);
+
+        } catch (error) {
+            handleToast(error.message, 'error');
+        } finally {
+            updateScanState({
+                isScanning: false,
+                status: null,
+            }); // Users can now logout
+        }
+    };
+
     const detectFaces = async (deviceImgBlob, date) => {
         updateScanState({
             isScanning: true,
@@ -55,8 +106,6 @@ export const RecognizeProvider = ({ children }) => {
             detections: null,
             datetime: null,
         });
-
-        // const deviceImageBlob = await captureDeviceFrame();
 
         const captureData = new FormData();
         captureData.append('capturedFrames', deviceImgBlob, toFilename(date) + "_dvcam.png");
@@ -84,7 +133,7 @@ export const RecognizeProvider = ({ children }) => {
                     }
 
                     // handleToast(`${detectedFaces.length} face(s) were detected`, 'info');
-                    updateScanState({ detections: detectedFaces, detectId: null });
+                    updateScanState({ detections: detectedFaces});
 
 
                     return detectedFaces;
@@ -175,10 +224,11 @@ export const RecognizeProvider = ({ children }) => {
             detections,
             verifiedFaces,
             SCAN_STATUS,
-            detectId,
-            recognizeId,
             checkDetectResults,
             checkRecognizeResults,
+            getImageUrl,
+            handleScan,
+            videoRef
         }),
         [scanState]
     );
