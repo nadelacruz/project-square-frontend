@@ -30,7 +30,7 @@ const LandingPage = () => {
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         </div>
                         <div className='d-flex flex-column w-50 align-items-center '>
-                            <button className='landing-btn' onClick={() => {navigate('/auth/login')}}>
+                            <button className='landing-btn' onClick={() => { navigate('/auth/login') }}>
                                 Get Started
                             </button>
                             <div className='auth-footer-container'>
@@ -52,9 +52,9 @@ const LandingPage = () => {
                         </div>
                     </div>
                     <div className='landing-img-div'>
-                        <img
-                            src={"/images/landing-image.png"}
-                            alt={`<a href="https://www.freepik.com/free-vector/guard-service-man-sitting-control-panel-watching-surveillance-camera-videos-monitors-cctv-control-room-vector-illustration-security-system-worker-spying-supervision-concept_10613017.htm#fromView=keyword&page=1&position=9&uuid=50b03943-ca56-435e-8992-6baf8ebd1245">Image by pch.vector on Freepik</a>`}
+                        <img 
+                            src='/svg/security-animate.svg' 
+                            alt={'https://storyset.com/web'}
                         />
                     </div>
                 </div>

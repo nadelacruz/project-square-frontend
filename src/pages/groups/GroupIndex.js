@@ -1,0 +1,135 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
+import GroupHeader from '../../components/headers/GroupHeader';
+import SectionHeader from '../../components/headers/SectionHeader';
+import LocationItem from '../../components/items/LocationItem';
+import AnalyticsItem from '../../components/items/AnalyticsItem';
+
+import { BsFillGrid3X3GapFill } from "react-icons/bs";
+import { FaList } from "react-icons/fa";
+import { IoAnalyticsSharp } from "react-icons/io5";
+import { ImLocation } from "react-icons/im";
+
+import { useGroup } from '../../hooks/useGroup';
+import { useLocation } from '../../hooks/useLocation';
+import { useAuth } from '../../hooks/useAuth';
+
+const GroupIndex = ({ locations, owner, group }) => {
+
+    const { user } = useAuth();
+    const {
+        handleToast,
+        handleChange,
+        newInputName,
+        updateGroup,
+        showDeleteGroup,
+        toggleDeleteGroup,
+        updateState
+    } = useGroup();
+
+    const {
+        toggleCreateLocation,
+    } = useLocation();
+
+    const sampleAnalytics = [
+        { name: 'Frequency' },
+        { name: 'Mean' },
+        { name: 'Median' },
+        { name: 'Mode' },
+    ];
+
+    const renderAnalytics = () => {
+        return sampleAnalytics.map((analytics, index) => {
+            return (
+                <AnalyticsItem
+                    analytics={analytics}
+                    key={index}
+                />
+            )
+        });
+    };
+
+    const renderLocations = () => {
+        return locations.map((location, index) => {
+            return (
+                <LocationItem
+                    location={location}
+                    isOwner={owner.id === user.id}
+                    key={index}
+                />
+            )
+        });
+    };
+
+    const Section = ({ title, icon, actions, content }) => {
+        return (
+            <>
+                <SectionHeader
+                    icon={icon}
+                    title={title}
+                    actions={actions}
+                />
+                {content}
+            </>
+        )
+    };
+
+
+    return (
+        <>
+            <div className='group-locations-header-area'>
+                <GroupHeader group={group} owner={owner} />
+            </div>
+            {owner.id === user.id && (
+                <div className='group-analytics-area'>
+                    <Section
+                        title={"Analytics"}
+                        icon={<IoAnalyticsSharp className='me-2' size={24} />}
+                        actions={
+                            <>
+                                <button
+                                    className='main-button'
+                                    onClick={toggleCreateLocation}
+                                >Add location</button>
+                            </>
+                        }
+                        content={
+                            <div className='group-grid-display'>
+                                {renderAnalytics()}
+                            </div>
+                        }
+                    />
+                </div>
+            )}
+            <div className='group-locations-area' >
+                <Section
+                    title={"Locations"}
+                    icon={<ImLocation className='me-2' size={24} />}
+                    actions={
+                        <>
+                            <FaList size={25} className='me-4 cursor-pointer' />
+                            <BsFillGrid3X3GapFill size={25} className='cursor-pointer' />
+                        </>
+                    }
+                    content={
+                        <>
+                            {locations.length === 0 && (
+                                <div style={{ height: '100px' }}>
+                                    No locations added yet
+                                </div>
+                            )}
+                            {locations.length > 0 && (
+                                <div className='group-grid-display'>
+                                    {renderLocations()}
+                                </div>
+                            )}
+                        </>
+                    }
+                />
+            </div >
+        </>
+    );
+}
+
+export default GroupIndex;

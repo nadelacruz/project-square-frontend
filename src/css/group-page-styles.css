@@ -5,7 +5,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 180px auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
         "breadcrumbs"
         "header"
@@ -92,4 +92,28 @@
     background-color: var(--background-semi-light);
     border-radius: 10px;
     overflow: hidden;
+}
+
+.member-item {
+    width: 100%;
+    padding: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    border-top: solid 1px rgb(206, 201, 201);
+}
+
+.member-profile-div {
+    aspect-ratio: 1 / 1;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.member-profile-div img {
+    width: 100%;
+    object-fit: contain;
 }

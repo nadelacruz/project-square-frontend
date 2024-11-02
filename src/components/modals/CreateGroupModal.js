@@ -21,7 +21,8 @@ const CreateGroupModal = ({ show, onClose }) => {
         handleChange,
         inputName,
         inputErrors,
-        createGroup
+        createGroup,
+        triggerReloadGroups
     } = useGroup();
 
     const [buttonText, setButtonText] = useState(BUTTON_TEXT.CREATE);
@@ -35,12 +36,13 @@ const CreateGroupModal = ({ show, onClose }) => {
         try {
             setButtonText(BUTTON_TEXT.CREATING);
 
-            const group = await createGroup(inputName, user.id);
+            const group = await createGroup(inputName.trim(), user.id);
             handleToast(`Group "${group.name}" created successfully`, 'success');
         } catch (error) {
             console.error(error);
             handleToast(error.message, 'error');
         } finally {
+            triggerReloadGroups(); // Reloads the Groups page
             setButtonText(BUTTON_TEXT.CREATE);
             updateState({ inputName: null,}); 
             handleClose();

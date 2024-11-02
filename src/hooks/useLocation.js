@@ -23,18 +23,19 @@ const TOAST_CONFIG = {
 
 export const LocationProvider = ({ children }) => {
 
+    const [reload, setReload] = useState(0);
+
     const [state, setState] = useState({
-        group: null,
-        locations: [],
         inputName: null,
         inputErrors: {
             inputName: ''
-        }
+        },
+        showCreateLocation: false,
     });
 
 
     const { inputName, inputErrors } = state;
-    const { group, locations } = state;
+    const { showCreateLocation } = state;
 
 
     const updateState = (newState) => {
@@ -60,12 +61,15 @@ export const LocationProvider = ({ children }) => {
     const getGroupLocations = async (group_id) => {
         const response = await square_api.get(`/groups/group-locations/${group_id}`);
         const freshGroupLocations = response.data;
-        updateState({
-            group: freshGroupLocations.group,
-            locations: freshGroupLocations.locations
-        });
 
         return freshGroupLocations;
+    };
+
+    const getLocationCameras = async (location_id) => {
+        const response = await square_api.get(`/locations/location-cameras/${location_id}`);
+        const freshLocationCameras = response.data;
+
+        return freshLocationCameras;
     };
 
     const createLocation = async (location_name, group_id) => {
@@ -73,7 +77,7 @@ export const LocationProvider = ({ children }) => {
             location_name: location_name,
             group_id: group_id
         }
-        const response = await square_api.post('/groups/create', credentials);
+        const response = await square_api.post('/locations/create', credentials);
 
         if (response.status === 201) { // 201 = CREATED
             return response.data.location;
@@ -82,11 +86,12 @@ export const LocationProvider = ({ children }) => {
         }
     };
 
-    const deleteLocation = async (location_id) => {
+    const deleteLocation = async (location_id, owner_password) => {
         const credentials = {
             location_id: location_id,
+            owner_password: owner_password
         }
-        const response = await square_api.post('/groups/delete', credentials);
+        const response = await square_api.post('/locations/delete', credentials);
 
         if (response.status === 200) { // 200 = OK
             return true;
@@ -94,6 +99,9 @@ export const LocationProvider = ({ children }) => {
             return false;
         }
     };
+
+    const toggleCreateLocation = () => updateState({ showCreateLocation: !showCreateLocation });
+    const triggerReloadLocation = () => setReload(reload + 1);
 
     const value = useMemo(
         () => ({
@@ -105,11 +113,14 @@ export const LocationProvider = ({ children }) => {
             BUTTON_TEXT,
             createLocation,
             deleteLocation ,
-            group,
-            locations,
-            getGroupLocations
+            getGroupLocations,
+            showCreateLocation,
+            toggleCreateLocation,
+            reload,
+            triggerReloadLocation,
+            getLocationCameras
         }),
-        [state]
+        [state, reload]
     );
     return <LocationContext.Provider value={value}>{children}</LocationContext.Provider>;
 };

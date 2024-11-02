@@ -21,7 +21,8 @@ const JoinGroupModal = ({ show, onClose }) => {
         handleChange,
         inputCode,
         inputErrors,
-        joinGroup
+        joinGroup, 
+        triggerReloadGroups
     } = useGroup();
 
     const [buttonText, setButtonText] = useState(BUTTON_TEXT.JOIN);
@@ -35,12 +36,13 @@ const JoinGroupModal = ({ show, onClose }) => {
         try {
             setButtonText(BUTTON_TEXT.JOINING);
 
-            const group = await joinGroup(inputCode, user.id);
+            const group = await joinGroup(inputCode.trim(), user.id);
             handleToast(`Joined "${group.name}" group successfully`, 'success');
         } catch (error) {
             console.error(error);
             handleToast(error.message, 'error');
         } finally {
+            triggerReloadGroups(); // Reloads the Groups page
             setButtonText(BUTTON_TEXT.JOIN);
             updateState({ inputCode: null,}); 
             handleClose();

@@ -6,15 +6,15 @@ const Dropdown = ({ children, icon, title }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClick = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
                 setIsOpen(false);
-            }
+            } 
         };
         
-        document.addEventListener('click', handleClickOutside, true);
+        document.addEventListener('click', handleClick, true);
         return () => {
-            document.removeEventListener('click', handleClickOutside, true);
+            document.removeEventListener('click', handleClick, true);
         };
 
     }, []);
@@ -33,7 +33,7 @@ const Dropdown = ({ children, icon, title }) => {
             {(isOpen) && (
                 <div
                     ref={ref}
-                    className='icon-dropdown box-shadow custom-scrollbar'
+                    className='icon-dropdown box-shadow custom-scrollbar inside-dropdown'
                     style={{
                         right: `${distanceFromRight}px`
                     }}>

@@ -18,7 +18,7 @@ const MainHeader = () => {
     const { user, logout } = useAuth();
     const { isScanning } = useRecognize();
     const { setCollapse, collapse } = useSidebar();
-    const { updateState } = useGroup();
+    const { toggleCreateGroup, toggleJoinGroup } = useGroup();
 
     const navigate = useNavigate();
 
@@ -69,11 +69,11 @@ const MainHeader = () => {
                 <div className='d-flex align-items-center'>
                     <div className='d-flex align-items-center'>
                         <Dropdown icon={<IoMdAdd size={25} />} title={"Add"}>
-                            <div className='icon-dropdown-item' onClick={() => {updateState({showCreate: true})}}>
+                            <div className='icon-dropdown-item' onClick={toggleCreateGroup}>
                                 <IoMdAdd size={25} title='Create Group' />
                                 <span className='icon-dropdown-text'>Create group</span>
                             </div>
-                            <div className='icon-dropdown-item' onClick={() =>{updateState({showJoin: true})}}>
+                            <div className='icon-dropdown-item' onClick={toggleJoinGroup}>
                                 <IoMdAdd size={25} title='Join Group' />
                                 <span className='icon-dropdown-text'>Join group</span>
                             </div>

@@ -29,9 +29,10 @@
 @media (max-width: 850px) {
     .main-container {
         grid-template-areas:
-        "header header"
-        "main main";
+            "header header"
+            "main main";
     }
+
     .sidebar-area {
         display: none;
     }
@@ -129,6 +130,20 @@
     border: none;
 }
 
+.danger-button {
+    background-color: var(--danger-color);
+    font-size: 16px;
+    padding: 5px 40px;
+    color: var(--background-light);
+    border: none;
+    border-radius: var(--btn-border-radius);
+}
+
+.danger-button:hover {
+    background-color: var(--danger-color-light);
+    border: none;
+}
+
 .fade-in {
     opacity: 0;
     animation: fadeIn 0.2s ease-in-out forwards;
@@ -181,13 +196,49 @@
     }
 }
 
-.breadcrumb-text .active{
+.breadcrumb-text .active {
     font-weight: bold;
 }
 
 .unselectable {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer */
-    user-select: none;         /* Standard syntax */
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer */
+    user-select: none;
+    /* Standard syntax */
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-right {
+    animation: slideRight 0.3s ease-out forwards;
 }

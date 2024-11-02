@@ -13,7 +13,7 @@ const MainBreadcrumbs = () => {
             {breadcrumbs.map((breadcrumb, index) => {
                 return (
                     <div
-                        className={`breadcrumb-text`}
+                        className={`breadcrumb-text slide-right`}
                         key={index}
                         onClick={() => onBreadcrumbClick(index, breadcrumb.link)}
                     >

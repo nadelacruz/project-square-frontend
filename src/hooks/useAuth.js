@@ -16,11 +16,6 @@ export const AuthProvider = ({ children }) => {
         user = JSON.parse(user);
     }
 
-    const [home, setHome] = useState("/");
-
-    useEffect(() => {
-
-    }, [location]);
 
     const login = async (credentials) => {
         const response = await square_api.post('/auth/login', credentials);
@@ -102,7 +97,6 @@ export const AuthProvider = ({ children }) => {
     const value = useMemo(
         () => ({
             user,
-            home,
             login,
             register,
             logout,

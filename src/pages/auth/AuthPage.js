@@ -162,12 +162,12 @@ const AuthPage = ({ type }) => {
                             >{((type === 'login')? "Sign up": "Sign in")}</strong>
                         </span>
 
-                        <button
+                        {/* <button
                             className='auth-form-btn-clear'
                             onClick={() => {loginGoogle()}}
                         >
                             Continue with Google
-                        </button>
+                        </button> */}
 
                         <button
                             className='auth-form-btn-clear'

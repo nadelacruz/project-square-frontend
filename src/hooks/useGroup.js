@@ -12,7 +12,9 @@ const BUTTON_TEXT = {
     CREATE: 'Create',
     CREATING: 'Creating...',
     JOIN: 'Join',
-    JOINING: 'Joining...'
+    JOINING: 'Joining...',
+    DELETE: 'Delete',
+    DELETING: 'Deleting...'
 };
 
 const TOAST_CONFIG = {
@@ -23,28 +25,29 @@ const TOAST_CONFIG = {
 };
 
 export const GroupProvider = ({ children }) => {
+    
+    const [reload, setReload] = useState(0);
 
     const [state, setState] = useState({
         createdGroups: [],
         joinedGroups: [],
         inputCode: null,
         inputName: null,
+        newInputName: null,
+        deleteInputName: null,
         inputErrors: {
             inputCode: '',
-            inputName: ''
+            inputName: '',
         },
-        showCreate: false,
-        showJoin: false,
+        showCreateGroup: false,
+        showJoinGroup: false,
+        showDeleteGroup: false,
     });
 
-    const { inputCode, inputName, inputErrors } = state;
+    const { inputCode, inputName, inputErrors, newInputName, deleteInputName } = state;
     const { joinedGroups, createdGroups } = state;
-    const { showCreate, showJoin } = state;
+    const { showCreateGroup, showJoinGroup, showDeleteGroup } = state;
 
-    const [breadcrumbs, setBreadcrumbs] = useState([
-        { label: 'Groups', link: '/groups' },
-        { label: 'Dashboard', link: '/dashboard' },
-    ]);
 
     const updateState = (newState) => {
         setState(prevState => ({ ...prevState, ...newState }));
@@ -106,10 +109,26 @@ export const GroupProvider = ({ children }) => {
         }
     };
 
-    const deleteGroup = async (group_id, owner_password) => {
+    const updateGroup = async (group_id, new_group_name) => {
         const credentials = {
             group_id: group_id,
-            owner_password: owner_password
+            new_group_name: new_group_name
+        }
+        const response = await square_api.post('/groups/update', credentials);
+
+        if (response.status === 200) { // 200 = OK
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+
+    const deleteGroup = async (group_id, group_name, user_id) => {
+        const credentials = {
+            group_id: group_id,
+            group_name: group_name,
+            user_id: user_id,
         }
         const response = await square_api.post('/groups/delete', credentials);
 
@@ -120,6 +139,12 @@ export const GroupProvider = ({ children }) => {
         }
     };
 
+    const toggleCreateGroup = () => updateState({ showCreateGroup: !showCreateGroup });
+    const toggleJoinGroup = () => updateState({ showJoinGroup: !showJoinGroup });
+    const toggleDeleteGroup = () => updateState({ showDeleteGroup: !showDeleteGroup });
+
+    const triggerReloadGroups = () => setReload(reload + 1);
+
     const value = useMemo(
         () => ({
             updateState,
@@ -129,7 +154,6 @@ export const GroupProvider = ({ children }) => {
             inputName,
             inputErrors,
             BUTTON_TEXT,
-            breadcrumbs,
             createGroup,
             joinGroup,
             deleteGroup,
@@ -137,10 +161,19 @@ export const GroupProvider = ({ children }) => {
             getJoinedGroups,
             createdGroups,
             joinedGroups,
-            showCreate,
-            showJoin
+            showCreateGroup,
+            showJoinGroup,
+            toggleCreateGroup,
+            toggleJoinGroup,
+            reload,
+            triggerReloadGroups,
+            newInputName,
+            updateGroup,
+            showDeleteGroup,
+            toggleDeleteGroup,
+            deleteInputName
         }),
-        [state, breadcrumbs]
+        [state, reload]
     );
     return <GroupContext.Provider value={value}>{children}</GroupContext.Provider>;
 };

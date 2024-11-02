@@ -32,7 +32,8 @@
 .auth-form-container {
     display: flex;
     flex-direction: column;
-    width: 350px;
+    width: 80%;
+    max-width: 350px;
     height: 100%;
     align-items: center;
     justify-content: space-between;

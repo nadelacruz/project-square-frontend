@@ -16,10 +16,26 @@ import { useParams } from 'react-router-dom';
 import { useRecognize } from '../../hooks/useRecognize';
 import { useBreadcrumbs } from '../../hooks/useBreadcrumbs';
 import { useFeeds } from '../../hooks/useFeeds';
+import { useLocation } from '../../hooks/useLocation';
 
+
+const CAMERAS = [
+    { name: "Camera 1", ip: "192.168.254.106" },
+    { name: "Camera 2", ip: "192.168.254.107" },
+    { name: "Camera 3", ip: "192.168.254.108" },
+    { name: "Camera 1", ip: "192.168.254.106" },
+    { name: "Camera 2", ip: "192.168.254.107" },
+    { name: "Camera 3", ip: "192.168.254.108" },
+];
 
 const LocationPage = () => {
     const { id } = useParams();
+    let isFetching = false;
+
+    const [group, setGroup] = useState(null);
+    const [location, setLocation] = useState(null);
+    const [cameras, setCameras] = useState(CAMERAS);
+
     const { setBreadcrumbs, clearBreadcrumbs } = useBreadcrumbs();
     const {
         isScanning,
@@ -33,7 +49,35 @@ const LocationPage = () => {
         updateState,
         renderEmptySlots
     } = useFeeds();
+    const {
+        reload,
+        getLocationCameras
+    } = useLocation();
 
+
+
+    useEffect(() => {
+        if (!isFetching) {
+            isFetching = true;
+
+            getLocationCameras(id).then((res) => {
+                setGroup(res.group);
+                setLocation(res.location);
+                setCameras(res.cameras);
+                handleBreadcrumbs(res.group, res.location);
+                isFetching = false;
+            }).catch((e) => {
+                console.log("Error while getting location cameras data: " + e);
+                isFetching = false;
+            });
+        }
+
+        return () => {
+            setGroup(null);
+            setLocation(null);
+            setCameras([]);
+        };
+    }, [id, reload]);
 
     useEffect(() => {
         const feedsGrid = document.querySelector('.feeds-grid');
@@ -57,29 +101,14 @@ const LocationPage = () => {
         }
     }, []);
 
-    const location = {
-        group: { name: "Some Group", id: 99 },
-        name: "Location 1",
-        id: 1
-    };
-
-    const cameras = [
-        { name: "Camera 1", ip: "192.168.254.106" },
-        { name: "Camera 2", ip: "192.168.254.107" },
-        { name: "Camera 3", ip: "192.168.254.108" },
-        { name: "Camera 1", ip: "192.168.254.106" },
-        { name: "Camera 2", ip: "192.168.254.107" },
-        { name: "Camera 3", ip: "192.168.254.108" },
-    ];
-
-    useEffect(() => {
+    const handleBreadcrumbs = (group, location) => {
         clearBreadcrumbs();
         setBreadcrumbs([
             { label: "Groups", link: "/groups" },
-            { label: location.group.name, link: "/groups" },
+            { label: group.name, link: "/groups/" + group.id },
             { label: location.name, link: "/locations/" + location.id },
         ]);
-    }, []);
+    };
 
 
     const handleDetectChange = (detected) => {

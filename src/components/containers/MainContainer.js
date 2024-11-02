@@ -9,29 +9,34 @@ import JoinGroupModal from '../modals/JoinGroupModal';
 import { useGroup } from '../../hooks/useGroup';
 
 const MainContainer = ({ children }) => {
-    const { showCreate, showJoin, updateState } = useGroup();
+    const { 
+        showCreateGroup, 
+        showJoinGroup, 
+        toggleCreateGroup,
+        toggleJoinGroup,
+    } = useGroup();
 
     useEffect(() => {
-        const container = document.querySelector('.content-area');
+        const content = document.querySelector('.content-area');
 
-        if (container) {
+        if (content) {
             const observer = new ResizeObserver(entries => {
                 requestAnimationFrame(() => {
                     for (let entry of entries) {
                         const width = entry.contentRect.width;
     
-                        container.classList.remove('medium', 'narrow');
+                        content.classList.remove('medium', 'narrow');
     
                         if (width < 950) {
-                            container.classList.add('narrow');
+                            content.classList.add('narrow');
                         } else if (width < 1400) {
-                            container.classList.add('medium');
+                            content.classList.add('medium');
                         }
                     }
                 });
             });
     
-            observer.observe(container);
+            observer.observe(content);
     
             return () => observer.disconnect();
         }
@@ -40,17 +45,16 @@ const MainContainer = ({ children }) => {
     return (
         <div className="main-container">
             <CreateGroupModal
-                show={showCreate}
-                onClose={() => { updateState({ showCreate: false }) }}
+                show={showCreateGroup}
+                onClose={toggleCreateGroup}
             />
 
             <JoinGroupModal
-                show={showJoin}
-                onClose={() => { updateState({ showJoin: false }) }}
+                show={showJoinGroup}
+                onClose={toggleJoinGroup}
             />
 
-
-            <ToastContainer />
+            <ToastContainer limit={1} />
             <MainHeader />
             <MainSidebar />
 

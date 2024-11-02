@@ -28,24 +28,27 @@ const GroupsPage = () => {
         getJoinedGroups,
         inputCode,
         inputName,
-        updateState
+        updateState,
+        toggleCreateGroup,
+        toggleJoinGroup,
+        reload
     } = useGroup();
 
 
     useEffect(() => {
         if (
-            isFetching ||
-            (inputCode !== null && inputName !== null) ||
-            !user
-        ) return;
-        isFetching = true;
-        try {
-            getJoinedGroups(user.id).then(() => { isFetching = false; });
-            getCreatedGroups(user.id).then(() => { isFetching = false; });
-        } catch (error) {
-            console.error(error);
+            !isFetching &&
+            user
+        ) {
+            isFetching = true;
+            try {
+                getJoinedGroups(user.id).then(() => { isFetching = false; });
+                getCreatedGroups(user.id).then(() => { isFetching = false; });
+            } catch (error) {
+                console.error(error);
+            } 
         }
-    }, [inputCode, inputName, user]);
+    }, [user, reload]);
 
 
     const renderJoinedGroups = () => {
@@ -81,17 +84,17 @@ const GroupsPage = () => {
                             <>
                                 <button
                                     className='main-button'
-                                    onClick={() => {updateState({showJoin: true})}}
+                                    onClick={toggleJoinGroup}
                                 >Join group</button>
                             </>
                         }
                     />
-                    {!joinedGroups && (
+                    {joinedGroups.length === 0 && (
                         <div className=''>
                             No groups joined yet
                         </div>
                     )}
-                    {joinedGroups && (
+                    {joinedGroups.length > 0 && (
                         <div className='group-grid-display'>
                             {renderJoinedGroups()}
                         </div>
@@ -105,17 +108,17 @@ const GroupsPage = () => {
                             <>
                                 <button
                                     className='main-button'
-                                    onClick={() => {updateState({showCreate: true})}}
+                                    onClick={toggleCreateGroup}
                                 >Create group</button>
                             </>
                         }
                     />
-                    {!createdGroups && (
+                    {createdGroups.length === 0 && (
                         <div className=''>
                             No groups created yet
                         </div>
                     )}
-                    {createdGroups && (
+                    {createdGroups.length > 0 && (
                         <div className='group-grid-display'>
                             {renderCreatedGroups()}
                         </div>

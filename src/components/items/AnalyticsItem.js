@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { FaArrowRight } from "react-icons/fa";
 
-const GroupAnalyticsItem = ({ analytics }) => {
+const AnalyticsItem = ({ analytics }) => {
     const navigate = useNavigate(); 
 
     return (
@@ -23,4 +23,4 @@ const GroupAnalyticsItem = ({ analytics }) => {
     )
 }
 
-export default GroupAnalyticsItem;
+export default AnalyticsItem;

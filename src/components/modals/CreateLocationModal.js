@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 
 import StorageService from "../../services/StorageService";
 
-import { useLocation } from "react-router-dom";
+import { useLocation } from "../../hooks/useLocation";
 
-const CreateLocationModal = ({ show, onClose }) => {
+const CreateLocationModal = ({ show, onClose, group }) => {
     const ss = new StorageService();
 
     const {
@@ -19,7 +19,7 @@ const CreateLocationModal = ({ show, onClose }) => {
         inputName,
         inputErrors,
         createLocation,
-        group
+        triggerReloadLocation,
     } = useLocation();
 
     const [buttonText, setButtonText] = useState(BUTTON_TEXT.CREATE);
@@ -33,12 +33,13 @@ const CreateLocationModal = ({ show, onClose }) => {
         try {
             setButtonText(BUTTON_TEXT.CREATING);
 
-            const group = await createLocation(inputName, user.id);
-            handleToast(`Location "${group.name}" created successfully`, 'success');
+            const location = await createLocation(inputName.trim(), group.id);
+            handleToast(`Location "${location.name}" created successfully`, 'success');
         } catch (error) {
             console.error(error);
             handleToast(error.message, 'error');
         } finally {
+            triggerReloadLocation(); //Reloads the Group page
             setButtonText(BUTTON_TEXT.CREATE);
             updateState({ inputName: null,}); 
             handleClose();
@@ -58,13 +59,13 @@ const CreateLocationModal = ({ show, onClose }) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter" className="text-white">
-                    Create a group
+                    Add new location
                 </Modal.Title>
             </Modal.Header>
 
             <Modal.Body className="threel-scrollbar text-white" closeButton>
                 <input
-                    name='inputName' // must be same with state in useGroup
+                    name='inputName' // must be same with state in useLocation
                     type='text'
                     placeholder='Name'
                     value={inputName}

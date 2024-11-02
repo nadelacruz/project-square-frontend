@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as faceapi from 'face-api.js';
 import { useLocation } from 'react-router-dom';
 import { useRecognize } from '../../hooks/useRecognize';
-import debounce from 'lodash/debounce';
 
 const WebcamFeed = ({ onDetectChange, videoRef }) => {
     const canvasRef = useRef(null);
     const { isScanning } = useRecognize();
     const [detected, setDetected] = useState(0);
-    const debouncedSetDetected = debounce(setDetected, 10000);
     const [stream, setStream] = useState(null);
     const location = useLocation();
 
@@ -18,7 +16,7 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
 
     useEffect(() => {
         return () => {
-            if (stream) {
+            if (stream && location !== "/dashboard") {
                 const tracks = stream.getTracks();
                 tracks.forEach(track => track.stop());
                 console.log("stopped camera");
