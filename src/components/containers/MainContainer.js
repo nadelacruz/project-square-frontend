@@ -55,7 +55,7 @@ const MainContainer = ({ children }) => {
             />
 
             <ToastContainer limit={1} />
-            <MainHeader />
+            
             <MainSidebar />
 
             <div className='content-area custom-scrollbar'>

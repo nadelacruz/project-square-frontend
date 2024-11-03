@@ -12,7 +12,6 @@ const LandingPage = () => {
     return (
         <div className="main-container" >
             <ToastContainer />
-            <MainHeader />
 
             <div className='content-area custom-scrollbar'>
                 <div className='landing-container'>

@@ -1,0 +1,21 @@
+@import './variables.css';
+
+.dashboard-container {
+    overflow-y: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "header"
+        "content";
+}
+
+.dashboard-header-area {
+    grid-area: header;
+    height: 60px;
+}
+
+.dashboard-content-area {
+    grid-area: content;
+}

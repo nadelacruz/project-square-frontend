@@ -6,15 +6,9 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: 60px minmax(500px, 1fr);
+    grid-template-rows: minmax(500px, 1fr);
     grid-template-areas:
-        "header header"
         "sidebar main";
-}
-
-.header-area {
-    grid-area: header;
-    justify-content: space-between;
 }
 
 .sidebar-area {
@@ -123,6 +117,10 @@
     color: var(--background-light);
     border: none;
     border-radius: var(--btn-border-radius);
+}
+
+.main-button.rounded{
+    border-radius: 100px !important;
 }
 
 .main-button:hover {

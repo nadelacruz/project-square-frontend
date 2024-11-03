@@ -10,7 +10,7 @@ header {
 
 .logo-div {
     aspect-ratio: 1 / 1;
-    width: 50px;
+    width: 70px!important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,15 +24,15 @@ header {
 }
 
 .logo-text {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: bold;
-    color: var(--primary-color);
 }
 
 .logo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    height: 60px;
 }
 
 .logout-btn {

@@ -125,7 +125,7 @@ const LocationPage = () => {
 
     const renderCameras = () => {
         return (
-            cameras.map((camera, index) => {
+            CAMERAS.map((camera, index) => {
                 return (
                     <CameraItem
                         key={index}
