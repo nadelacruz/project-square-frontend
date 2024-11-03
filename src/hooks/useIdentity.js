@@ -27,7 +27,7 @@ export const IdentityProvider = ({ children }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [state, setState] = useState({
-        faces: [null, null, null, null],
+        faces: [null, null, null, null, null],
         firstName: '',
         middleInitial: '',
         lastName: '',
