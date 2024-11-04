@@ -10,62 +10,64 @@ import Dropzone from 'react-dropzone';
 
 import { useIdentity } from "../../hooks/useIdentity";
 
-const ImageDropzone = ({ onImageDrop, initialImage }) => {
+const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
 
-    const { useCamera, faces } = useIdentity();
+    const { useCamera, webcamRef, toggleCamera } = useIdentity();
 
-    const [isNotNull, setIsNotNull] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [coverPreview, setcoverPreview] = useState(
+    const emptyPreview = (
         <>
+            <span className="fs-6 w-75 text-center mb-3">{(index < 1)? 'Default Profile' : `Face Image ${index + 1}`}</span>
             <MdOutlineImageSearch size={100} />
             <span className="small w-75 text-center mb-3">Click to browse, drop a photo, or take one using camera.</span>
         </>
     );
 
+    const [isNotNull, setIsNotNull] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [coverPreview, setcoverPreview] = useState(emptyPreview);
+
     useEffect(() => {
+        renderEmptyPreview();
+        renderImagePreview();
+        if (useCamera) renderCameraPreview();
+    }, [index]);
+
+    useEffect(() => {
+        if (useCamera) {
+            renderCameraPreview()
+        } else {
+            renderEmptyPreview();
+            renderImagePreview();
+        }
+    }, [useCamera]);
+
+    const renderEmptyPreview = () => {
+        setcoverPreview(emptyPreview);
+    };
+
+    const renderImagePreview = () => {
         if (initialImage) {
             setcoverPreview(
                 <img src={initialImage} alt="Cover Preview" title={`${initialImage}}`} />
             );
             setIsNotNull(true);
-        } else {
-            setcoverPreview(
-                <>
-                    <MdOutlineImageSearch size={100} />
-                    <span className="small w-75 text-center mb-3">Click to browse, drop a photo, or take one using camera.</span>
-                </>
-            )
         }
-    }, [initialImage]);
+    };
 
-    useEffect(() => {
-        if (useCamera) {
-            setcoverPreview(
-                <Webcam
-                    audio={false}
-                    ref={null}
-                    screenshotFormat="image/jpeg"
-                    className="webcam-container"
-                />
-            );
-        } else {
-            setcoverPreview(
-                <>
-                    <MdOutlineImageSearch size={100} />
-                    <span className="small w-75 text-center mb-3">Click to browse, drop a photo, or take one using camera.</span>
-                </>
-            );
-            if (initialImage) {
-                setcoverPreview(
-                    <img src={initialImage} alt="Cover Preview" title={`${initialImage}}`} />
-                );
-                setIsNotNull(true);
-            }
-        }
-    }, [useCamera]);
+    const renderCameraPreview = () => {
+        setcoverPreview(
+            <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                className="webcam-container"
+            />
+        );
+    };
 
     const handleImageDrop = (acceptedFiles) => {
+        if (useCamera) toggleCamera();
+
         if (acceptedFiles.length > 5) {
             toast.error(`Too many files. Please select only five (5) face images.`, {
                 autoClose: 3000,
@@ -88,7 +90,7 @@ const ImageDropzone = ({ onImageDrop, initialImage }) => {
 
         onImageDrop(filteredFiles);
         setcoverPreview(
-            <img src={URL.createObjectURL(acceptedFiles[0])} alt="Cover Preview" title={`${acceptedFiles[0].path}`} />
+            <img src={URL.createObjectURL(filteredFiles[0])} alt="Cover Preview" title={`${acceptedFiles[0].path}`} />
         );
         setIsNotNull(true);
     };

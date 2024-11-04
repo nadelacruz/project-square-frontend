@@ -1,38 +1,34 @@
-import React, { useState, useRef } from 'react';
-
+import React, { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import IdentityInfo from './IdentityInfo';
 import IdentityFace from './IdentityFace';
 
-const IdentityPage = ({content}) => {
-    const webcamRef = useRef(null);
-    const [image, setImage] = useState(null);
+const IdentityPage = ({ content }) => {
 
-    const capturePhoto = React.useCallback(() => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        setImage(imageSrc);
-    }, [webcamRef]);
+    useEffect(() => {
+        // Ask confirmation from user when reloading page
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = "";  
+        };
 
-    {/* <div className='identity-setup-progress-area'>
-            </div>
-            <div className='identity-setup-content-area'>
-                    <Webcam
-                        audio={false}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                    />
-                <button onClick={capturePhoto}>Capture Photo</button>
-                {image && <img src={image} alt="Captured" />}
-            </div> */}
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
 
     return (
         <div className='identity-setup-container'>
+            <ToastContainer />
             <div className='step-main-container'>
                 {content === "info" && (<IdentityInfo />)}
                 {content === "face" && (<IdentityFace />)}
                 {content === "verify" && (<IdentityInfo />)}
                 {content === "finish" && (<IdentityInfo />)}
             </div>
-        </div >
+        </div>
     );
 };
 

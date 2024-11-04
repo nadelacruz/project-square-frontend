@@ -11,24 +11,29 @@ const IdentityFace = () => {
     const {
         toggleCamera,
         faces,
+        facePreviews,
         currentIndex,
         handleFaceImageclick,
         updateState,
-        useCamera
+        useCamera,
+        capturePhoto
     } = useIdentity();
 
     const handleImageDrop = (images) => {
-        const faceImages = images.map((face) => URL.createObjectURL(face));
         const slotsToEnd = 5 - currentIndex;
-        const slots = (faceImages.length <= slotsToEnd)? faceImages.length : slotsToEnd;
+        const slots = (images.length <= slotsToEnd)? images.length : slotsToEnd;
         
         const newFaces = [
             ...faces.slice(0, currentIndex), 
-            ...faceImages.slice(0, slots),
+            ...images.slice(0, slots),
             ...faces.slice(currentIndex + slots) 
         ];
 
-        updateState({ faces: newFaces });
+        const newPreviews = [
+            ...newFaces.map((face) => (face)? URL.createObjectURL(face) : null),
+        ];
+
+        updateState({ faces: newFaces, facePreviews: newPreviews});
     }
 
     const FaceImage = ({ width, index }) => {
@@ -39,7 +44,7 @@ const IdentityFace = () => {
                 style={{ width: `${width}` }}
                 onClick={() => handleFaceImageclick(index)}
             >
-                <img src={faces[index]} />
+                <img src={facePreviews[index]} />
             </div>
         )
     };
@@ -79,14 +84,14 @@ const IdentityFace = () => {
 
             <div className='step-right-area'>
                 {/* <div className='fs-5 mb-2' style={{ color: 'var(--primary-color)' }}>Default Profile</div> */}
-                <ImageDropzone onImageDrop={handleImageDrop} initialImage={faces[currentIndex]} />
+                <ImageDropzone onImageDrop={handleImageDrop} initialImage={facePreviews[currentIndex]} index={currentIndex}/>
                 {!useCamera && (
                     <button className="main-button rounded mt-3" onClick={toggleCamera}>Use Camera</button>
                 )}
                 {useCamera && (
                     <div className='d-flex align-items-center mt-3'>
                         <button className="main-button rounded me-3" onClick={toggleCamera}>Browse</button>
-                        <button className="main-button rounded" onClick={() => { }}>Take Photo</button>
+                        <button className="main-button rounded" onClick={() => {capturePhoto()}}>Take Photo</button>
                     </div>
                 )}
             </div>

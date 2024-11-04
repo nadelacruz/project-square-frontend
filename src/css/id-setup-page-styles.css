@@ -74,11 +74,12 @@
 .identity-face-div {
     aspect-ratio: 1 / 1;
     background-color: var(--light-gray);
-    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border-radius: 8px;
+    outline: 2px dashed var(--gray);
     cursor: pointer;
 }
 
