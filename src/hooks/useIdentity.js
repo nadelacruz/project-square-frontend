@@ -4,14 +4,16 @@ import { toast } from 'react-toastify';
 import square_api from "../api/square_api";
 
 import StorageService from "../services/StorageService";
-import { data } from "@tensorflow/tfjs";
-
 
 const IdentityContext = createContext();
 
-const BUTTON_TEXT = {
-    CREATE: 'Create',
-    CREATING: 'Creating...',
+const TIMEOUT = 1000;
+
+const IDENTITY_PAGES = {
+    INFO: '/auth/register/identity/info',
+    FACE: '/auth/register/identity/face',
+    VERIFY: '/auth/register/identity/verify',
+    FINISH: '/auth/register/identity/finish',
 };
 
 const TOAST_CONFIG = {
@@ -31,7 +33,7 @@ export const IdentityProvider = ({ children }) => {
         faces: [null, null, null, null, null],
         facePreviews: [null, null, null, null, null],
         firstName: '',
-        middleInitial: '',
+        middleName: '',
         lastName: '',
         inputErrors: {
             firstName: '',
@@ -40,9 +42,21 @@ export const IdentityProvider = ({ children }) => {
         },
     });
 
-
-    const { firstName, middleInitial, lastName, inputErrors } = state;
+    const { firstName, middleName, lastName, inputErrors } = state;
     const { faces, facePreviews } = state;
+
+    const CAN_PROCEED_FACE = (
+        firstName !== '' &&
+        middleName !== '' &&
+        lastName !== ''
+    );
+
+    const CAN_PROCEED_VERIFY = (
+        firstName !== '' &&
+        middleName !== '' &&
+        lastName !== '' &&
+        faces[0] !== null
+    );
 
 
     const updateState = (newState) => {
@@ -65,6 +79,49 @@ export const IdentityProvider = ({ children }) => {
         }));
     };
 
+    const uploadIdentity = async (user_id) => {
+        const identityData = new FormData();
+        identityData.append('first_name', firstName);
+        identityData.append('middle_name', middleName);
+        identityData.append('last_name', lastName);
+
+        faces.map((face, index) => {
+            const faceName = 'face' + (index + 1);
+            const fileName = user_id + faceName + ".png";
+            identityData.append(faceName, face, fileName);
+        })
+
+        const response = await square_api.post('/identity/upload', identityData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+
+        const jobId = response.data.job_id;
+        return jobId;
+    };
+
+    const checkUploadIdentity = async (uploadTaskId) => {
+        if (!uploadTaskId) return;
+        while (true) {
+            try {
+                const response = await square_api.get(`/identity/upload-result/${uploadTaskId}`);
+
+                if (response.data.state === "SUCCESS") {
+                    const identity = response.data.result;
+
+                    return identity;
+                }
+                if (response.data.state === "FAILURE") {
+                    throw new Error("Identity pload task failed...");
+                }
+            } catch (error) {
+                console.error(`Error checking identity upload status ${uploadTaskId}:`, error);
+                break;
+            }
+            await new Promise(resolve => setTimeout(resolve, TIMEOUT));
+        }
+    };
+
+
     useEffect(() => console.log(state), [state]);
 
     const base64ToBlob = (base64Data, contentType = "image/jpeg") => {
@@ -77,7 +134,7 @@ export const IdentityProvider = ({ children }) => {
         return new Blob([byteArray], { type: contentType });
     };
 
-    const capturePhoto = useCallback(async() => {
+    const capturePhoto = async () => {
         const imageSrc = webcamRef.current.getScreenshot();
         const base64String = imageSrc.split(",")[1];
 
@@ -87,13 +144,13 @@ export const IdentityProvider = ({ children }) => {
         newFaces[currentIndex] = imageBlob;
 
         const newFacePreviews = [
-            ...newFaces.map((face) => (face)? URL.createObjectURL(face) : null),
+            ...newFaces.map((face) => (face) ? URL.createObjectURL(face) : null),
         ]
 
         updateState({ faces: newFaces, facePreviews: newFacePreviews });
-    }, [webcamRef, currentIndex]);
+    }
 
-    
+
     const handleFaceImageclick = (index) => setCurrentIndex(index);
     const toggleCamera = () => setUseCamera(!useCamera);
 
@@ -105,14 +162,17 @@ export const IdentityProvider = ({ children }) => {
             toggleCamera,
             useCamera,
             firstName,
-            middleInitial,
+            middleName,
             lastName,
             faces,
             currentIndex,
             handleFaceImageclick,
             facePreviews,
             webcamRef,
-            capturePhoto
+            capturePhoto,
+            IDENTITY_PAGES,
+            CAN_PROCEED_FACE,
+            CAN_PROCEED_VERIFY
         }),
         [state, useCamera, currentIndex]
     );

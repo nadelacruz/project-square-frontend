@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+
+import MainContainer from '../../components/containers/MainContainer';
+
 import IdentityInfo from './IdentityInfo';
 import IdentityFace from './IdentityFace';
+import IdentityVerify from './IdentityVerify';
 
 const IdentityPage = ({ content }) => {
 
@@ -9,7 +13,7 @@ const IdentityPage = ({ content }) => {
         // Ask confirmation from user when reloading page
         const handleBeforeUnload = (event) => {
             event.preventDefault();
-            event.returnValue = "";  
+            event.returnValue = "";
         };
 
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -25,7 +29,7 @@ const IdentityPage = ({ content }) => {
             <div className='step-main-container'>
                 {content === "info" && (<IdentityInfo />)}
                 {content === "face" && (<IdentityFace />)}
-                {content === "verify" && (<IdentityInfo />)}
+                {content === "verify" && (<IdentityVerify />)}
                 {content === "finish" && (<IdentityInfo />)}
             </div>
         </div>

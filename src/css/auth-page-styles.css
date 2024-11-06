@@ -57,7 +57,7 @@
 }
 
 .auth-form-btn-clear {
-    background-color: var(--background-light);
+    background-color: transparent;
     font-size: 16px;
     height: 52px;
     width: 100%;
@@ -68,7 +68,7 @@
 }
 
 .auth-form-btn-clear:hover {
-    background-color: var(--background-semi-light);
+    background-color: #96d7ff17;
     color: var(--primary-color);
 }
 

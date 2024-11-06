@@ -1,12 +1,14 @@
 @import './variables.css';
 
-header {
-    padding: 20px 13px;
-    color: var(--text-color-dim);
-    background-color: var(--page-header-color);
+.main-header-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    color: var(--background-light);
 }
+
+/* OLD CSS */
 
 .logo-div {
     aspect-ratio: 1 / 1;

@@ -4,6 +4,19 @@
 .not-found-container {
     width: 100%;
     height: 100%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.not-found-container-inner {
+    background-color: var(--background-light);
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;

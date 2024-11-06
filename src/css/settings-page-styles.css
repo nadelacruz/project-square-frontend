@@ -1,0 +1,24 @@
+@import './variables.css';
+
+.settings-container {
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+}
+
+.user-default-profile-div {
+    aspect-ratio: 1 / 1;
+    width: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10%;
+    overflow: hidden;
+    background-color: var(--light-gray);
+}
+
+.user-default-profile-div img {
+    width: 100%;
+    object-fit: contain;
+}

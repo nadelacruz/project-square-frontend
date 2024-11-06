@@ -30,6 +30,7 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
         renderEmptyPreview();
         renderImagePreview();
         if (useCamera) renderCameraPreview();
+        if (!initialImage) setIsNotNull(false);
     }, [index]);
 
     useEffect(() => {

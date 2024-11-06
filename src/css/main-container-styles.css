@@ -1,12 +1,16 @@
 @import './variables.css';
 
+body {
+    background-color: var(--background-dark);
+}
+
 .main-container {
     height: 100vh;
     width: 100%;
     overflow: hidden;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: minmax(500px, 1fr);
+    grid-template-rows: 100%;
     grid-template-areas:
         "sidebar main";
 }
@@ -22,13 +26,15 @@
 
 @media (max-width: 850px) {
     .main-container {
+        grid-template-columns: auto;
         grid-template-areas:
-            "header header"
-            "main main";
+            "main";
     }
 
     .sidebar-area {
-        display: none;
+        position: absolute;
+        height: 100%;
+        /* box-shadow: 10px 3px 100px 50px rgba(133, 133, 133, 0.3); */
     }
 }
 
@@ -117,15 +123,24 @@
     color: var(--background-light);
     border: none;
     border-radius: var(--btn-border-radius);
+    display: flex;
+    align-items: center;
 }
 
-.main-button.rounded{
+
+.main-button.rounded {
     border-radius: 100px !important;
 }
 
 .main-button:hover {
     background-color: var(--primary-color-light);
     border: none;
+}
+
+.main-button:disabled {
+    background-color: var(--primary-color-dark);
+    color: var(--light-gray);
+    cursor: not-allowed;
 }
 
 .danger-button {
@@ -178,6 +193,7 @@
     height: 60px;
     display: flex;
     align-items: center;
+    background-color: inherit;
 }
 
 .breadcrumb-text {
@@ -186,6 +202,9 @@
     cursor: pointer;
     font-size: 16px;
     margin-right: 10px;
+    z-index: 100;
+    background-color: inherit;
+    transition: opacity 2s ease-in-out;
 }
 
 .breadcrumb-text:hover {
@@ -228,15 +247,26 @@
 @keyframes slideRight {
     from {
         transform: translateX(-100%);
-        opacity: 0;
+        z-index: 0;
     }
 
     to {
         transform: translateX(0);
-        opacity: 1;
+        z-index: 100;
     }
 }
 
 .slide-right {
-    animation: slideRight 0.3s ease-out forwards;
+    animation: slideRight 0.3s ease-out both;
+}
+
+
+.hidden {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-out;
+}
+
+.visible {
+    transform: translateX(0);
+    transition: transform 0.3s ease-out;
 }

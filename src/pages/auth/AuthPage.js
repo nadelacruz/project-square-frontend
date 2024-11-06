@@ -99,7 +99,7 @@ const AuthPage = ({ type }) => {
                                 alt={`resight logo`}
                             />
                         </div>
-                        <span className='logo-text'>SQUARE</span>
+                        <span className='logo-text' style={{color: 'var(--primary-color)'}}>SQUARE</span>
                     </div>
 
                     <div className='d-flex flex-column align-items-center w-100'>

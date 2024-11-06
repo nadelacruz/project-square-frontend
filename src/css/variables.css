@@ -15,7 +15,9 @@
     --text-color-dark: #858585;
     --gray: #979797;
     --light-gray: #dddddd;
-    --background-light: #ecf7fc;
+    --background-dark: #1d1d1d;
+    --background-semi-dark: #414141;
+    --background-light: #f7fcff;
     --background-semi-light: #e0f2fb;
     --error-color: #A82122;
     --danger-color: #c93a3a;
@@ -27,4 +29,32 @@
 
 * {
     font-family: 'Poppins', sans-serif;
+}
+
+.pro-sidebar-header {
+    border-bottom: none !important;
+}
+
+.pro-sidebar-footer {
+    border-top: none !important;
+}
+
+.pro-menu-item {
+    padding: 0px 15px !important;
+    padding-right: 10px !important;
+}
+
+.pro-inner-item {
+    padding: 8px 10px !important;
+}
+
+.pro-menu-item.active {
+    .pro-inner-item {
+        background-color: var(--primary-color-light);
+        border-radius: 15px;
+        color: var(--background-light) !important;
+    }
+    .pro-inner-item a  {
+        color: var(--background-light) !important;
+    }
 }

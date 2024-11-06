@@ -7,11 +7,13 @@ import CreateGroupModal from '../modals/CreateGroupModal';
 import JoinGroupModal from '../modals/JoinGroupModal';
 
 import { useGroup } from '../../hooks/useGroup';
+import { useSidebar } from '../../hooks/useSidebar';
 
-const MainContainer = ({ children }) => {
-    const { 
-        showCreateGroup, 
-        showJoinGroup, 
+const MainContainer = ({ children, sidebar = true }) => {
+    const { setIsNarrow } = useSidebar();
+    const {
+        showCreateGroup,
+        showJoinGroup,
         toggleCreateGroup,
         toggleJoinGroup,
     } = useGroup();
@@ -24,20 +26,22 @@ const MainContainer = ({ children }) => {
                 requestAnimationFrame(() => {
                     for (let entry of entries) {
                         const width = entry.contentRect.width;
-    
+                        setIsNarrow(false);
                         content.classList.remove('medium', 'narrow');
-    
-                        if (width < 950) {
+
+                        if (width < 850) {
                             content.classList.add('narrow');
+                            setIsNarrow(true);
                         } else if (width < 1400) {
+                            setIsNarrow(false);
                             content.classList.add('medium');
                         }
                     }
                 });
             });
-    
+
             observer.observe(content);
-    
+
             return () => observer.disconnect();
         }
     }, []);
@@ -55,8 +59,8 @@ const MainContainer = ({ children }) => {
             />
 
             <ToastContainer limit={1} />
-            
-            <MainSidebar />
+
+            {sidebar && (<MainSidebar />)}
 
             <div className='content-area custom-scrollbar'>
                 {children}

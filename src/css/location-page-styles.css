@@ -1,9 +1,10 @@
 @import './variables.css';
+@import './main-container-styles.css';
 
 .location-cameras-container {
     width: 100%;
     max-width: 2000px;
-    padding:0 1.5rem;
+    padding: 0 1.5rem;
     overflow-y: auto;
     display: grid;
     grid-template-columns: 300px 1fr 450px;
@@ -40,11 +41,12 @@
     .location-cameras-container {
         grid-template-columns: 1fr auto;
         grid-template-areas:
-        "header header"
-        "live list "
-        "cameras none "
-        "cameras none ";
+            "header header"
+            "live list "
+            "cameras none "
+            "cameras none ";
     }
+
     .location-cameras-area {
         padding-top: 1rem;
         margin-bottom: 3rem;
@@ -56,16 +58,18 @@
     .location-cameras-container {
         grid-template-columns: 1fr;
         grid-template-areas:
-        "header"
-        "live "
-        "cameras "
-        "list ";
+            "header"
+            "live "
+            "cameras "
+            "list ";
     }
+
     .location-list-area {
         padding-top: 1.5rem;
         padding-left: 0;
         margin-bottom: 3rem;
     }
+
     .location-cameras-area {
         padding-top: 1rem;
         padding-right: 0;
