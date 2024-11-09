@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ProSidebar, Menu, MenuItem, SubMenu, SidebarFooter, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
+import React, { useEffect } from 'react';
+import { ProSidebar, Menu, MenuItem, SidebarFooter, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 
 
@@ -22,7 +22,7 @@ const MainSidebar = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { user, logout } = useAuth();
+    const { logout } = useAuth();
     const { isScanning } = useRecognize();
     const {
         collapse,

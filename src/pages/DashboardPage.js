@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 import MainContainer from '../components/containers/MainContainer';
 import MainHeader from '../components/headers/MainHeader';
-
-import { useNavigate } from 'react-router-dom';
 
 // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.1.2:554/live/ch00_0"; // Appartment Network
 // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.254.104:554/live/ch00_0"; // Home Network
 
 const DashboardPage = () => {
-
-    const navigate = useNavigate();
 
     return (
         <MainContainer>

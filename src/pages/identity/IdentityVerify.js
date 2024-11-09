@@ -1,6 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-
-import ImageDropzone from '../../components/dropzones/ImageDropzone';
+import React, { useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useIdentity } from '../../hooks/useIdentity';
@@ -9,14 +7,10 @@ const IdentityVerify = () => {
     const navigate = useNavigate();
 
     const {
-        toggleCamera,
-        faces,
+        // faces,
         facePreviews,
-        currentIndex,
-        handleFaceImageclick,
-        updateState,
-        useCamera,
-        capturePhoto,
+        // currentIndex,
+        // updateState,
         firstName,
         middleName,
         lastName,
@@ -34,22 +28,22 @@ const IdentityVerify = () => {
         }
     }, []);
 
-    const handleImageDrop = (images) => {
-        const slotsToEnd = 5 - currentIndex;
-        const slots = (images.length <= slotsToEnd) ? images.length : slotsToEnd;
+    // const handleImageDrop = (images) => {
+    //     const slotsToEnd = 5 - currentIndex;
+    //     const slots = (images.length <= slotsToEnd) ? images.length : slotsToEnd;
 
-        const newFaces = [
-            ...faces.slice(0, currentIndex),
-            ...images.slice(0, slots),
-            ...faces.slice(currentIndex + slots)
-        ];
+    //     const newFaces = [
+    //         ...faces.slice(0, currentIndex),
+    //         ...images.slice(0, slots),
+    //         ...faces.slice(currentIndex + slots)
+    //     ];
 
-        const newPreviews = [
-            ...newFaces.map((face) => (face) ? URL.createObjectURL(face) : null),
-        ];
+    //     const newPreviews = [
+    //         ...newFaces.map((face) => (face) ? URL.createObjectURL(face) : null),
+    //     ];
 
-        updateState({ faces: newFaces, facePreviews: newPreviews });
-    };
+    //     updateState({ faces: newFaces, facePreviews: newPreviews });
+    // };
 
     const handleIdentityUpload = async () => {
         const uploadTaskId = await uploadIdentity(9);

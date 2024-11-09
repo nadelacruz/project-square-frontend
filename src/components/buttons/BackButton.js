@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 const BackButton = ({ text, onClick}) => {
-    const navigate = useNavigate();
-
     return (
         <div className='back-button' onClick={() => {onClick()}}>
             <IoMdArrowRoundBack size={19} />

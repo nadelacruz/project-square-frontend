@@ -16,7 +16,7 @@ import './css/group-page-styles.css'
 import './css/id-setup-page-styles.css'
 import './css/settings-page-styles.css'
 import './css/dropzone-styles.css'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import AuthPage from './pages/auth/AuthPage';
 import DashboardPage from './pages/DashboardPage';

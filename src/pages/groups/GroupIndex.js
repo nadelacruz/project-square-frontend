@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
 
 import GroupHeader from '../../components/headers/GroupHeader';
 import SectionHeader from '../../components/headers/SectionHeader';
@@ -11,22 +10,22 @@ import { FaList } from "react-icons/fa";
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { ImLocation } from "react-icons/im";
 
-import { useGroup } from '../../hooks/useGroup';
+// import { useGroup } from '../../hooks/useGroup';
 import { useLocation } from '../../hooks/useLocation';
 import { useAuth } from '../../hooks/useAuth';
 
 const GroupIndex = ({ locations, owner, group }) => {
 
     const { user } = useAuth();
-    const {
-        handleToast,
-        handleChange,
-        newInputName,
-        updateGroup,
-        showDeleteGroup,
-        toggleDeleteGroup,
-        updateState
-    } = useGroup();
+    // const {
+    //     handleToast,
+    //     handleChange,
+    //     newInputName,
+    //     updateGroup,
+    //     showDeleteGroup,
+    //     toggleDeleteGroup,
+    //     updateState
+    // } = useGroup();
 
     const {
         toggleCreateLocation,

@@ -1,14 +1,11 @@
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
+import { createContext, useContext, useMemo} from "react";
 import StorageService from "../services/StorageService";
 import square_api from "../api/square_api";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const ss = new StorageService();
-
-    const location = useLocation();
 
     var user = ss.getItem('user');
 

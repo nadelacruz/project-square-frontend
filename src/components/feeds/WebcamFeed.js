@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecognize } from '../../hooks/useRecognize';
 
 const WebcamFeed = ({ onDetectChange, videoRef }) => {
     const canvasRef = useRef(null);
-    const { isScanning } = useRecognize();
-    const [detected, setDetected] = useState(0);
     const [stream, setStream] = useState(null);
     const location = useLocation();
 
     useEffect(() => {
-        onDetectChange(detected);
-    }, [detected, onDetectChange]);
+        onDetectChange();
+    }, [onDetectChange]);
 
     useEffect(() => {
         return () => {

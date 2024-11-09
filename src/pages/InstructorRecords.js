@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
 import { threelApiBaseUrl } from '../../backend/api';
@@ -22,7 +22,6 @@ const ListenerPlaylist = () => {
 
     const { id } = useParams();
 
-    const location = useLocation();
     const navigate = useNavigate();
 
     const [isHeaderHovered, setIsHeaderHovered] = useState(false);

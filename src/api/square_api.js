@@ -1,7 +1,4 @@
 import axios from 'axios';
-import StorageService from '../services/StorageService';
-
-const ss = new StorageService();
 
 let serverIp = '';
 // serverIp = '172.26.127.26';

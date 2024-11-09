@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 
 import MainContainer from '../../components/containers/MainContainer';
 import NotFoundPage from '../NotFoundPage';
@@ -13,14 +13,12 @@ import GroupMembers from './GroupMembers';
 import CreateLocationModal from '../../components/modals/CreateLocationModal';
 
 import { useLocation } from '../../hooks/useLocation'
-import { useRecognize } from '../../hooks/useRecognize';
+// import { useRecognize } from '../../hooks/useRecognize';
 import { useBreadcrumbs } from '../../hooks/useBreadcrumbs';
 
 const GroupPage = ({ content }) => {
     const { id } = useParams();
     let isFetching = false;
-
-    const navigate = useNavigate();
 
     const [owner, setOwner] = useState(null);
     const [group, setGroup] = useState(null);
@@ -29,7 +27,7 @@ const GroupPage = ({ content }) => {
     const [notFound, setNotFound] = useState(false);
 
     const { setBreadcrumbs, clearBreadcrumbs, addBreadcrumb } = useBreadcrumbs();
-    const { getImageUrl } = useRecognize();
+    // const { getImageUrl } = useRecognize();
 
     const {
         getGroupLocations,

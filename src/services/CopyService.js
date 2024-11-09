@@ -11,7 +11,7 @@ const copyToClipboard = (text) => {
     toast.dismiss(); 
     navigator.clipboard.writeText(text)
         .then(() => toast.info("Code copied to clipboard!", TOAST_CONFIG))
-        .catch((err) => toast.error("Failed to copy code.", TOAST_CONFIG))
+        .catch((err) => toast.error("Failed to copy code. Error: "+err, TOAST_CONFIG))
 }
 
 export {TOAST_CONFIG, copyToClipboard};

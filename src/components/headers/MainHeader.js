@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 import Dropdown from '../dropdowns/Dropdown';
 
@@ -9,16 +8,13 @@ import { TiThMenu } from "react-icons/ti";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useGroup } from '../../hooks/useGroup';
-import { useRecognize } from '../../hooks/useRecognize';
 import { useSidebar } from '../../hooks/useSidebar';
 
 const MainHeader = ({text, prefix}) => {
-    const { user, logout } = useAuth();
-    const { isScanning } = useRecognize();
+    const { user } = useAuth();
     const { toggleCreateGroup, toggleJoinGroup } = useGroup();
     const { toggleCollapse } = useSidebar();
 
-    const navigate = useNavigate();
 
     return (
         <div className='main-header-container'>

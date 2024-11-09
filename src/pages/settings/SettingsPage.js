@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import MainContainer from '../../components/containers/MainContainer';
-import IdentityPage from '../identity/IdentityPage';
 
 import SectionHeader from '../../components/headers/SectionHeader';
 
-import { FaEdit } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 
 import { useNavigate } from 'react-router-dom';

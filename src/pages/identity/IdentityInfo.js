@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useIdentity } from '../../hooks/useIdentity';
@@ -7,7 +7,6 @@ const IdentityInfo = () => {
     const navigate = useNavigate();
 
     const {
-        updateState,
         handleChange,
         handleToast,
         firstName,

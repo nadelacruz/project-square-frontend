@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { faceApiBaseUrl } from '../../api/square_api';
 
 import { FaArrowRight } from "react-icons/fa";

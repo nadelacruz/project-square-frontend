@@ -1,9 +1,7 @@
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { toast } from 'react-toastify';
 
 import square_api from "../api/square_api";
-
-import StorageService from "../services/StorageService";
 
 const LocationContext = createContext();
 

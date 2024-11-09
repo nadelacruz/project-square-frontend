@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { faceApiBaseUrl } from '../../api/square_api';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-import { FaArrowRight } from "react-icons/fa";
 
 const AnalyticsItem = ({ analytics }) => {
-    const navigate = useNavigate(); 
 
     return (
         <div className='group-analytics-item ' onClick={() => {}}>

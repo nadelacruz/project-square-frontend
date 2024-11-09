@@ -1,10 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import square_api, { squareApiBaseUrl, serverIp } from '../api/square_api';
-import { ToastContainer, toast } from 'react-toastify';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-import MainHeader from '../components/headers/MainHeader';
 
 const LandingPage = () => {
     const navigate = useNavigate();

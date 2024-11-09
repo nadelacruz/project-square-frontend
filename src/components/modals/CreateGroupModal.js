@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
-import Button from 'react-bootstrap/Button';
-import { toast } from 'react-toastify';
-
-import StorageService from "../../services/StorageService";
 
 import { useGroup } from "../../hooks/useGroup";
 import { useAuth } from "../../hooks/useAuth";
 
 const CreateGroupModal = ({ show, onClose }) => {
-    const ss = new StorageService();
 
     const { user } = useAuth();
 
@@ -20,7 +15,6 @@ const CreateGroupModal = ({ show, onClose }) => {
         handleToast,
         handleChange,
         inputName,
-        inputErrors,
         createGroup,
         triggerReloadGroups
     } = useGroup();

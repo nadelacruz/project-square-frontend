@@ -1,29 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
 
 import MemberItem from '../../components/items/MemberItem';
 
-import { useGroup } from '../../hooks/useGroup';
-import { useLocation } from '../../hooks/useLocation';
+// import { useGroup } from '../../hooks/useGroup';
+// import { useLocation } from '../../hooks/useLocation';
 
 const GroupMembers = ({ members, owner }) => {
 
-    const [isRunning, setIsRunning] = useState(false);
-    const [isCopied, setIsCopied] = useState(false);
+    // const {
+    //     handleToast,
+    //     handleChange,
+    //     newInputName,
+    //     updateGroup,
+    //     showDeleteGroup,
+    //     toggleDeleteGroup,
+    //     updateState
+    // } = useGroup();
 
-    const {
-        handleToast,
-        handleChange,
-        newInputName,
-        updateGroup,
-        showDeleteGroup,
-        toggleDeleteGroup,
-        updateState
-    } = useGroup();
-
-    const {
-        triggerReloadLocation,
-    } = useLocation();
+    // const {
+    //     triggerReloadLocation,
+    // } = useLocation();
 
     const renderMembers = () => {
         return (

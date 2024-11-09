@@ -1,14 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect } from 'react';
 
 import { FaUserGroup } from "react-icons/fa6";
-
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
-
 import MainContainer from '../../components/containers/MainContainer';
 
-import HorizontalList from '../../components/lists/HorizontalList';
 import GroupItem from '../../components/items/GroupItem';
 import SectionHeader from '../../components/headers/SectionHeader';
 
@@ -16,8 +10,6 @@ import { useGroup } from '../../hooks/useGroup';
 import { useAuth } from '../../hooks/useAuth';
 
 const GroupsPage = () => {
-    const videoRef = useRef();
-
     const { user } = useAuth();
 
     let isFetching = false;
@@ -26,9 +18,6 @@ const GroupsPage = () => {
         createdGroups,
         getCreatedGroups,
         getJoinedGroups,
-        inputCode,
-        inputName,
-        updateState,
         toggleCreateGroup,
         toggleJoinGroup,
         reload

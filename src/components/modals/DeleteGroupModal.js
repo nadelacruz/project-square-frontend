@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
-import Button from 'react-bootstrap/Button';
-import { toast } from 'react-toastify';
 
 import { RiGroupLine } from "react-icons/ri";
 import { SlLocationPin } from "react-icons/sl";
 import { MdGroups } from "react-icons/md";
-
-import StorageService from "../../services/StorageService";
 
 import { useGroup } from "../../hooks/useGroup";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const DeleteGroupModal = ({ show, onClose, group }) => {
-    const ss = new StorageService();
-
     const navigate = useNavigate();
 
     const { user } = useAuth();

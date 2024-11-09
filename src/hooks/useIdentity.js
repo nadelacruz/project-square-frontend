@@ -1,9 +1,7 @@
-import { createContext, useContext, useMemo, useEffect, useState, useCallback, useRef } from "react";
+import { createContext, useContext, useMemo, useEffect, useState, useRef } from "react";
 import { toast } from 'react-toastify';
 
 import square_api from "../api/square_api";
-
-import StorageService from "../services/StorageService";
 
 const IdentityContext = createContext();
 
@@ -42,7 +40,7 @@ export const IdentityProvider = ({ children }) => {
         },
     });
 
-    const { firstName, middleName, lastName, inputErrors } = state;
+    const { firstName, middleName, lastName } = state;
     const { faces, facePreviews } = state;
 
     const CAN_PROCEED_FACE = (

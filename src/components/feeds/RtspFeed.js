@@ -1,13 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import face_api, { faceApiBaseUrl, serverIp } from '../../api/square_api';
-import JSMpeg from "@cycjimmy/jsmpeg-player";
-import axios from "axios";
-import ReactPlayer from 'react-player';
+import React, { useState } from 'react';
 
-import Spinner from 'react-bootstrap/Spinner';
-
-const RtspFeed = ({ streamUrl, serverIp, className }) => {
-    const videoNode = useRef(null);
+const RtspFeed = ({className }) => {
 
     const [rtspLoading, setRtspLoading] = useState(true);
 
@@ -35,24 +28,17 @@ const RtspFeed = ({ streamUrl, serverIp, className }) => {
     //     }
     // }, []);
 
-    const startRTSPFeed = async () => {
-        const res = await axios.get(`http://${serverIp}:3002/stream/?rtsp=${streamUrl}`);
-        return res.data.url;
-    };
+    // const startRTSPFeed = async () => {
+    //     const res = await axios.get(`http://${serverIp}:3002/stream/?rtsp=${streamUrl}`);
+    //     return res.data.url;
+    // };
 
-    const stopRTSPFeed = async () => {
-        return await axios.get(`http://${serverIp}:3002/stop`);
-    };
+    // const stopRTSPFeed = async () => {
+    //     return await axios.get(`http://${serverIp}:3002/stop`);
+    // };
 
     return (
         <div className={`video-feed ${className}`}>
-            {rtspLoading && (
-                <Spinner
-                    className='position-absolute'
-                    animation="border"
-                    variant="light"
-                />
-            )}
             <canvas id="stream-canvas" style={{ backgroundColor: 'black' }}></canvas>
         </div>
     )

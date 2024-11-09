@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import MainHeader from '../headers/MainHeader';
+import React, {useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import MainSidebar from '../sidebars/MainSidebar';
 
 import CreateGroupModal from '../modals/CreateGroupModal';

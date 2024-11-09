@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { faceApiBaseUrl } from '../../api/square_api';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { FaArrowRight } from "react-icons/fa";
 
 const LocationItem = ({ location, isOwner }) => {
     const navigate = useNavigate(); 

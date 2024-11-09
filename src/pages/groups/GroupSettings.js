@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState} from 'react';
 import { copyToClipboard } from '../../services/CopyService';
 
 import SectionHeader from '../../components/headers/SectionHeader';

@@ -1,5 +1,4 @@
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { createContext, useContext, useMemo, useState } from "react";
 
 import { FaSquare } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
@@ -16,8 +15,6 @@ const GRIDS = [
 ];
 
 export const FeedsProvider = ({ children }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const [state, setState] = useState({
         gridDims: { width: 0, height: 0 },

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import MainContainer from '../../components/containers/MainContainer';
-
 import IdentityInfo from './IdentityInfo';
 import IdentityFace from './IdentityFace';
 import IdentityVerify from './IdentityVerify';

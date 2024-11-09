@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const AuthPage = ({ type }) => {
-    const { login, register, loginGoogle } = useAuth();
+    const { login, register } = useAuth();
     const navigate = useNavigate();
 
     const [loader, setLoader] = useState(type === 'login' ? 'Log in' : 'Register');

@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 const SidebarContext = createContext();
 

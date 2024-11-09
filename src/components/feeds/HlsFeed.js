@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 
 const HlsFeed = ({ streamUrl }) => {
     const videoRef = useRef(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+    // const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         if (Hls.isSupported()) {
@@ -11,20 +11,16 @@ const HlsFeed = ({ streamUrl }) => {
             hls.loadSource(streamUrl);
             hls.attachMedia(videoRef.current);
             hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                setIsLoaded(true); // Set loaded state when HLS manifest is parsed
+                // setIsLoaded(true); // Set loaded state when HLS manifest is parsed
             });
         } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
             // For Safari
             videoRef.current.src = streamUrl;
             videoRef.current.addEventListener('loadedmetadata', () => {
-                setIsLoaded(true);
+                // setIsLoaded(true);
             });
         }
     }, [streamUrl]);
-
-    const handlePlay = () => {
-        videoRef.current.play();
-    };
 
     return (
         <div>

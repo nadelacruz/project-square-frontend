@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import GroupHeaderLoading from '../../components/headers/GroupHeaderLoading';
 import SectionHeaderLoading from '../../components/headers/SectionHeaderLoading';
 import PlaceholderItem from '../../components/items/PlaceholderItem';

@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
-
-import Dropdown from '../dropdowns/Dropdown';
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';

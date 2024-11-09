@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
-import Button from 'react-bootstrap/Button';
-import { toast } from 'react-toastify';
-
-import StorageService from "../../services/StorageService";
 
 import { useLocation } from "../../hooks/useLocation";
 
 const CreateLocationModal = ({ show, onClose, group }) => {
-    const ss = new StorageService();
 
     const {
         BUTTON_TEXT,
@@ -17,7 +12,6 @@ const CreateLocationModal = ({ show, onClose, group }) => {
         handleToast,
         handleChange,
         inputName,
-        inputErrors,
         createLocation,
         triggerReloadLocation,
     } = useLocation();

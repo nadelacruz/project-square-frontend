@@ -7,10 +7,7 @@ import UnknownItem from '../items/UnknownItem';
 
 const AttendanceList = () => {
     const {
-        updateScanState,
-        handleToast,
         isScanning,
-        status,
         detections,
         verifiedFaces,
     } = useRecognize();

@@ -3,8 +3,6 @@ import { toast } from 'react-toastify';
 
 import square_api from "../api/square_api";
 
-import StorageService from "../services/StorageService";
-
 import { toDisplayText, toFilename } from "../services/DateFormatService";
 
 
@@ -54,14 +52,14 @@ export const RecognizeProvider = ({ children }) => {
         }
     };
 
-    const captureFrame = () => {
-        return new Promise((resolve, reject) => {
-            const canvas = document.getElementById("stream-canvas");
-            requestAnimationFrame(() => {
-                canvas.toBlob(resolve, 'image/png');
-            });
-        });
-    };
+    // const captureFrame = () => {
+    //     return new Promise((resolve, reject) => {
+    //         const canvas = document.getElementById("stream-canvas");
+    //         requestAnimationFrame(() => {
+    //             canvas.toBlob(resolve, 'image/png');
+    //         });
+    //     });
+    // };
 
 
     const captureDeviceFrame = () => {
@@ -71,7 +69,7 @@ export const RecognizeProvider = ({ children }) => {
         canvas.height = video.videoHeight;
         canvas.getContext('2d').drawImage(video, 0, 0);
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             requestAnimationFrame(() => {
                 canvas.toBlob(resolve, 'image/png');
             });
@@ -183,10 +181,10 @@ export const RecognizeProvider = ({ children }) => {
                 if (response.data.state === "SUCCESS") {
                     const recognizeResults = response.data.result;
 
-                    const formattedDate = toDisplayText(date);
+                    // const formattedDate = toDisplayText(date);
 
-                    const seenIds = new Set(verifiedFaces.map(face => face.identity || 'unknown'));
-                    const unseenIds = recognizeResults.filter(face => !seenIds.has(face.identity));
+                    // const seenIds = new Set(verifiedFaces.map(face => face.identity || 'unknown'));
+                    // const unseenIds = recognizeResults.filter(face => !seenIds.has(face.identity));
 
                     updateScanState({
                         verifiedFaces: [...verifiedFaces, ...recognizeResults],

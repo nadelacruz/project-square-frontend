@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
+import React, { useEffect } from 'react';
 
 import MainContainer from '../../components/containers/MainContainer';
 import MainBreadcrumbs from '../../components/tabs/MainBreadcrumbs';
-import SectionHeader from '../../components/headers/SectionHeader';
 
 import WebcamFeed from '../../components/feeds/WebcamFeed';
 import RtspFeed from '../../components/feeds/RtspFeed';
@@ -34,14 +30,14 @@ const LocationPage = () => {
     const { id } = useParams();
     let isFetching = false;
 
-    const [group, setGroup] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [cameras, setCameras] = useState(CAMERAS);
+    // const [group, setGroup] = useState(null);
+    // const [location, setLocation] = useState(null);
+    // const [cameras, setCameras] = useState(CAMERAS);
 
     const { setBreadcrumbs, clearBreadcrumbs } = useBreadcrumbs();
     const {
         isScanning,
-        handleScan,
+        // handleScan,
         videoRef
     } = useRecognize();
     const {
@@ -63,9 +59,9 @@ const LocationPage = () => {
             isFetching = true;
 
             getLocationCameras(id).then((res) => {
-                setGroup(res.group);
-                setLocation(res.location);
-                setCameras(res.cameras);
+                // setGroup(res.group);
+                // setLocation(res.location);
+                // setCameras(res.cameras);
                 handleBreadcrumbs(res.group, res.location);
                 isFetching = false;
             }).catch((e) => {
@@ -75,9 +71,9 @@ const LocationPage = () => {
         }
 
         return () => {
-            setGroup(null);
-            setLocation(null);
-            setCameras([]);
+            // setGroup(null);
+            // setLocation(null);
+            // setCameras([]);
         };
     }, [id, reload]);
 
@@ -160,10 +156,7 @@ const LocationPage = () => {
                             videoRef={videoRef}
                             onDetectChange={(detected) => handleDetectChange(detected)}
                         />
-                        <RtspFeed 
-                            streamUrl="http://localhost:5000/stream.m3u8"
-                            serverIp=""
-                        />
+                        <RtspFeed/>
                         {renderEmptySlots()}
                     </div>
                 </div>
