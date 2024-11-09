@@ -4,8 +4,6 @@ import { toast } from 'react-toastify';
 import square_api from "../api/square_api";
 
 import StorageService from "../services/StorageService";
-import { data } from "@tensorflow/tfjs";
-
 
 const LocationContext = createContext();
 
