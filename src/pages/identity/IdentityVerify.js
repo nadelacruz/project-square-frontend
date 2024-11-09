@@ -21,7 +21,11 @@ const IdentityVerify = () => {
         middleName,
         lastName,
         IDENTITY_PAGES,
-        CAN_PROCEED_VERIFY
+        CAN_PROCEED_VERIFY,
+        uploadIdentity,
+        checkUploadIdentity,
+        saveFaceEmbeddings,
+        checkSaveFaceEmbeddings
     } = useIdentity();
 
     useEffect(() => {
@@ -45,6 +49,16 @@ const IdentityVerify = () => {
         ];
 
         updateState({ faces: newFaces, facePreviews: newPreviews });
+    };
+
+    const handleIdentityUpload = async () => {
+        const uploadTaskId = await uploadIdentity(9);
+        const uploadedImages = await checkUploadIdentity(uploadTaskId);
+
+        for (const uploadedImage of uploadedImages) {
+            const saveEmbeddingsTaskId = await saveFaceEmbeddings(uploadedImage.face_image_path, uploadedImage.unique_key);
+            await checkSaveFaceEmbeddings(saveEmbeddingsTaskId); 
+        }
     }
 
     const FaceImage = ({ width, index }) => {
@@ -53,7 +67,7 @@ const IdentityVerify = () => {
             <div
                 className={`identity-face-div ${hasSrc}`}
                 style={{ width: `${width}` }}
-                onClick={() => {}}
+                onClick={() => { }}
             >
                 <img src={facePreviews[index]} />
             </div>
@@ -111,9 +125,9 @@ const IdentityVerify = () => {
                     </button>
                     <button
                         className='main-button'
-                        onClick={() => { navigate(IDENTITY_PAGES.FINISH) }}
+                        onClick={() => { handleIdentityUpload() }}
                     >
-                        Next
+                        Upload Identity
                     </button>
                 </div>
             </div>

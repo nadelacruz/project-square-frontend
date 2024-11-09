@@ -35,6 +35,8 @@ import LocationPage from './pages/locations/LocationPage.js';
 import AuthenticatedRoute from './routes/AuthenticatedRoute';
 import PublicRoute from './routes/PublicRoute';
 
+import StreamTest from './pages/StreamTest.js';
+
 import { AuthProvider } from './hooks/useAuth';
 import { RecognizeProvider } from './hooks/useRecognize';
 import { SidebarProvider } from './hooks/useSidebar';
@@ -62,6 +64,12 @@ function App() {
                             <PublicRoute>
                               <LandingPage />
                             </PublicRoute>
+                          }
+                        />
+                        <Route
+                          path="/test-stream"
+                          element={
+                            <StreamTest />
                           }
                         />
                         <Route

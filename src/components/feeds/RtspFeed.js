@@ -1,43 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import face_api, { faceApiBaseUrl, serverIp }  from '../../api/square_api';
+import React, { useState, useEffect, useRef } from 'react';
+import face_api, { faceApiBaseUrl, serverIp } from '../../api/square_api';
 import JSMpeg from "@cycjimmy/jsmpeg-player";
 import axios from "axios";
+import ReactPlayer from 'react-player';
 
 import Spinner from 'react-bootstrap/Spinner';
 
-const RtspFeed = ({rtspUrl, className}) => {
+const RtspFeed = ({ streamUrl, serverIp, className }) => {
+    const videoNode = useRef(null);
+
     const [rtspLoading, setRtspLoading] = useState(true);
 
-    const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.1.2:554/live/ch00_0"; // Appartment Network
+    // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.254.106:554/live/ch00_0"; // Appartment Network
     // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.254.104:554/live/ch00_0"; // Home Network
 
-    useEffect(() => {
-        startRTSPFeed();
-        const url = 'ws://' + serverIp + ':9999';
-        let canvas = document.getElementById("stream-canvas");
-        const player = new JSMpeg.Player(String(url), {
-            canvas: canvas,
-            preserveDrawingBuffer: true,
-            onVideoDecode: () => setRtspLoading(false),
-        });
+    // useEffect(() => {
+    //     setRtspLoading(true);
+    //     const getWsUrl = async () => await startRTSPFeed();
 
+    //     getWsUrl().then((wsUrl) => {
+    //         console.log(wsUrl);
+    //         let canvas = document.getElementById("stream-canvas");
+    //         const player = new JSMpeg.Player(String(wsUrl), {
+    //             canvas: canvas,
+    //             preserveDrawingBuffer: true,
+    //             onVideoDecode: () => setRtspLoading(false),
+    //             audio: false, // Disable audio
+    //         });
+    //     });
 
-        return () => {
-            stopRTSPFeed();
-            setRtspLoading(true);
-        }
-    }, []);
+    //     return () => {
+    //         stopRTSPFeed();
+    //         setRtspLoading(true);
+    //     }
+    // }, []);
 
-    const httpRequest = async (url) => {
-        axios.get(`http://${serverIp}:3002/stream?rtsp=${url}`);
+    const startRTSPFeed = async () => {
+        const res = await axios.get(`http://${serverIp}:3002/stream/?rtsp=${streamUrl}`);
+        return res.data.url;
     };
 
-    const startRTSPFeed = () => {
-        httpRequest(rtspUrl);
-    };
-
-    const stopRTSPFeed = () => {
-        httpRequest("stop");
+    const stopRTSPFeed = async () => {
+        return await axios.get(`http://${serverIp}:3002/stop`);
     };
 
     return (

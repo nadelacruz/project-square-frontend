@@ -6,8 +6,8 @@ const ss = new StorageService();
 let serverIp = '';
 // serverIp = '172.26.127.26';
 // serverIp = '192.168.254.100';
-serverIp = '192.168.1.4';
-const flaskURL = `http://${((serverIp !== '') ? serverIp : 'localhost')}:5000`;
+// serverIp = '192.168.1.4';
+const flaskURL = `http://${((serverIp !== '') ? serverIp : 'localhost')}:5001`;
 const squareApiBaseUrl = flaskURL;
 
 const square_api = axios.create({

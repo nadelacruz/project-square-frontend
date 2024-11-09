@@ -7,7 +7,7 @@ import StorageService from "../services/StorageService";
 
 const IdentityContext = createContext();
 
-const TIMEOUT = 1000;
+const TIMEOUT = 500;
 
 const IDENTITY_PAGES = {
     INFO: '/auth/register/identity/info',
@@ -84,11 +84,13 @@ export const IdentityProvider = ({ children }) => {
         identityData.append('first_name', firstName);
         identityData.append('middle_name', middleName);
         identityData.append('last_name', lastName);
+        identityData.append('user_id', user_id);
 
         faces.map((face, index) => {
-            const faceName = 'face' + (index + 1);
-            const fileName = user_id + faceName + ".png";
-            identityData.append(faceName, face, fileName);
+            if (face !== null) {
+                const fileName = lastName + "_" + index + ".jpg";
+                identityData.append('faceImages', face, fileName);
+            }
         })
 
         const response = await square_api.post('/identity/upload', identityData, {
@@ -100,21 +102,53 @@ export const IdentityProvider = ({ children }) => {
     };
 
     const checkUploadIdentity = async (uploadTaskId) => {
-        if (!uploadTaskId) return;
         while (true) {
             try {
                 const response = await square_api.get(`/identity/upload-result/${uploadTaskId}`);
 
                 if (response.data.state === "SUCCESS") {
-                    const identity = response.data.result;
+                    const uploadedImages = response.data.result;
 
-                    return identity;
+                    return uploadedImages;
                 }
                 if (response.data.state === "FAILURE") {
-                    throw new Error("Identity pload task failed...");
+                    throw new Error("Identity upload task failed...");
                 }
             } catch (error) {
                 console.error(`Error checking identity upload status ${uploadTaskId}:`, error);
+                break;
+            }
+            await new Promise(resolve => setTimeout(resolve, TIMEOUT));
+        }
+    };
+
+    const saveFaceEmbeddings = async (face_image_path, unique_key) => {
+        const payload = {
+            face_image_path: face_image_path,
+            unique_key: unique_key
+        };
+
+        const response = await square_api.post('/identity/save-embeddings', payload);
+        const jobId = response.data.job_id;
+
+        return jobId;
+    };
+
+    const checkSaveFaceEmbeddings = async (saveEmbeddingsTaskId) => {
+        while (true) {
+            try {
+                const response = await square_api.get(`/identity/upload-result/${saveEmbeddingsTaskId}`);
+
+                if (response.data.state === "SUCCESS") {
+                    const successMessage = response.data.result;
+
+                    return successMessage;
+                }
+                if (response.data.state === "FAILURE") {
+                    throw new Error("Save face embeddings task failed...");
+                }
+            } catch (error) {
+                console.error(`Error checking save face embeddings status ${saveEmbeddingsTaskId}:`, error);
                 break;
             }
             await new Promise(resolve => setTimeout(resolve, TIMEOUT));
@@ -172,7 +206,11 @@ export const IdentityProvider = ({ children }) => {
             capturePhoto,
             IDENTITY_PAGES,
             CAN_PROCEED_FACE,
-            CAN_PROCEED_VERIFY
+            CAN_PROCEED_VERIFY,
+            uploadIdentity,
+            checkUploadIdentity,
+            saveFaceEmbeddings,
+            checkSaveFaceEmbeddings
         }),
         [state, useCamera, currentIndex]
     );

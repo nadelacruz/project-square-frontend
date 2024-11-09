@@ -8,6 +8,8 @@ import MainBreadcrumbs from '../../components/tabs/MainBreadcrumbs';
 import SectionHeader from '../../components/headers/SectionHeader';
 
 import WebcamFeed from '../../components/feeds/WebcamFeed';
+import RtspFeed from '../../components/feeds/RtspFeed';
+
 import AttendanceList from '../../components/lists/AttendanceList';
 import FeedsActionBar from '../../components/bars/FeedsActionBar';
 import CameraItem from '../../components/items/CameraItem';
@@ -157,6 +159,10 @@ const LocationPage = () => {
                         <WebcamFeed
                             videoRef={videoRef}
                             onDetectChange={(detected) => handleDetectChange(detected)}
+                        />
+                        <RtspFeed 
+                            streamUrl="http://localhost:5000/stream.m3u8"
+                            serverIp=""
                         />
                         {renderEmptySlots()}
                     </div>
