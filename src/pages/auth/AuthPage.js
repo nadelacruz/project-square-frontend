@@ -99,12 +99,12 @@ const AuthPage = ({ type }) => {
                                 alt={`resight logo`}
                             />
                         </div>
-                        <span className='logo-text' style={{color: 'var(--primary-color)'}}>SQUARE</span>
+                        <span className='logo-text' style={{ color: 'var(--primary-color)' }}>SQUARE</span>
                     </div>
 
                     <div className='d-flex flex-column align-items-center w-100'>
                         <div className='auth-text-bold'>
-                            {((type === 'login')? "Welcome Back": "Create an account")}
+                            {((type === 'login') ? "Welcome Back" : "Create an account")}
                         </div>
 
                         <div className='auth-form-input-container'>
@@ -148,18 +148,18 @@ const AuthPage = ({ type }) => {
                             <span className='text-white ms-2'>{loader}</span>
                         </button>
 
-                        <span className='auth-text-small'>{((type === 'login')? "Don't have an account?": "Already have an account?")}
+                        <span className='auth-text-small'>{((type === 'login') ? "Don't have an account?" : "Already have an account?")}
                             <strong
                                 style={{ color: 'var(--primary-color-dark)' }}
                                 className='cursor-pointer ms-1'
                                 onClick={() => {
-                                    if(type === "login") {
+                                    if (type === "login") {
                                         navigate('/auth/register');
                                     } else {
                                         navigate('/auth/login');
                                     }
                                 }}
-                            >{((type === 'login')? "Sign up": "Sign in")}</strong>
+                            >{((type === 'login') ? "Sign up" : "Sign in")}</strong>
                         </span>
 
                         {/* <button
@@ -175,6 +175,14 @@ const AuthPage = ({ type }) => {
                         >
                             Back to homepage
                         </button>
+                        {type == "register" && (
+                            <button
+                                className='auth-form-btn-clear'
+                                onClick={() => { navigate('/auth/register/identity/face') }}
+                            >
+                                Register Face
+                            </button>
+                        )}
                     </div>
 
                     <div className='auth-footer-container'>
