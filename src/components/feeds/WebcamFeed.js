@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as faceapi from 'face-api.js';
 import { useLocation } from 'react-router-dom';
 import { useRecognize } from '../../hooks/useRecognize';
 
@@ -24,14 +23,6 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
         };
     }, [location, stream]);
 
-    const loadModels = async () => {
-        try {
-            await faceapi.loadSsdMobilenetv1Model('/weights');
-            console.log('SSD Mobilenet V1 model loaded successfully');
-        } catch (error) {
-            console.error('Error loading SSD Mobilenet V1 model:', error);
-        }
-    };
 
     const resizeCanvas = () => {
         if (videoRef.current && canvasRef.current) {
@@ -57,48 +48,15 @@ const WebcamFeed = ({ onDetectChange, videoRef }) => {
         }
     };
 
-    const detectFaces = async () => {
-        if (!videoRef.current || !canvasRef.current) return;
-
-        try {
-            const detections = await faceapi.detectAllFaces(videoRef.current);
-            if (videoRef.current.videoWidth === 0 || videoRef.current.videoHeight === 0) {
-                console.warn("Invalid video dimensions. Skipping face detection.");
-                return;
-            }
-
-            const resizedDetections = faceapi.resizeResults(detections, {
-                width: canvasRef.current.width,
-                height: canvasRef.current.height,
-            });
-
-            const ctx = canvasRef.current.getContext('2d');
-            ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
-            faceapi.draw.drawDetections(canvasRef.current, resizedDetections, {
-                boxColor: 'red',
-                lineWidth: 2
-            });
-
-            setDetected(detections.length);
-        } catch (error) {
-            console.error('Error during face detection:', error);
-        }
-    };
 
     useEffect(() => {
-        let intervalId;
-
         const initializeFaceDetection = async () => {
-            // await loadModels();
             await startVideoStream();
-            // intervalId = setInterval(detectFaces, 1000);
         };
 
         initializeFaceDetection();
 
         return () => {
-            clearInterval(intervalId);
         };
     }, []);
 
