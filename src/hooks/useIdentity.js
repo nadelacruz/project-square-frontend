@@ -149,7 +149,7 @@ export const IdentityProvider = ({ children }) => {
                 console.error(`Error checking save face embeddings status ${saveEmbeddingsTaskId}:`, error);
                 break;
             }
-            await new Promise(resolve => setTimeout(resolve, TIMEOUT));
+            await new Promise(resolve => setTimeout(resolve, TIMEOUT*4));
         }
     };
 

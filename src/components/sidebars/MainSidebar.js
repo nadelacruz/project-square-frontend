@@ -104,7 +104,7 @@ const MainSidebar = () => {
                             onClick={() => {
                                 if (!isScanning) {
                                     logout().then(() => {
-                                        navigate('/', { replace: true })
+                                        window.location.replace('/dashboard');
                                     });
                                 }
                             }}

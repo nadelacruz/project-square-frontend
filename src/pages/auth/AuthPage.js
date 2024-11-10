@@ -48,7 +48,7 @@ const AuthPage = ({ type }) => {
                 : await register(credentials);
 
             if (isLoggedIn) {
-                navigate('/dashboard', { replace: true });
+                window.location.replace('/dashboard');
                 setLoader(type === 'login' ? 'Log in' : 'Register');
             }
         } catch (res) {
