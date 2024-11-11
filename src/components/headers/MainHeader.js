@@ -9,11 +9,13 @@ import { TiThMenu } from "react-icons/ti";
 import { useAuth } from "../../hooks/useAuth";
 import { useGroup } from '../../hooks/useGroup';
 import { useSidebar } from '../../hooks/useSidebar';
+import { useIdentity } from '../../hooks/useIdentity';
 
-const MainHeader = ({text, prefix}) => {
+const MainHeader = ({ text, prefix }) => {
     const { user } = useAuth();
     const { toggleCreateGroup, toggleJoinGroup } = useGroup();
     const { toggleCollapse } = useSidebar();
+    const { identity } = useIdentity();
 
 
     return (
@@ -56,7 +58,7 @@ const MainHeader = ({text, prefix}) => {
                     </div>
                     <div className='me-3'>
                         <div className='fs-6'>
-                            User Name
+                            {(identity)? identity.fullname : "" }
                         </div>
                         <div className='small'>
                             {user.email}

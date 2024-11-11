@@ -83,10 +83,7 @@ function App() {
                                   element={
                                     <Routes>
                                       <Route path="/" element={<AuthPage type="register" />} />
-                                      <Route path="identity/info" element={<IdentityPage content="info" />} />
-                                      <Route path="identity/face" element={<IdentityPage content="face" />} />
-                                      <Route path="identity/verify" element={<IdentityPage content="verify" />} />
-                                      <Route path="identity/finish" element={<IdentityPage content="finish" />} />
+                                      <Route path="identity/:id" element={<IdentityPage/>} />
                                       <Route path="*" element={<NotFoundPage content="noHeader" />} />
                                     </Routes>
                                   }

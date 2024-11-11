@@ -99,7 +99,6 @@ const GroupPage = ({ content }) => {
                     <div className={`group-locations-container fade-in`} id="grploc">
                         <div
                             className='group-locations-breadcrumbs-area'
-                            style={{ backgroundColor: (content !== "index") ? "white" : "" }}
                         >
                             <MainBreadcrumbs />
                         </div>

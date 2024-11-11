@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import { ProSidebar, Menu, MenuItem, SidebarFooter, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 
-
-import { useNavigate } from 'react-router-dom';
-
 import { MdDashboardCustomize } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaRectangleList } from "react-icons/fa6";
@@ -17,12 +14,14 @@ import { useSidebar } from '../../hooks/useSidebar';
 import { useRecognize } from '../../hooks/useRecognize';
 import { useAuth } from '../../hooks/useAuth';
 import { useLocation } from 'react-router-dom';
+import { useIdentity } from '../../hooks/useIdentity';
+import { identity } from 'lodash';
 
 const MainSidebar = () => {
     const location = useLocation();
-    const navigate = useNavigate();
 
     const { logout } = useAuth();
+    const { updateState } = useIdentity();
     const { isScanning } = useRecognize();
     const {
         collapse,
@@ -104,6 +103,7 @@ const MainSidebar = () => {
                             onClick={() => {
                                 if (!isScanning) {
                                     logout().then(() => {
+                                        updateState({identity: null});
                                         window.location.replace('/dashboard');
                                     });
                                 }

@@ -4,9 +4,13 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
+import StorageService from '../../services/StorageService';
+
 const AuthPage = ({ type }) => {
     const { login, register } = useAuth();
     const navigate = useNavigate();
+
+    const ss = new StorageService();
 
     const [loader, setLoader] = useState(type === 'login' ? 'Log in' : 'Register');
     const [state, setState] = useState({
@@ -43,12 +47,15 @@ const AuthPage = ({ type }) => {
         setLoader(type === 'login' ? 'Logging in...' : 'Registering...');
 
         try {
-            const isLoggedIn = type === 'login'
+            const user = type === 'login'
                 ? await login(credentials)
                 : await register(credentials);
 
-            if (isLoggedIn) {
-                window.location.replace('/dashboard');
+            if (user) {
+                ss.storeItem('user', JSON.stringify(user));
+                if (type === "login") window.location.replace('/dashboard');
+                if (type === "register") window.location.replace(`/auth/register/identity/`+user.id);
+
                 setLoader(type === 'login' ? 'Log in' : 'Register');
             }
         } catch (res) {
@@ -175,14 +182,6 @@ const AuthPage = ({ type }) => {
                         >
                             Back to homepage
                         </button>
-                        {type == "register" && (
-                            <button
-                                className='auth-form-btn-clear'
-                                onClick={() => { navigate('/auth/register/identity/face') }}
-                            >
-                                Register Face
-                            </button>
-                        )}
                     </div>
 
                     <div className='auth-footer-container'>

@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 
 import ImageDropzone from '../../components/dropzones/ImageDropzone';
 
-import { useNavigate } from 'react-router-dom';
 import { useIdentity } from '../../hooks/useIdentity';
 
 const IdentityFace = () => {
-    const navigate = useNavigate();
 
     const {
         toggleCamera,
@@ -17,15 +15,17 @@ const IdentityFace = () => {
         updateState,
         useCamera,
         capturePhoto,
-        IDENTITY_PAGES,
         CAN_PROCEED_FACE,
-        CAN_PROCEED_VERIFY
+        CAN_PROCEED_VERIFY,
+        onStepNextClick,
+        onStepBackClick,
+        setCurrentStep
     } = useIdentity();
 
     useEffect(() => {
         if (!CAN_PROCEED_FACE) {
-            navigate(IDENTITY_PAGES.INFO);
-        }
+            setCurrentStep(0);
+        }   
     }, []);
 
     const handleImageDrop = (images) => {
@@ -94,14 +94,14 @@ const IdentityFace = () => {
                 <div className='d-flex align-items-center mt-5'>
                     <button
                         className='main-button me-4'
-                        onClick={() => { navigate(IDENTITY_PAGES.INFO) }}
+                        onClick={onStepBackClick}
                     >
                         Back
                     </button>
                     <button
                         className='main-button'
                         disabled={!CAN_PROCEED_VERIFY}
-                        onClick={() => { navigate(IDENTITY_PAGES.VERIFY) }}
+                        onClick={onStepNextClick}
                     >
                         Next
                     </button>

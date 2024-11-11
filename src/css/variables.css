@@ -13,12 +13,17 @@
     --text-color: #ffffff;
     --text-color-dim: #e5e5e5;
     --text-color-dark: #858585;
+    
     --gray: #979797;
     --light-gray: #dddddd;
+
     --background-dark: #1d1d1d;
-    --background-semi-dark: #414141;
+    --background-semi-dark: #2a2a2a;
+    --background-dark-light: #5c5858;
+    
     --background-light: #f7fcff;
     --background-semi-light: #e0f2fb;
+
     --error-color: #A82122;
     --danger-color: #c93a3a;
     --danger-color-light: #e65353;

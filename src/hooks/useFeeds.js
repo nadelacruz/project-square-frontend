@@ -38,7 +38,7 @@ export const FeedsProvider = ({ children }) => {
     const renderEmptySlots = () => {
         const side = grid + 1;
         const emptySlots = [];
-        for (let i = 0; i < (side * side) - 2; i++) {
+        for (let i = 0; i < (side * side) - 1; i++) {
             emptySlots.push(
                 <div key={i} className="video-feed" style={{ background: 'var(--page-header-color)' }}>
                     No camera

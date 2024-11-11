@@ -1,59 +1,25 @@
 import React, { useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import { useIdentity } from '../../hooks/useIdentity';
 
 const IdentityVerify = () => {
-    const navigate = useNavigate();
 
     const {
-        // faces,
         facePreviews,
-        // currentIndex,
-        // updateState,
         firstName,
         middleName,
         lastName,
-        IDENTITY_PAGES,
         CAN_PROCEED_VERIFY,
-        uploadIdentity,
-        checkUploadIdentity,
-        saveFaceEmbeddings,
-        checkSaveFaceEmbeddings
+        setCurrentStep,
+        onStepBackClick,
+        onStepNextClick
     } = useIdentity();
 
     useEffect(() => {
         if (!CAN_PROCEED_VERIFY) {
-            navigate(IDENTITY_PAGES.INFO);
+            setCurrentStep(0);
         }
     }, []);
-
-    // const handleImageDrop = (images) => {
-    //     const slotsToEnd = 5 - currentIndex;
-    //     const slots = (images.length <= slotsToEnd) ? images.length : slotsToEnd;
-
-    //     const newFaces = [
-    //         ...faces.slice(0, currentIndex),
-    //         ...images.slice(0, slots),
-    //         ...faces.slice(currentIndex + slots)
-    //     ];
-
-    //     const newPreviews = [
-    //         ...newFaces.map((face) => (face) ? URL.createObjectURL(face) : null),
-    //     ];
-
-    //     updateState({ faces: newFaces, facePreviews: newPreviews });
-    // };
-
-    const handleIdentityUpload = async () => {
-        const uploadTaskId = await uploadIdentity(9);
-        const uploadedImages = await checkUploadIdentity(uploadTaskId);
-
-        for (const uploadedImage of uploadedImages) {
-            const saveEmbeddingsTaskId = await saveFaceEmbeddings(uploadedImage.face_image_path, uploadedImage.unique_key);
-            await checkSaveFaceEmbeddings(saveEmbeddingsTaskId); 
-        }
-    }
 
     const FaceImage = ({ width, index }) => {
         const hasSrc = (facePreviews[index]) ? 'with-source' : '';
@@ -113,13 +79,13 @@ const IdentityVerify = () => {
                 <div className='d-flex align-items-center mt-5'>
                     <button
                         className='main-button me-4'
-                        onClick={() => { navigate(IDENTITY_PAGES.FACE) }}
+                        onClick={onStepBackClick}
                     >
                         Back
                     </button>
                     <button
                         className='main-button'
-                        onClick={() => { handleIdentityUpload() }}
+                        onClick={onStepNextClick}
                     >
                         Upload Identity
                     </button>

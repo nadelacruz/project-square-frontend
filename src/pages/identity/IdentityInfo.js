@@ -1,29 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useIdentity } from '../../hooks/useIdentity';
 
 const IdentityInfo = () => {
-    const navigate = useNavigate();
 
     const {
         handleChange,
-        handleToast,
         firstName,
         middleName,
         lastName,
-        IDENTITY_PAGES,
-        CAN_PROCEED_FACE
+        CAN_PROCEED_FACE,
+        onStepNextClick,
     } = useIdentity();
-
-    const handleNextClick = () => {
-        if (!CAN_PROCEED_FACE) {
-            handleToast('Please complete the fields!', 'error');
-            return;
-        } else {
-            navigate(IDENTITY_PAGES.FACE);
-        }
-    };
 
     return (
         <>
@@ -73,7 +61,7 @@ const IdentityInfo = () => {
                     <button
                         className='main-button'
                         disabled={!CAN_PROCEED_FACE}
-                        onClick={handleNextClick}
+                        onClick={onStepNextClick}
                     >
                         Next
                     </button>

@@ -156,7 +156,7 @@ const LocationPage = () => {
                             videoRef={videoRef}
                             onDetectChange={(detected) => handleDetectChange(detected)}
                         />
-                        <RtspFeed/>
+                        {/* <RtspFeed/> */}
                         {renderEmptySlots()}
                     </div>
                 </div>

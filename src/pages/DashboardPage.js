@@ -12,11 +12,33 @@ const DashboardPage = () => {
         <MainContainer>
             <div className='dashboard-container'>
                 <div className='dashboard-header-area'>
-                    <MainHeader text="Dashboard"/>
+                    <MainHeader text="Dashboard" />
                 </div>
-                <div style={{ width: '100%', height: '120px' }}>
-                    <div className='dashboard-section'>
+                <div className='dashboard-content-area'>
+                    <div className='dashboard-content-action-area'>
+                        <div className='dashboard-section'>
+                            
+                        </div>
+                    </div>
+                    <div className='dashboard-content-topleft-area'>
+                        <div className='dashboard-section'>
 
+                        </div>
+                    </div>
+                    <div className='dashboard-content-topright-area'>
+                        <div className='dashboard-section-highlight'>
+
+                        </div>
+                    </div>
+                    <div className='dashboard-content-bottomleft-area'>
+                        <div className='dashboard-section'>
+
+                        </div>
+                    </div>
+                    <div className='dashboard-content-bottomright-area'>
+                        <div className='dashboard-section'>
+
+                        </div>
                     </div>
                 </div>
             </div>

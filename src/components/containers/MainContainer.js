@@ -1,10 +1,12 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import MainSidebar from '../sidebars/MainSidebar';
 
 import CreateGroupModal from '../modals/CreateGroupModal';
 import JoinGroupModal from '../modals/JoinGroupModal';
 
+import { useAuth } from '../../hooks/useAuth';
+import { useIdentity } from '../../hooks/useIdentity';
 import { useGroup } from '../../hooks/useGroup';
 import { useSidebar } from '../../hooks/useSidebar';
 
@@ -16,9 +18,30 @@ const MainContainer = ({ children, sidebar = true }) => {
         toggleCreateGroup,
         toggleJoinGroup,
     } = useGroup();
+    const { user, logout } = useAuth();
+    const { getIdentity, identity } = useIdentity();
+
+    let isFetching = false;
 
     useEffect(() => {
         const content = document.querySelector('.content-area');
+
+        if (!isFetching && !identity) {
+            isFetching = true;
+            getIdentity(user.id)
+                .then((userInfo) => {
+                    isFetching = false;
+                })
+                .catch((err) => {
+                    isFetching = false;
+                    // OR MAYBE SHOW A MODAL FOR
+                    logout().then(() => {
+                        window.location.replace(`/auth/register/identity/`+user.id);
+                    });
+                    console.log( err);
+                })
+        }
+
 
         if (content) {
             const observer = new ResizeObserver(entries => {
@@ -43,7 +66,7 @@ const MainContainer = ({ children, sidebar = true }) => {
 
             return () => observer.disconnect();
         }
-    }, []);
+    }, [identity]);
 
     return (
         <div className="main-container">

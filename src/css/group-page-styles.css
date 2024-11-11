@@ -16,7 +16,6 @@
 .group-locations-breadcrumbs-area {
     grid-area: breadcrumbs;
     padding-left: 1.5rem;
-    background-color: var(--background-light);
 }
 
 .group-locations-header-area {
@@ -49,7 +48,6 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: var(--background-light);
 }
 
 .group-info {
@@ -79,8 +77,9 @@
     aspect-ratio: 4 / 2;
     padding: 5px;
     cursor: pointer;
-    background-color: var(--background-semi-light);
+    background-color: var(--primary-color);
     border-radius: 10px;
+    /* color: var(--background-dark); */
     overflow: hidden;
 }
 
@@ -89,7 +88,8 @@
     aspect-ratio: 6 / 5;
     padding: 5px;
     cursor: pointer;
-    background-color: var(--background-semi-light);
+    background-color: var(--primary-color);
+    /* color: var(--background-dark); */
     border-radius: 10px;
     overflow: hidden;
 }
