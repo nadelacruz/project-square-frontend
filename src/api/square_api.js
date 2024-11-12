@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let serverIp = '';
 
-serverIp = '10.244.127.26';
+serverIp = '57.181.230.200';
 
 const flaskURL = `http://${((serverIp !== '') ? serverIp : 'localhost')}:5000`;
 const squareApiBaseUrl = flaskURL;
