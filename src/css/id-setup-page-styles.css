@@ -70,6 +70,7 @@
     border-radius: 8px;
     outline: 2px dashed var(--gray);
     cursor: pointer;
+    position: relative;
 }
 
 .identity-face-div img {
@@ -131,6 +132,21 @@
 
 .face-selection-others-area {
     grid-area: others;
+}
+
+.face-image-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 5px;
+    color: white;
+    background-color: red;
+    border-radius: 25px;
+    scale: 1;
+}
+
+.face-image-close-btn:hover{
+    scale: 1.2;
 }
 
 @media (max-width: 650px) {

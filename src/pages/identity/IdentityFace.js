@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 
+import { LuScanFace } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
+
 import ImageDropzone from '../../components/dropzones/ImageDropzone';
 
 import { useIdentity } from '../../hooks/useIdentity';
@@ -19,7 +22,8 @@ const IdentityFace = () => {
         CAN_PROCEED_VERIFY,
         onStepNextClick,
         onStepBackClick,
-        setCurrentStep
+        setCurrentStep,
+        deletePhoto
     } = useIdentity();
 
     useEffect(() => {
@@ -55,6 +59,7 @@ const IdentityFace = () => {
                 onClick={() => handleFaceImageclick(index)}
             >
                 <img src={facePreviews[index]} />
+                {hasSrc && ( <IoClose size={20} className='face-image-close-btn' onClick={() => deletePhoto(index)}/>)}
             </div>
         )
     };

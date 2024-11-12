@@ -20,6 +20,9 @@ export const IdentityProvider = ({ children }) => {
     const webcamRef = useRef(null);
 
     const [useCamera, setUseCamera] = useState(false);
+    const [useRear, setUseRear] = useState(false);
+    const [isFlipped, setIsFlipped] = useState(false);
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -175,6 +178,7 @@ export const IdentityProvider = ({ children }) => {
     };
 
     useEffect(() => console.log(state), [state]);
+    // useEffect(() => console.log(isFlipped), [isFlipped]);
 
     const base64ToBlob = (base64Data, contentType = "image/jpeg") => {
         const byteCharacters = atob(base64Data);
@@ -208,6 +212,17 @@ export const IdentityProvider = ({ children }) => {
         }
     }
 
+    const deletePhoto = async (index) => {
+        const newFaces = state.faces;
+        newFaces[index] = null;
+
+        const newFacePreviews = [
+            ...newFaces.map((face) => (face) ? URL.createObjectURL(face) : null),
+        ]
+
+        updateState({ faces: newFaces, facePreviews: newFacePreviews });
+    }
+
     const onStepBackClick = () => {
         if (currentStep > 0) setCurrentStep(currentStep - 1);
     };
@@ -218,6 +233,8 @@ export const IdentityProvider = ({ children }) => {
 
     const handleFaceImageclick = (index) => setCurrentIndex(index);
     const toggleCamera = () => setUseCamera(!useCamera);
+    const toggleFlipped = () => setIsFlipped(!isFlipped);
+    const toggleRear = () => setUseRear(!useRear);
 
     const value = useMemo(
         () => ({
@@ -248,9 +265,14 @@ export const IdentityProvider = ({ children }) => {
             currentStep,
             setCurrentStep,
             onStepBackClick,
-            onStepNextClick
+            onStepNextClick,
+            deletePhoto,
+            isFlipped,
+            toggleFlipped,
+            useRear,
+            toggleRear
         }),
-        [state, useCamera, currentIndex, currentStep]
+        [state, useCamera, currentIndex, currentStep, isFlipped, useRear]
     );
     return <IdentityContext.Provider value={value}>{children}</IdentityContext.Provider>;
 };

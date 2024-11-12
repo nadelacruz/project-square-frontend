@@ -19,6 +19,12 @@ const Dropdown = ({ children, icon, title }) => {
 
     }, []);
 
+    const handleClick = (e) => {
+        if (isOpen) e.stopPropagation();
+        setIsOpen(!isOpen) ;
+    }
+    
+
 
     const dropdownIcon = document.querySelector(`.${title}-icon`);
     var distanceFromRight;
@@ -27,7 +33,7 @@ const Dropdown = ({ children, icon, title }) => {
     }
     return (
         <div className={`${title}`}>
-            <div className={`header-icons ${title}-icon`}  title={title} onClick={() => { setIsOpen(!isOpen) }}>
+            <div className={`header-icons ${title}-icon`}  title={title} onClick={handleClick}>
                 {icon}
             </div>
             {(isOpen) && (

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let serverIp = '';
+let serverIp = ''; //IP OF ELASTIC EC2
 // serverIp = '172.26.127.26';
 // serverIp = '192.168.254.102';
 serverIp = '192.168.1.4';
