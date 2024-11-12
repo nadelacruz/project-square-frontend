@@ -52,9 +52,11 @@ const AuthPage = ({ type }) => {
                 : await register(credentials);
 
             if (user) {
-                ss.storeItem('user', JSON.stringify(user));
-                if (type === "login") window.location.replace('/dashboard');
-                if (type === "register") window.location.replace(`/auth/register/identity/`+user.id);
+                if (type === "register") {
+                    window.location.replace(`/auth/register/identity/` + user.id);
+                } else if (type === "login") {
+                    window.location.replace('/dashboard');
+                }
 
                 setLoader(type === 'login' ? 'Log in' : 'Register');
             }

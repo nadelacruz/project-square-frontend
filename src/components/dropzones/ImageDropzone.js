@@ -5,6 +5,8 @@ import Webcam from 'react-webcam';
 import { MdOutlineImageSearch } from "react-icons/md";
 import { RiImageAddFill } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
+import { MdFlip } from "react-icons/md";
+import { IoCameraReverseOutline } from "react-icons/io5";
 
 import Dropzone from 'react-dropzone';
 
@@ -12,7 +14,15 @@ import { useIdentity } from "../../hooks/useIdentity";
 
 const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
 
-    const { useCamera, webcamRef, toggleCamera } = useIdentity();
+    const {
+        useCamera,
+        webcamRef,
+        toggleCamera,
+        isFlipped,
+        toggleFlipped,
+        useRear,
+        toggleRear
+    } = useIdentity();
 
     const emptyPreview = (
         <>
@@ -40,7 +50,7 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
             renderEmptyPreview();
             renderImagePreview();
         }
-    }, [useCamera]);
+    }, [useCamera, isFlipped, useRear]);
 
     const renderEmptyPreview = () => {
         setcoverPreview(emptyPreview);
@@ -63,6 +73,10 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
                     ref={webcamRef}
                     screenshotFormat="image/jpeg"
                     className="webcam-container"
+                    style={{ transform: `${isFlipped ? 'scaleX(-1)' : ''}` }}
+                    videoConstraints={{
+                        facingMode: `${useRear ? "environment" : "user"}`
+                    }}
                 />
             </>
         );
@@ -130,8 +144,32 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
                         )}
 
                         {(useCamera || isNotNull) && (
-                            <div className="captured" >
+                            <div className="captured">
                                 <span className="fs-6">Face image {index + 1}</span>
+                            </div>
+                        )}
+
+                        {(useCamera) && (
+                            <div className="flip">
+                                <div
+                                    className="btn me-2"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleFlipped();
+                                    }}
+                                >
+                                    <MdFlip size={20} />
+                                </div>
+
+                                <div
+                                    className="btn"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleRear();
+                                    }}
+                                >
+                                    <IoCameraReverseOutline size={20} />
+                                </div>
                             </div>
                         )}
 

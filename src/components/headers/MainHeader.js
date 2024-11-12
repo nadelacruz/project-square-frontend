@@ -20,7 +20,7 @@ const MainHeader = ({ text }) => {
 
     return (
         <div className='main-header-container'>
-            <div className='d-flex align-items-center'>
+            <div className='d-flex align-items-center cursor-pointer'>
                 <HiOutlineMenuAlt2 size={30} onClick={toggleCollapse} />
                 {(text && !isNarrow) && (<div className='fs-5 ms-2'>{text}</div>)}
             </div>

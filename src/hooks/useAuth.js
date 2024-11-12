@@ -34,8 +34,6 @@ export const AuthProvider = ({ children }) => {
         if (response.status === 201) { // 201 = CREATED
             const user = response.data.user;
 
-            ss.storeItem('user', JSON.stringify(user));
-
             return user;
         } else {
             return null;
