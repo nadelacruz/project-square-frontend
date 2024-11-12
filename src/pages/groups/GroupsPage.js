@@ -6,12 +6,14 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import MainContainer from '../../components/containers/MainContainer';
 import MainHeader from '../../components/headers/MainHeader';
+import ContentContainer from '../../components/containers/ContentContainer';
 
 import GroupItem from '../../components/items/GroupItem';
 import SectionHeader from '../../components/headers/SectionHeader';
 
 import { useGroup } from '../../hooks/useGroup';
 import { useAuth } from '../../hooks/useAuth';
+import { useSidebar } from '../../hooks/useSidebar';
 
 const GroupsPage = () => {
     const { user } = useAuth();
@@ -26,6 +28,7 @@ const GroupsPage = () => {
         toggleJoinGroup,
         reload
     } = useGroup();
+    const { isNarrow } = useSidebar();
 
 
     useEffect(() => {
@@ -68,25 +71,26 @@ const GroupsPage = () => {
 
     return (
         <MainContainer>
-            <div className='groups-container fade-in '>
-                <div className='groups-header-area'>
-                    <MainHeader text="Dashboard" />
-                </div>
+            <ContentContainer
+                header={<MainHeader text={"Groups"}/>}
+            >
                 <div className='groups-joined-area'>
                     <div className='groups-section'>
                         <SectionHeader
-                            icon={<IoIosArrowDown className='me-2' size={33} />}
+                            icon={<IoIosArrowDown className='me-2'size={(isNarrow)? 23 : 33} />}
                             title={"Joined Groups"}
                             actions={
                                 <>
-                                    <button
-                                        className='main-button'
-                                        onClick={toggleJoinGroup}
-                                        style={{ padding: '10px 18px', borderRadius: '12px' }}
-                                    >
-                                        Join group
-                                        <FaUserGroup className='ms-2' size={20} />
-                                    </button>
+                                    {!isNarrow && (
+                                        <button
+                                            className='main-button'
+                                            onClick={toggleJoinGroup}
+                                            style={{ padding: '10px 18px', borderRadius: '12px' }}
+                                        >
+                                            Join group
+                                            <FaUserGroup className='ms-2' size={20} />
+                                        </button>
+                                    )}
                                 </>
                             }
                         />
@@ -96,7 +100,7 @@ const GroupsPage = () => {
                             </div>
                         )}
                         {joinedGroups.length > 0 && (
-                            <div className='group-grid-display'>
+                            <div className='groups-grid-display'>
                                 {renderJoinedGroups()}
                             </div>
                         )}
@@ -105,18 +109,20 @@ const GroupsPage = () => {
                 <div className='groups-created-area'>
                     <div className='groups-section'>
                         <SectionHeader
-                            icon={<IoIosArrowDown className='me-2' size={33} />}
+                            icon={<IoIosArrowDown className='me-2' size={(isNarrow)? 23 : 33} />}
                             title={"Created Groups"}
                             actions={
                                 <>
-                                    <button
-                                        className='main-button'
-                                        onClick={toggleCreateGroup}
-                                        style={{ padding: '10px 18px', borderRadius: '12px' }}
-                                    >
-                                        Create group
-                                        <FaUserPlus className='ms-2' size={20} />
-                                    </button>
+                                    {!isNarrow && (
+                                        <button
+                                            className='main-button'
+                                            onClick={toggleCreateGroup}
+                                            style={{ padding: '10px 18px', borderRadius: '12px' }}
+                                        >
+                                            Create group
+                                            <FaUserPlus className='ms-2' size={20} />
+                                        </button>
+                                    )}
                                 </>
                             }
                         />
@@ -126,13 +132,13 @@ const GroupsPage = () => {
                             </div>
                         )}
                         {createdGroups.length > 0 && (
-                            <div className='group-grid-display'>
+                            <div className='groups-grid-display'>
                                 {renderCreatedGroups()}
                             </div>
                         )}
                     </div>
                 </div>
-            </div>
+            </ContentContainer>
         </MainContainer>
     );
 }

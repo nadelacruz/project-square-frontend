@@ -1,20 +1,23 @@
 import React from 'react';
 
+import { BiCctv } from "react-icons/bi";
 
 const CameraItem = ({ camera }) => {
 
     return (
         <div className='camera-item' onClick={() => { }}>
-            <div className='ms-3 d-flex flex-column justify-content-center'>
-                <span
-                    className='fs-6 fw-bold text-truncate'
-                >{camera.name}</span>
+            <div className='d-flex align-items-center'>
+                <BiCctv size={32} style={{border: '2px solid gray', borderRadius: '3px', color: 'gray'}}/>
+                <div className='ms-2'>
+                    <div
+                        className='fw-bold text-truncate'
+                    >{camera.name}</div>
 
-                <span
-                    className='opacity-75 text-truncate'
-                    style={{ fontSize: '12px' }}
-                >{camera.ip}</span>
-
+                    <div
+                        className='opacity-75 text-truncate'
+                        style={{ fontSize: '12px' }}
+                    >{camera.ip}</div>
+                </div>
             </div>
         </div>
     )

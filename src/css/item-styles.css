@@ -10,7 +10,7 @@
     align-items: center;
     padding: 10px 20px;
     cursor: pointer;
-    background-color: var(--primary-color-dark);
+    background-color: var(--primary-color);
     border-radius: 10px;
     color: var(--background-light);
     overflow: hidden;

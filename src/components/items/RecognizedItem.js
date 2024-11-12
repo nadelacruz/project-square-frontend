@@ -33,7 +33,7 @@ const RecognizedItem = ({ unique_key, detected, datetime }) => {
                         alt={`input image`}
                     />
                 </div>
-                <FaArrowRight className='ms-2 me-2' size={24} />
+                <FaArrowRight size={24} />
                 <div
                     className='square-item-cover my-auto'
                     style={{ width: '60px', borderRadius: '5px' }}
@@ -44,15 +44,17 @@ const RecognizedItem = ({ unique_key, detected, datetime }) => {
                     />
                 </div>
             </div>
-            <div className='ms-3 d-flex flex-column justify-content-center'>
+            <div className='details ms-2 d-flex flex-column justify-content-center'>
 
                 <span
-                    className='fs-6 fw-bold text-truncate'
+                    className='item-name fw-bold text-truncate'
+                    style={{fontSize: '1.1  rem'}}
                     title={name}
-                >{name}</span>
+                    >{name}</span>
 
                 <span
-                    className='small opacity-75 text-truncate'
+                    className='item-date opacity-75 text-truncate'
+                    style={{fontSize: '12px'}}
                 >{datetime}</span>
             </div>
         </div>

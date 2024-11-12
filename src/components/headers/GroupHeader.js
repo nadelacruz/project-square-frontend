@@ -16,49 +16,48 @@ const GroupHeader = ({ group, owner }) => {
 
     const handleSettingsClick = () => {
         navigate('/groups/' + group.id + "/settings");
-        addBreadcrumb("Settings", "/groups/"+group.id+"/settings");
+        addBreadcrumb("Settings", "/groups/" + group.id + "/settings");
     };
 
     const handleMembersClick = () => {
         navigate('/groups/' + group.id + "/members");
-        addBreadcrumb("Members", "/groups/"+group.id+"/members");
+        addBreadcrumb("Members", "/groups/" + group.id + "/members");
     };
 
     return (
         <div className='group-locations-header'>
             <div className='group-info'>
-                <div>
-                    <div className='fs-1 fw-bold mb-2'>{group.name}</div>
-                    <div className="d-flex align-items-center">
+                <div className='fw-bold mb-2'>{group.name}</div>
+                <div className='details-action-flex'>
+                    <div className="group-details">
                         <FaUserGroup size={18} />
-                        <div className='fs-6 ms-2 me-3'>{`${group.members_count} members`}</div>
+                        <div className='ms-2 me-3'>{`${group.members_count} members`}</div>
                         <FaLocationDot size={18} />
-                        <div className='fs-6 ms-2'>{`${group.locations_count} locations`}</div>
+                        <div className='ms-2'>{`${group.locations_count} locations`}</div>
                     </div>
-
-                </div>
-            </div>
-            <div className='group-actions'>
-                <div 
-                    className="header-icons" 
-                    title='Members'
-                    onClick={handleMembersClick}
-                >
-                    <FaUserGroup
-                        size={25}
-                    />
-                </div>
-                {owner.id === user.id && (
-                    <div 
-                        className="header-icons" 
-                        title='Settings'
-                        onClick={handleSettingsClick}
-                    >
-                        <IoSettingsSharp
-                            size={25}
-                        />
+                    <div className='group-actions'>
+                        <div
+                            className="header-icons"
+                            title='Members'
+                            onClick={handleMembersClick}
+                        >
+                            <FaUserGroup
+                                size={25}
+                            />
+                        </div>
+                        {owner.id === user.id && (
+                            <div
+                                className="header-icons"
+                                title='Settings'
+                                onClick={handleSettingsClick}
+                            >
+                                <IoSettingsSharp
+                                    size={25}
+                                />
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );

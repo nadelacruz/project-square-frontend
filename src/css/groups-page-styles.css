@@ -1,34 +1,13 @@
 @import './variables.css';
 
-.groups-container {
-    overflow-y: auto;
-    width: 100%;
-    max-width: 1600px;  
-    padding-right: 2rem;
-    padding-left: calc(2rem - 10px);
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-        "header"
-        "joined"
-        "created";
-    gap: 1rem;
-}
-
-.groups-header-area {
-    grid-area: header;
-}
-
 .groups-joined-area {
-    grid-area: joined;
     display: flex;
     flex-direction: column;
     align-items: start;
+    margin-bottom: 1rem;
 }
 
 .groups-created-area {
-    grid-area: created;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -38,13 +17,12 @@
 .group-item {
     width: var(--grid-item-width);
     aspect-ratio: 6 / 4;
-    padding: 5px;
+    padding: 10px 15px;
     cursor: pointer;
     background-color: var(--primary-color);
     border-radius: 10px;
     color: var(--background-light);
     overflow: hidden;
-    margin-right: 5px;
 }
 
 .group-horizontal-list {
@@ -83,4 +61,25 @@
     background-color: var(--background-semi-dark);
     border-radius: 12px;
     padding: 1.5rem 2rem;
+}
+
+.groups-grid-display {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--grid-item-width));
+    gap: 1rem;
+}
+
+@media (max-width: 800px) {
+    .groups-section {
+        padding: 1rem;
+    }
+
+    .group-item {
+        width: 100%;
+    }
+
+    .groups-grid-display {
+        grid-template-columns: repeat(auto-fit, calc((100% - 1rem) / 2));
+    }
 }

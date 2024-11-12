@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: space-between;
     height: 70px;
+    width: 100%;
     color: var(--background-light);
 }
 
@@ -82,7 +83,7 @@
 }
 
 .icon-dropdown {
-    background-color: var(--background-input-color);
+    background-color: var(--background-semi-dark);
     color: var(--text-color-dim);
     z-index: 100;
     position: absolute;
@@ -97,7 +98,7 @@
 }
 
 .icon-dropdown-item:hover {
-    background-color: var(--primary-background-nav-color);
+    background-color: var(--secondary-highlight);
 }
 
 .icon-dropdown-text {

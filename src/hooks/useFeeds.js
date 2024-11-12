@@ -40,7 +40,7 @@ export const FeedsProvider = ({ children }) => {
         const emptySlots = [];
         for (let i = 0; i < (side * side) - 1; i++) {
             emptySlots.push(
-                <div key={i} className="video-feed" style={{ background: 'var(--page-header-color)' }}>
+                <div key={i} className="video-feed" style={{fontSize: '12px'}}>
                     No camera
                 </div> // Make empty camera slot component that can Handle drop
             );

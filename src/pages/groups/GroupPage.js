@@ -1,7 +1,8 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import MainContainer from '../../components/containers/MainContainer';
+import ContentContainer from '../../components/containers/ContentContainer';
 import NotFoundPage from '../NotFoundPage';
 import GroupPageLoading from './GroupPageLoading';
 import MainBreadcrumbs from '../../components/tabs/MainBreadcrumbs';
@@ -36,7 +37,7 @@ const GroupPage = ({ content }) => {
         showCreateLocation,
         handleToast
     } = useLocation();
-    
+
     useEffect(() => {
         if (!isFetching) {
             isFetching = true;
@@ -51,7 +52,7 @@ const GroupPage = ({ content }) => {
                 })
                 .catch((e) => {
                     handleToast(e.response.data.error, "error");
-                    if(e.response.status === 404) setNotFound(true);
+                    if (e.response.status === 404) setNotFound(true);
                 })
                 .finally(() => isFetching = false)
         }
@@ -72,10 +73,10 @@ const GroupPage = ({ content }) => {
             { label: group.name, link: "/groups/" + group.id },
         ]);
         if (content === "settings") {
-            addBreadcrumb("Settings", "/groups/"+group.id+"/settings");
+            addBreadcrumb("Settings", "/groups/" + group.id + "/settings");
         }
         if (content === "members") {
-            addBreadcrumb("Members", "/groups/"+group.id+"/members");
+            addBreadcrumb("Members", "/groups/" + group.id + "/members");
         }
     };
 
@@ -96,16 +97,16 @@ const GroupPage = ({ content }) => {
                     <NotFoundPage content={"noGroup"} />
                 )}
                 {group && (
-                    <div className={`group-locations-container fade-in`} id="grploc">
-                        <div
-                            className='group-locations-breadcrumbs-area'
-                        >
-                            <MainBreadcrumbs />
+                    <ContentContainer
+                        header={<MainBreadcrumbs />}
+                    >
+                        <div className={`group-locations-container fade-in`}>
+                            {content === "index" && (<GroupIndex group={group} owner={owner} locations={locations} />)}
+                            {content === "settings" && (<GroupSettings group={group} />)}
+                            {content === "members" && (<GroupMembers members={members} owner={owner} />)}
+
                         </div>
-                        {content === "index" && (<GroupIndex group={group} owner={owner} locations={locations}/>)}
-                        {content === "settings" && (<GroupSettings group={group} />)}
-                        {content === "members" && (<GroupMembers members={members} owner={owner} />)}
-                    </div>
+                    </ContentContainer>
                 )}
             </MainContainer>
         </>

@@ -36,7 +36,7 @@ const SettingsPage = () => {
                                 style={{ padding: '5px 15px' }}
                             >
                                 <MdEdit size={20} />
-                                <span className='ms-1'>Edit Identity</span>
+                                <span className='ms-1'>Update Identity</span>
                             </button>
                         </div>
                     </div>

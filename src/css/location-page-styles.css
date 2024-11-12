@@ -1,19 +1,18 @@
 @import './variables.css';
 @import './main-container-styles.css';
 
-.location-cameras-container {
+.location-container {
+    padding-top: 1rem;
     width: 100%;
+    height: 100%;
     max-width: 2000px;
-    padding: 0 1.5rem;
-    overflow-y: auto;
     display: grid;
-    grid-template-columns: 300px 1fr 450px;
-    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 1.75fr 1.25fr;
+    grid-template-rows: auto 1fr;
     grid-template-areas:
-        "header header header"
-        "cameras live list "
-        "none none none "
-        "none none none ";
+        "live list"
+        "cameras list ";
+    gap: 1rem;
 }
 
 .location-header-area {
@@ -28,18 +27,19 @@
 .location-list-area {
     grid-area: list;
     overflow-y: auto;
+    position: relative;
     color: var(--background-dark);
-    padding-left: 1.5rem;
 }
 
 .location-cameras-area {
     grid-area: cameras;
-    padding-right: 1.5rem;
-    color: var(--background-dark);
+    color: var(--background-light);
+    font-size: 1rem;
+    padding-bottom: 2rem;
     overflow-y: auto;
 }
 
-.content-area.medium {
+/* .content-area.medium {
     .location-cameras-container {
         grid-template-columns: 1fr auto;
         grid-template-areas:
@@ -54,52 +54,49 @@
         margin-bottom: 3rem;
         padding-right: 0;
     }
-}
-
-.content-area.narrow {
-    .location-cameras-container {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "header"
-            "live "
-            "cameras "
-            "list ";
-    }
-
-    .location-list-area {
-        padding-top: 1.5rem;
-        padding-left: 0;
-        margin-bottom: 3rem;
-    }
-
-    .location-cameras-area {
-        padding-top: 1rem;
-        padding-right: 0;
-    }
-}
+} */
 
 .list-container {
     width: 100%;
-    padding: 1.5rem;
+    font-size: 1rem;
+    min-height: 500px;
     background-color: var(--background-semi-dark);
     color: var(--background-light);
     border-radius: 7px;
-}
-
-.cameras-container {
-    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid var(--background-semi-dark) ;
     overflow-y: auto;
 }
 
+.list-container-header {
+    position: sticky;
+    z-index: 100;
+    padding: 1rem;
+    padding-bottom: 15px;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    background-color: var(--background-semi-dark);
+}
+
+.list-container-footer-fade {
+    position: sticky;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to bottom, transparent 0%, var(--background-semi-dark) 85%);
+}
+
 .camera-item {
-    width: minmax(100%, calc(var(--grid-item-width) * 1.5));
-    padding: 10px 5px;
+    width: 100%;
+    padding: 10px 15px;
     cursor: pointer;
     background-color: var(--background-semi-dark);
     color: var(--light-gray);
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 10px;
 }
 
 .action-icons {
@@ -126,4 +123,88 @@
     border-radius: 7px;
     display: flex;
     align-items: center;
+}
+
+.cameras-grid-display {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, calc((100% - 24px) / 4));
+    gap: 8px;
+}
+
+.detection-type {
+    font-size: 13px;
+    padding: 2px 10px;
+    border-radius: 25px;
+    color: var(--gray);
+    border: 1px solid var(--gray);
+    cursor: pointer;
+}
+
+.detection-type:hover {
+    border: 1px solid var(--primary-color   );
+    background-color: var(--primary-color);
+    color: var(--background-light);
+}
+
+.detection-type.active {
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--background-light);
+}
+
+.detection-types-flex {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+
+@media (max-width: 800px) {
+    .location-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1hr auto;
+        grid-template-areas:
+            "live "
+            "list "
+            "cameras ";
+    }
+
+    .list-container {
+        height: 400px !important;
+    }
+
+    .location-list-area {
+        padding-left: 0;
+    }
+
+    .location-cameras-area {
+        padding-top: 1rem;
+        padding-right: 0;
+    }
+
+    .cameras-grid-display {
+        grid-template-columns: repeat(auto-fit, calc((100% - 8px) / 2));
+    }
+    
+    .camera-item {
+        font-size: 0.75rem;
+    }
+
+    .queue-item .details .item-date{
+        font-size: 9px !important;
+    }
+
+    .queue-item .details .item-name{
+        font-size: 0.75rem !important;
+    }
+
+    .square-item-cover {
+        width: 40px !important;
+    }
+    .loading-cover {
+        width: 40px !important;
+    }
 }

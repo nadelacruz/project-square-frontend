@@ -14,14 +14,11 @@ import { useSidebar } from '../../hooks/useSidebar';
 import { useRecognize } from '../../hooks/useRecognize';
 import { useAuth } from '../../hooks/useAuth';
 import { useLocation } from 'react-router-dom';
-import { useIdentity } from '../../hooks/useIdentity';
-import { identity } from 'lodash';
 
 const MainSidebar = () => {
     const location = useLocation();
 
     const { logout } = useAuth();
-    const { updateState } = useIdentity();
     const { isScanning } = useRecognize();
     const {
         collapse,
@@ -72,27 +69,27 @@ const MainSidebar = () => {
                         className={`${(activePage === PAGES.DASHBOARD) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.DASHBOARD)}
                         icon={<MdDashboardCustomize size={25} />}
-                    ><Link to="/dashboard">Dashboard</Link></MenuItem>
+                    ><Link to="/dashboard" style={{color: 'inherit'}}>Dashboard</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.GROUPS) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.GROUPS)}
                         icon={<FaUserGroup size={25} />}
-                    ><Link to="/groups">Groups</Link></MenuItem>
+                    ><Link to="/groups" style={{color: 'inherit'}}>Groups</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.LOCATIONS) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.LOCATIONS)}
                         icon={<FaMapLocation size={22} />}
-                    ><Link to="/locations">Locations</Link></MenuItem>
+                    ><Link to="/locations" style={{color: 'inherit'}}>Locations</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.ACTIVITY) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.ACTIVITY)}
                         icon={<FaRectangleList size={25} />}
-                    ><Link to="/activity">Activity</Link></MenuItem>
+                    ><Link to="/activity" style={{color: 'inherit'}}>Activity</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.SETTINGS) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.SETTINGS)}
                         icon={<IoSettingsSharp size={25} />}
-                    ><Link to="/settings">Settings</Link></MenuItem>
+                    ><Link to="/settings" style={{color: 'inherit'}}>Settings</Link></MenuItem>
                 </Menu>
             </SidebarContent>
             {!collapse && (
@@ -103,7 +100,6 @@ const MainSidebar = () => {
                             onClick={() => {
                                 if (!isScanning) {
                                     logout().then(() => {
-                                        updateState({identity: null});
                                         window.location.replace('/dashboard');
                                     });
                                 }

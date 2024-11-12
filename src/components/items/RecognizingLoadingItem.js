@@ -17,7 +17,7 @@ const RecognizingLoadingItem = ({ detected }) => {
                         alt={`input image`}
                     />
                 </div>
-                <FaArrowRight className='ms-2 me-2 opacity-50' size={24} />
+                <FaArrowRight className='opacity-50' size={24} />
                 <div
                     className='loading-cover my-auto'
                     style={{ width: '60px', borderRadius: '5px' }}

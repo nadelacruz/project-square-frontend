@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MainContainer from '../components/containers/MainContainer';
+import ContentContainer from '../components/containers/ContentContainer';
 import MainHeader from '../components/headers/MainHeader';
 
 // const rtspurl = "rtsp://CAPSTONE:@CAPSTONE1@192.168.1.2:554/live/ch00_0"; // Appartment Network
@@ -10,14 +11,13 @@ const DashboardPage = () => {
 
     return (
         <MainContainer>
-            <div className='dashboard-container'>
-                <div className='dashboard-header-area'>
-                    <MainHeader text="Dashboard" />
-                </div>
+            <ContentContainer
+                header={<MainHeader text="Dashboard" />}
+            >
                 <div className='dashboard-content-area'>
                     <div className='dashboard-content-action-area'>
                         <div className='dashboard-section'>
-                            
+
                         </div>
                     </div>
                     <div className='dashboard-content-topleft-area'>
@@ -41,7 +41,7 @@ const DashboardPage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </ContentContainer>
         </MainContainer>
     );
 }

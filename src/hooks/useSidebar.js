@@ -16,9 +16,10 @@ export const SidebarProvider = ({ children }) => {
     const [isNarrow, setIsNarrow] = useState(false);
 
     const toggleCollapse = () => setCollapse(!collapse);
+
     const handleClick = (page) => {
         setActivePage(page)
-        if (isNarrow) toggleCollapse();
+        if (isNarrow) setCollapse(true);
     };
 
     const value = useMemo(

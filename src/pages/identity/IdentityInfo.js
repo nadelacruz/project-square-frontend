@@ -20,7 +20,7 @@ const IdentityInfo = () => {
                 <div className='step-title'>Personal Info</div>
             </div>
             <div className='step-left-area'>
-                <div className='small mb-2'>Firstname</div>
+                <div className='small mb-2'>First name</div>
                 <input
                     name='firstName'
                     type='text'
@@ -44,7 +44,7 @@ const IdentityInfo = () => {
                     className="form-control identity-setup-input"
                 />
 
-                <div className='small mb-2'>Lastname</div>
+                <div className='small mb-2'>Last name</div>
                 <input
                     name='lastName'
                     type='text'
