@@ -16,7 +16,7 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
 
     const emptyPreview = (
         <>
-            <span className="fs-6 w-75 text-center mb-3">{(index < 1)? 'Default Profile' : `Face Image ${index + 1}`}</span>
+            <span className="fs-6 w-75 text-center mb-3">{(index < 1) ? 'Default Profile' : `Face Image ${index + 1}`}</span>
             <MdOutlineImageSearch size={100} />
             <span className="small w-75 text-center mb-3">Click to browse, drop a photo, or take one using camera.</span>
         </>
@@ -57,12 +57,14 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
 
     const renderCameraPreview = () => {
         setcoverPreview(
-            <Webcam
-                audio={false}
-                ref={webcamRef}
-                screenshotFormat="image/jpeg"
-                className="webcam-container"
-            />
+            <>
+                <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    className="webcam-container"
+                />
+            </>
         );
     };
 
@@ -124,6 +126,12 @@ const ImageDropzone = ({ onImageDrop, initialImage, index }) => {
                             >
                                 <FaRegEdit size={100} />
                                 <span className="fs-6 fw-bold">Choose another face image</span>
+                            </div>
+                        )}
+
+                        {(useCamera || isNotNull) && (
+                            <div className="captured" >
+                                <span className="fs-6">Face image {index + 1}</span>
                             </div>
                         )}
 

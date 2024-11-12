@@ -2,35 +2,44 @@
     --primary-color: #217ba8;
     --primary-color-dark: #175c7e;
     --primary-color-light: #3895c3;
+
     --primary-highlight: rgba(126, 203, 225, 0.404);
     --secondary-highlight: rgba(102, 110, 128, 0.4);
-    --page-header-color: #0E0D0D;
-    --primary-header-hover-color: #661313;
-    --primary-background-color: #1B1B1B;
-    --primary-background-nav-color: #2d2d2d;
-    --card-background-color: rgba(50, 50, 50, 0.4);
-    --background-input-color: #282727;
+
     --text-color: #ffffff;
     --text-color-dim: #e5e5e5;
     --text-color-dark: #858585;
+    
     --gray: #979797;
     --light-gray: #dddddd;
-    --background-dark: #1d1d1d;
-    --background-semi-dark: #414141;
+
+    --background-dark: #131522;
+    --background-semi-dark: #242736;
+    --background-dark-light: #5c5858;
+    
     --background-light: #f7fcff;
     --background-semi-light: #e0f2fb;
+
     --error-color: #A82122;
     --danger-color: #c93a3a;
     --danger-color-light: #e65353;
+
     --btn-border-radius: 0.375rem;
     --grid-item-width: 20rem;
+
     --placeholder-color: #4a619226;
+
 }
 
 * {
     font-family: 'Poppins', sans-serif;
 }
 
+/* SIDEBAR CSS OVERWRITE DO NOT TOUCH */
+
+.pro-sidebar > .pro-sidebar-inner {
+    background: var(--background-dark) !important;
+}
 .pro-sidebar-header {
     border-bottom: none !important;
 }
@@ -46,6 +55,7 @@
 
 .pro-inner-item {
     padding: 8px 10px !important;
+    color: var(--background-light) !important;
 }
 
 .pro-menu-item.active {

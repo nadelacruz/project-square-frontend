@@ -4,29 +4,25 @@ import Dropdown from '../dropdowns/Dropdown';
 
 import { IoNotifications } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
-import { TiThMenu } from "react-icons/ti";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useGroup } from '../../hooks/useGroup';
 import { useSidebar } from '../../hooks/useSidebar';
+import { useIdentity } from '../../hooks/useIdentity';
 
-const MainHeader = ({text, prefix}) => {
+const MainHeader = ({ text }) => {
     const { user } = useAuth();
     const { toggleCreateGroup, toggleJoinGroup } = useGroup();
-    const { toggleCollapse } = useSidebar();
+    const { toggleCollapse, isNarrow } = useSidebar();
+    const { identity } = useIdentity();
 
 
     return (
         <div className='main-header-container'>
             <div className='d-flex align-items-center'>
-                <div
-                    className='header-icons'
-                    onClick={toggleCollapse}
-                >
-                    <TiThMenu size={25} />
-                </div>
-                {text && (<div className='fs-5 ms-1'>{text}</div>)}
-                {prefix && (<>{prefix}</>)}
+                <HiOutlineMenuAlt2 size={30} onClick={toggleCollapse} />
+                {(text && !isNarrow) && (<div className='fs-5 ms-2'>{text}</div>)}
             </div>
             <div className='d-flex align-items-center'>
                 <div className='d-flex align-items-center'>
@@ -54,14 +50,16 @@ const MainHeader = ({text, prefix}) => {
                             alt={`user_image`}
                         />
                     </div>
-                    <div className='me-3'>
-                        <div className='fs-6'>
-                            User Name
+                    {!isNarrow && (
+                        <div className='me-3'>
+                            <div className='fs-6'>
+                                {(identity) ? identity.fullname : ""}
+                            </div>
+                            <div className='small'>
+                                {user.email}
+                            </div>
                         </div>
-                        <div className='small'>
-                            {user.email}
-                        </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>

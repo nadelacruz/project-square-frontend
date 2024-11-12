@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import MainContainer from '../../components/containers/MainContainer';
 import MainBreadcrumbs from '../../components/tabs/MainBreadcrumbs';
+import ContentContainer from '../../components/containers/ContentContainer';
 
 import WebcamFeed from '../../components/feeds/WebcamFeed';
 import RtspFeed from '../../components/feeds/RtspFeed';
@@ -9,6 +10,7 @@ import RtspFeed from '../../components/feeds/RtspFeed';
 import AttendanceList from '../../components/lists/AttendanceList';
 import FeedsActionBar from '../../components/bars/FeedsActionBar';
 import CameraItem from '../../components/items/CameraItem';
+import LocationDetectionList from './LocatonDetectionList';
 
 import { useParams } from 'react-router-dom';
 import { useRecognize } from '../../hooks/useRecognize';
@@ -136,40 +138,35 @@ const LocationPage = () => {
 
     return (
         <MainContainer>
-            <div className='location-cameras-container'>
-                <div className='location-header-area'>
-                    <MainBreadcrumbs />
-                </div>
-                <div className='location-cameras-area custom-scrollbar-hidden'>
-                    <div
-                        className='cameras-container  custom-scrollbar-hidden'
-                        style={{ height: `${gridDims.height}px` }}
-                    >
+            <ContentContainer
+                header={<MainBreadcrumbs />}
+            >
+                <div className='location-container'>
+                    <div className='location-live-area custom-scrollbar-hidden' >
+                        <div className={`feeds-grid ${GRIDS[grid].name}`} style={{marginBottom: '1rem'}}>
+                            <WebcamFeed
+                                videoRef={videoRef}
+                                onDetectChange={(detected) => handleDetectChange(detected)}
+                            />
+                            {/* <RtspFeed/> */}
+                            {renderEmptySlots()}
+                        </div>
                         <FeedsActionBar />
-                        <div className='fs-5 fw-bold mt-3 unselectable'>Cameras</div>
-                        {renderCameras()}
+                    </div>
+
+                    <div className='location-cameras-area'>
+                        <div className='fw-bold unselectable mb-3'>Cameras</div>
+                        <div className='cameras-grid-display'>
+                            {renderCameras()}
+                        </div>
+                    </div>
+
+                    <div className='location-list-area custom-scrollbar-hidden'>
+                        <LocationDetectionList />
                     </div>
                 </div>
-                <div className='location-live-area custom-scrollbar-hidden' >
-                    <div className={`feeds-grid ${GRIDS[grid].name} `}>
-                        <WebcamFeed
-                            videoRef={videoRef}
-                            onDetectChange={(detected) => handleDetectChange(detected)}
-                        />
-                        <RtspFeed/>
-                        {renderEmptySlots()}
-                    </div>
-                </div>
-                <div className='location-list-area custom-scrollbar-hidden'>
-                    <div
-                        className='list-container'
-                        style={{ height: `${gridDims.height}px` }}
-                    >
-                        <div className='fs-5 fw-bold unselectable'>Detections</div>
-                        <AttendanceList />
-                    </div>
-                </div>
-            </div>
+
+            </ContentContainer>
         </MainContainer>
     );
 }

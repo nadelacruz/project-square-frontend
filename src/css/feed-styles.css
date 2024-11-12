@@ -3,7 +3,7 @@
 .video-feed {
     aspect-ratio: 3 / 2;
     width: 100%;
-    background-color: #000000;
+    background-color: var(--background-semi-dark);
     position: relative;
     border-radius: 7px;
     display: flex;

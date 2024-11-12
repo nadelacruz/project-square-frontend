@@ -1,29 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useIdentity } from '../../hooks/useIdentity';
 
 const IdentityInfo = () => {
-    const navigate = useNavigate();
 
     const {
         handleChange,
-        handleToast,
         firstName,
         middleName,
         lastName,
-        IDENTITY_PAGES,
-        CAN_PROCEED_FACE
+        CAN_PROCEED_FACE,
+        onStepNextClick,
     } = useIdentity();
-
-    const handleNextClick = () => {
-        if (!CAN_PROCEED_FACE) {
-            handleToast('Please complete the fields!', 'error');
-            return;
-        } else {
-            navigate(IDENTITY_PAGES.FACE);
-        }
-    };
 
     return (
         <>
@@ -32,7 +20,7 @@ const IdentityInfo = () => {
                 <div className='step-title'>Personal Info</div>
             </div>
             <div className='step-left-area'>
-                <div className='small mb-2'>Firstname</div>
+                <div className='small mb-2'>First name</div>
                 <input
                     name='firstName'
                     type='text'
@@ -56,7 +44,7 @@ const IdentityInfo = () => {
                     className="form-control identity-setup-input"
                 />
 
-                <div className='small mb-2'>Lastname</div>
+                <div className='small mb-2'>Last name</div>
                 <input
                     name='lastName'
                     type='text'
@@ -73,7 +61,7 @@ const IdentityInfo = () => {
                     <button
                         className='main-button'
                         disabled={!CAN_PROCEED_FACE}
-                        onClick={handleNextClick}
+                        onClick={onStepNextClick}
                     >
                         Next
                     </button>

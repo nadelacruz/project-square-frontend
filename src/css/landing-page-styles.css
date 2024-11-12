@@ -1,17 +1,64 @@
 @import './variables.css';
 
+
 .landing-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+    "header"
+    "content";
+
+}
+
+.landing-main-container {
+    grid-area: content;
+    width: 100%;
+    max-width: 1220px;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "left right";
+}
+
+.landing-header-area {
+    grid-area: header;
+    height: 70px;
+    padding: 0 2rem;
+    width: 100%;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 7%;
-    margin-right: 7%;
-    height: 100%;
+}
+
+.landing-left-area {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    grid-area: left;
+}
+
+.landing-right-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    grid-area: right;
 }
 
 .landing-img-div {
-    width: 48%;
+    width: 100%;
     max-width: 700px;
 }
 
@@ -21,7 +68,7 @@
 }
 
 .landing-text-bold {
-    font-size: 43px;
+    font-size: 40px;
     font-weight: bold;
     color: var(--background-light);
     margin-bottom: 30px;
@@ -51,4 +98,30 @@
 
 .landing-btn:hover {
     background-color: var(--primary-color-light);
+}
+
+@media (max-width: 800px) {
+    .landing-main-container {
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "header"
+            "right"
+            "left";
+        overflow-y: auto;
+    }
+
+    .landing-text-bold {
+        margin-top: 30px;
+        font-size: 30px;
+    }
+
+    .landing-text {
+        font-size: 12px;
+    }
+
+    .landing-header-area {
+        padding: 0 1rem;
+    }
+    
 }

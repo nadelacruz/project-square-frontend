@@ -1,18 +1,12 @@
 import { createContext, useContext, useMemo, useEffect, useState, useRef } from "react";
 import { toast } from 'react-toastify';
+import StorageService from "../services/StorageService";
 
 import square_api from "../api/square_api";
 
 const IdentityContext = createContext();
 
 const TIMEOUT = 500;
-
-const IDENTITY_PAGES = {
-    INFO: '/auth/register/identity/info',
-    FACE: '/auth/register/identity/face',
-    VERIFY: '/auth/register/identity/verify',
-    FINISH: '/auth/register/identity/finish',
-};
 
 const TOAST_CONFIG = {
     autoClose: 3000,
@@ -22,12 +16,15 @@ const TOAST_CONFIG = {
 };
 
 export const IdentityProvider = ({ children }) => {
+    const ss = new StorageService();
     const webcamRef = useRef(null);
 
     const [useCamera, setUseCamera] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentStep, setCurrentStep] = useState(0);
 
     const [state, setState] = useState({
+        identity: null,
         faces: [null, null, null, null, null],
         facePreviews: [null, null, null, null, null],
         firstName: '',
@@ -41,7 +38,7 @@ export const IdentityProvider = ({ children }) => {
     });
 
     const { firstName, middleName, lastName } = state;
-    const { faces, facePreviews } = state;
+    const { faces, facePreviews, identity } = state;
 
     const CAN_PROCEED_FACE = (
         firstName !== '' &&
@@ -56,6 +53,12 @@ export const IdentityProvider = ({ children }) => {
         faces[0] !== null
     );
 
+    const IDENTITY_PAGES = {
+        INFO: `/auth/register/identity`,
+        FACE: `/auth/register/identity/face`,
+        VERIFY: `/auth/register/identity/verify`,
+        UPLOAD: `/auth/register/identity/upload`,
+    };
 
     const updateState = (newState) => {
         setState(prevState => ({ ...prevState, ...newState }));
@@ -77,6 +80,24 @@ export const IdentityProvider = ({ children }) => {
         }));
     };
 
+    const getIdentity = async (userID) => {
+        const response = await square_api.get(`/identity/get/${userID}`);
+
+        if (response.status === 200) {
+            updateState({identity: response.data.user_info});
+            return response.data.user_info
+        } else {
+            ss.removeItem('user');
+            return null
+        }
+    };
+
+    const getIdentityImage = async (unique_key) => {
+        const response = await square_api.get(`/identity/get-image/${unique_key}`);
+
+        return response.data.identity
+    };
+
     const uploadIdentity = async (user_id) => {
         const identityData = new FormData();
         identityData.append('first_name', firstName);
@@ -89,7 +110,7 @@ export const IdentityProvider = ({ children }) => {
                 const fileName = lastName + "_" + index + ".jpg";
                 identityData.append('faceImages', face, fileName);
             }
-        })
+        });
 
         const response = await square_api.post('/identity/upload', identityData, {
             headers: { 'Content-Type': 'multipart/form-data' },
@@ -149,10 +170,9 @@ export const IdentityProvider = ({ children }) => {
                 console.error(`Error checking save face embeddings status ${saveEmbeddingsTaskId}:`, error);
                 break;
             }
-            await new Promise(resolve => setTimeout(resolve, TIMEOUT));
+            await new Promise(resolve => setTimeout(resolve, TIMEOUT * 4));
         }
     };
-
 
     useEffect(() => console.log(state), [state]);
 
@@ -180,14 +200,28 @@ export const IdentityProvider = ({ children }) => {
         ]
 
         updateState({ faces: newFaces, facePreviews: newFacePreviews });
+
+        if(currentIndex !== faces.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        } else {
+            setCurrentIndex(0);
+        }
     }
 
+    const onStepBackClick = () => {
+        if (currentStep > 0) setCurrentStep(currentStep - 1);
+    };
+
+    const onStepNextClick = () => {
+        if (currentStep < 3) setCurrentStep(currentStep + 1);
+    };
 
     const handleFaceImageclick = (index) => setCurrentIndex(index);
     const toggleCamera = () => setUseCamera(!useCamera);
 
     const value = useMemo(
         () => ({
+            identity,
             updateState,
             handleChange,
             handleToast,
@@ -208,9 +242,15 @@ export const IdentityProvider = ({ children }) => {
             uploadIdentity,
             checkUploadIdentity,
             saveFaceEmbeddings,
-            checkSaveFaceEmbeddings
+            checkSaveFaceEmbeddings,
+            getIdentity,
+            getIdentityImage,
+            currentStep,
+            setCurrentStep,
+            onStepBackClick,
+            onStepNextClick
         }),
-        [state, useCamera, currentIndex]
+        [state, useCamera, currentIndex, currentStep]
     );
     return <IdentityContext.Provider value={value}>{children}</IdentityContext.Provider>;
 };

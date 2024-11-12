@@ -1,14 +1,16 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import MainSidebar from '../sidebars/MainSidebar';
 
 import CreateGroupModal from '../modals/CreateGroupModal';
 import JoinGroupModal from '../modals/JoinGroupModal';
 
+import { useAuth } from '../../hooks/useAuth';
+import { useIdentity } from '../../hooks/useIdentity';
 import { useGroup } from '../../hooks/useGroup';
 import { useSidebar } from '../../hooks/useSidebar';
 
-const MainContainer = ({ children, sidebar = true }) => {
+const MainContainer = ({ children }) => {
     const { setIsNarrow } = useSidebar();
     const {
         showCreateGroup,
@@ -16,34 +18,52 @@ const MainContainer = ({ children, sidebar = true }) => {
         toggleCreateGroup,
         toggleJoinGroup,
     } = useGroup();
+    const { user, logout } = useAuth();
+    const { getIdentity, identity } = useIdentity();
+
+    let isFetching = false;
 
     useEffect(() => {
-        const content = document.querySelector('.content-area');
 
-        if (content) {
+        if (!isFetching && !identity) {
+            isFetching = true;
+            getIdentity(user.id)
+                .then((userInfo) => {
+                    isFetching = false;
+                })
+                .catch((err) => {
+                    isFetching = false;
+                    // OR MAYBE SHOW A MODAL FOR
+                    logout().then(() => {
+                        window.location.replace(`/auth/register/identity/` + user.id);
+                    });
+                    console.log(err);
+                })
+        }
+
+        const main = document.querySelector('.main-container');
+
+        if (main) {
             const observer = new ResizeObserver(entries => {
                 requestAnimationFrame(() => {
                     for (let entry of entries) {
                         const width = entry.contentRect.width;
                         setIsNarrow(false);
-                        content.classList.remove('medium', 'narrow');
+                        main.classList.remove('medium', 'narrow');
 
-                        if (width < 850) {
-                            content.classList.add('narrow');
+                        if (width < 800) {
+                            main.classList.add('narrow');
                             setIsNarrow(true);
-                        } else if (width < 1400) {
-                            setIsNarrow(false);
-                            content.classList.add('medium');
                         }
                     }
                 });
             });
 
-            observer.observe(content);
+            observer.observe(main);
 
             return () => observer.disconnect();
         }
-    }, []);
+    }, [identity]);
 
     return (
         <div className="main-container">
@@ -59,9 +79,9 @@ const MainContainer = ({ children, sidebar = true }) => {
 
             <ToastContainer limit={1} />
 
-            {sidebar && (<MainSidebar />)}
+            <MainSidebar />
 
-            <div className='content-area custom-scrollbar'>
+            <div className='content-area'>
                 {children}
             </div>
         </div>

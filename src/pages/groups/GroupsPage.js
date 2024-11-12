@@ -1,13 +1,19 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { FaUserGroup } from "react-icons/fa6";
+import { FaUserPlus } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+
 import MainContainer from '../../components/containers/MainContainer';
+import MainHeader from '../../components/headers/MainHeader';
+import ContentContainer from '../../components/containers/ContentContainer';
 
 import GroupItem from '../../components/items/GroupItem';
 import SectionHeader from '../../components/headers/SectionHeader';
 
 import { useGroup } from '../../hooks/useGroup';
 import { useAuth } from '../../hooks/useAuth';
+import { useSidebar } from '../../hooks/useSidebar';
 
 const GroupsPage = () => {
     const { user } = useAuth();
@@ -22,6 +28,7 @@ const GroupsPage = () => {
         toggleJoinGroup,
         reload
     } = useGroup();
+    const { isNarrow } = useSidebar();
 
 
     useEffect(() => {
@@ -35,7 +42,7 @@ const GroupsPage = () => {
                 getCreatedGroups(user.id).then(() => { isFetching = false; });
             } catch (error) {
                 console.error(error);
-            } 
+            }
         }
     }, [user, reload]);
 
@@ -64,56 +71,74 @@ const GroupsPage = () => {
 
     return (
         <MainContainer>
-            <div className='groups-container fade-in '>
+            <ContentContainer
+                header={<MainHeader text={"Groups"}/>}
+            >
                 <div className='groups-joined-area'>
-                    <SectionHeader
-                        icon={<FaUserGroup className='me-2' size={24} />}
-                        title={"Joined Groups"}
-                        actions={
-                            <>
-                                <button
-                                    className='main-button'
-                                    onClick={toggleJoinGroup}
-                                >Join group</button>
-                            </>
-                        }
-                    />
-                    {joinedGroups.length === 0 && (
-                        <div className=''>
-                            No groups joined yet
-                        </div>
-                    )}
-                    {joinedGroups.length > 0 && (
-                        <div className='group-grid-display'>
-                            {renderJoinedGroups()}
-                        </div>
-                    )}
+                    <div className='groups-section'>
+                        <SectionHeader
+                            icon={<IoIosArrowDown className='me-2'size={(isNarrow)? 23 : 33} />}
+                            title={"Joined Groups"}
+                            actions={
+                                <>
+                                    {!isNarrow && (
+                                        <button
+                                            className='main-button'
+                                            onClick={toggleJoinGroup}
+                                            style={{ padding: '10px 18px', borderRadius: '12px' }}
+                                        >
+                                            Join group
+                                            <FaUserGroup className='ms-2' size={20} />
+                                        </button>
+                                    )}
+                                </>
+                            }
+                        />
+                        {joinedGroups.length === 0 && (
+                            <div className=''>
+                                No groups joined yet
+                            </div>
+                        )}
+                        {joinedGroups.length > 0 && (
+                            <div className='groups-grid-display'>
+                                {renderJoinedGroups()}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className='groups-created-area'>
-                    <SectionHeader
-                        icon={<FaUserGroup className='me-2' size={24} />}
-                        title={"Created Groups"}
-                        actions={
-                            <>
-                                <button
-                                    className='main-button'
-                                    onClick={toggleCreateGroup}
-                                >Create group</button>
-                            </>
-                        }
-                    />
-                    {createdGroups.length === 0 && (
-                        <div className=''>
-                            No groups created yet
-                        </div>
-                    )}
-                    {createdGroups.length > 0 && (
-                        <div className='group-grid-display'>
-                            {renderCreatedGroups()}
-                        </div>
-                    )}
+                    <div className='groups-section'>
+                        <SectionHeader
+                            icon={<IoIosArrowDown className='me-2' size={(isNarrow)? 23 : 33} />}
+                            title={"Created Groups"}
+                            actions={
+                                <>
+                                    {!isNarrow && (
+                                        <button
+                                            className='main-button'
+                                            onClick={toggleCreateGroup}
+                                            style={{ padding: '10px 18px', borderRadius: '12px' }}
+                                        >
+                                            Create group
+                                            <FaUserPlus className='ms-2' size={20} />
+                                        </button>
+                                    )}
+                                </>
+                            }
+                        />
+                        {createdGroups.length === 0 && (
+                            <div className=''>
+                                No groups created yet
+                            </div>
+                        )}
+                        {createdGroups.length > 0 && (
+                            <div className='groups-grid-display'>
+                                {renderCreatedGroups()}
+                            </div>
+                        )}
+                    </div>
                 </div>
-            </div>
+            </ContentContainer>
         </MainContainer>
     );
 }

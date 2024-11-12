@@ -3,20 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 
 const GroupItem = ({ group }) => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     return (
-        <div className='group-item fade-in' onClick={() => {navigate(`/groups/${group.id}`)}}>
-            <div className='ms-3 d-flex flex-column justify-content-center'>
-                <span
-                    className='opacity-75 text-truncate'
-                    style={{fontSize: '12px'}}
-                >Group</span>
+        <div className='group-item fade-in' onClick={() => { navigate(`/groups/${group.id}`) }}>
+            <div
+                className='opacity-75 text-truncate'
+                style={{ fontSize: '12px' }}
+            >
+                Group
+            </div>
 
-                <span
-                    className='fs-6 fw-bold text-truncate'
-                    title={group.name}
-                >{group.name}</span>
+            <div
+                className='fs-6 fw-bold text-truncate'
+                title={group.name}
+            >
+                {group.name}
             </div>
         </div>
     )

@@ -4,8 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import IdentityInfo from './IdentityInfo';
 import IdentityFace from './IdentityFace';
 import IdentityVerify from './IdentityVerify';
+import IdentityUpload from './IdentityUpload';
 
-const IdentityPage = ({ content }) => {
+import { useParams } from 'react-router-dom';
+import { useIdentity } from '../../hooks/useIdentity';
+
+const IdentityPage = () => {
+    const { id } = useParams();
+    const { currentStep } = useIdentity();
 
     useEffect(() => {
         // Ask confirmation from user when reloading page
@@ -25,10 +31,10 @@ const IdentityPage = ({ content }) => {
         <div className='identity-setup-container'>
             <ToastContainer />
             <div className='step-main-container'>
-                {content === "info" && (<IdentityInfo />)}
-                {content === "face" && (<IdentityFace />)}
-                {content === "verify" && (<IdentityVerify />)}
-                {content === "finish" && (<IdentityInfo />)}
+                {currentStep === 0 && (<IdentityInfo />)}
+                {currentStep === 1 && (<IdentityFace />)}
+                {currentStep === 2 && (<IdentityVerify />)}
+                {currentStep === 3 && (<IdentityUpload userId={id} />)}
             </div>
         </div>
     );

@@ -22,9 +22,9 @@ export const AuthProvider = ({ children }) => {
 
             ss.storeItem('user', JSON.stringify(user));
 
-            return true;
+            return user;
         } else {
-            return false;
+            return null;
         }
     };
 
@@ -36,9 +36,9 @@ export const AuthProvider = ({ children }) => {
 
             ss.storeItem('user', JSON.stringify(user));
 
-            return true;
+            return user;
         } else {
-            return false;
+            return null;
         }
     };
 

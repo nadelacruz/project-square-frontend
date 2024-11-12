@@ -1,25 +1,17 @@
 @import './variables.css';
 
 .group-locations-container {
-    overflow-y: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-        "breadcrumbs"
         "header"
         "analytics"
         "locations";
 }
 
-.group-locations-breadcrumbs-area {
-    grid-area: breadcrumbs;
-    padding-left: 1.5rem;
-    background-color: var(--background-light);
-}
-
-.group-locations-header-area {
+.group-header-area {
     grid-area: header;
 }
 
@@ -28,7 +20,6 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 0 2rem;
     padding-top: 2rem;
 }
 
@@ -37,27 +28,33 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 0 2rem;
     padding-top: 2rem;
     margin-bottom: 50px;
 }
 
 .group-locations-header {
-    padding: 0 1.5rem;
-    padding-bottom: 1.5rem;
-    padding-top: 0.5rem;
     height: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: var(--background-light);
+    padding-top: 1.5rem;
 }
 
 .group-info {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     align-items: start;
     justify-content: space-between;
+    font-size: 2rem;
+}
+
+.group-details {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
 }
 
 .group-actions {
@@ -71,35 +68,38 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, var(--grid-item-width));
-    gap: 20px;
+    gap: 1rem;
 }
 
 .group-analytics-item {
-    width: var(--grid-item-width);
+    width: 100%;
     aspect-ratio: 4 / 2;
-    padding: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
     cursor: pointer;
-    background-color: var(--background-semi-light);
+    background-color: var(--primary-color);
     border-radius: 10px;
     overflow: hidden;
 }
 
 .location-item {
-    width: var(--grid-item-width);
+    width: 100%;
     aspect-ratio: 6 / 5;
-    padding: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
     cursor: pointer;
-    background-color: var(--background-semi-light);
+    background-color: var(--primary-color);
+    /* color: var(--background-dark); */
     border-radius: 10px;
     overflow: hidden;
 }
 
 .member-item {
     width: 100%;
-    padding: 1rem;
+    padding: 1.5rem;
     cursor: pointer;
     overflow: hidden;
-    border-top: solid 1px rgb(206, 201, 201);
+    border-top: solid 1px rgb(98, 98, 98);
 }
 
 .member-profile-div {
@@ -116,4 +116,42 @@
 .member-profile-div img {
     width: 100%;
     object-fit: contain;
+}
+
+.details-action-flex {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 800px) {
+    .group-locations-header {
+        padding: 0;
+        padding-top: 1rem;
+    }
+
+    .group-info {
+        font-size: 1.5rem;
+    }
+
+    .group-details {
+        font-size: 0.9rem;
+    }
+
+    .group-grid-display {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, calc((100% - 1rem) / 2));
+        gap: 1rem;
+    }
+
+    .group-analytics-item {
+        font-size: 0.7rem;
+    }
+
+    .location-item {
+        font-size: 0.7rem;
+    }
 }

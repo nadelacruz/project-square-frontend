@@ -6,6 +6,7 @@ import './css/sidebar-styles.css'
 import './css/feed-styles.css'
 import './css/item-styles.css'
 import './css/main-container-styles.css'
+import './css/content-container-styles.css'
 import './css/not-found-page-styles.css'
 import './css/landing-page-styles.css'
 import './css/auth-page-styles.css'
@@ -83,10 +84,7 @@ function App() {
                                   element={
                                     <Routes>
                                       <Route path="/" element={<AuthPage type="register" />} />
-                                      <Route path="identity/info" element={<IdentityPage content="info" />} />
-                                      <Route path="identity/face" element={<IdentityPage content="face" />} />
-                                      <Route path="identity/verify" element={<IdentityPage content="verify" />} />
-                                      <Route path="identity/finish" element={<IdentityPage content="finish" />} />
+                                      <Route path="identity/:id" element={<IdentityPage/>} />
                                       <Route path="*" element={<NotFoundPage content="noHeader" />} />
                                     </Routes>
                                   }

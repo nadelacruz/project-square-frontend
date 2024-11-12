@@ -10,22 +10,14 @@ import { FaList } from "react-icons/fa";
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { ImLocation } from "react-icons/im";
 
-// import { useGroup } from '../../hooks/useGroup';
 import { useLocation } from '../../hooks/useLocation';
 import { useAuth } from '../../hooks/useAuth';
+import { useSidebar } from '../../hooks/useSidebar';
 
 const GroupIndex = ({ locations, owner, group }) => {
 
     const { user } = useAuth();
-    // const {
-    //     handleToast,
-    //     handleChange,
-    //     newInputName,
-    //     updateGroup,
-    //     showDeleteGroup,
-    //     toggleDeleteGroup,
-    //     updateState
-    // } = useGroup();
+    const { isNarrow } = useSidebar();
 
     const {
         toggleCreateLocation,
@@ -77,7 +69,7 @@ const GroupIndex = ({ locations, owner, group }) => {
 
     return (
         <>
-            <div className='group-locations-header-area'>
+            <div className='group-header-area'>
                 <GroupHeader group={group} owner={owner} />
             </div>
             {owner.id === user.id && (
@@ -88,7 +80,7 @@ const GroupIndex = ({ locations, owner, group }) => {
                         actions={
                             <>
                                 <button
-                                    className='main-button'
+                                    className={`main-button ${isNarrow ? 'small' : ''} `}
                                     onClick={toggleCreateLocation}
                                 >Add location</button>
                             </>

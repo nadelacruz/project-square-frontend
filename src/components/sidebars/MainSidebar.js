@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import { ProSidebar, Menu, MenuItem, SidebarFooter, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 
-
-import { useNavigate } from 'react-router-dom';
-
 import { MdDashboardCustomize } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaRectangleList } from "react-icons/fa6";
@@ -20,7 +17,6 @@ import { useLocation } from 'react-router-dom';
 
 const MainSidebar = () => {
     const location = useLocation();
-    const navigate = useNavigate();
 
     const { logout } = useAuth();
     const { isScanning } = useRecognize();
@@ -73,27 +69,27 @@ const MainSidebar = () => {
                         className={`${(activePage === PAGES.DASHBOARD) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.DASHBOARD)}
                         icon={<MdDashboardCustomize size={25} />}
-                    ><Link to="/dashboard">Dashboard</Link></MenuItem>
+                    ><Link to="/dashboard" style={{color: 'inherit'}}>Dashboard</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.GROUPS) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.GROUPS)}
                         icon={<FaUserGroup size={25} />}
-                    ><Link to="/groups">Groups</Link></MenuItem>
+                    ><Link to="/groups" style={{color: 'inherit'}}>Groups</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.LOCATIONS) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.LOCATIONS)}
                         icon={<FaMapLocation size={22} />}
-                    ><Link to="/locations">Locations</Link></MenuItem>
+                    ><Link to="/locations" style={{color: 'inherit'}}>Locations</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.ACTIVITY) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.ACTIVITY)}
                         icon={<FaRectangleList size={25} />}
-                    ><Link to="/activity">Activity</Link></MenuItem>
+                    ><Link to="/activity" style={{color: 'inherit'}}>Activity</Link></MenuItem>
                     <MenuItem
                         className={`${(activePage === PAGES.SETTINGS) ? 'active' : ''}`}
                         onClick={() => handleClick(PAGES.SETTINGS)}
                         icon={<IoSettingsSharp size={25} />}
-                    ><Link to="/settings">Settings</Link></MenuItem>
+                    ><Link to="/settings" style={{color: 'inherit'}}>Settings</Link></MenuItem>
                 </Menu>
             </SidebarContent>
             {!collapse && (
@@ -104,7 +100,7 @@ const MainSidebar = () => {
                             onClick={() => {
                                 if (!isScanning) {
                                     logout().then(() => {
-                                        navigate('/', { replace: true })
+                                        window.location.replace('/dashboard');
                                     });
                                 }
                             }}

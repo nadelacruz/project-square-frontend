@@ -73,7 +73,7 @@ const AttendanceList = () => {
                 return (
                     <RecognizedItem
                         key={index}
-                        identityPath={face.identity}
+                        unique_key={face.identity}
                         detected={face.detected}
                         datetime={face.datetime}
                     />
